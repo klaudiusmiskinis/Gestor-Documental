@@ -1,14 +1,18 @@
+<div *ngIf="getPath().includes('?path=')">
+    <button (click)=getBack()>Volver</button>
+</div>
+
 <div *ngIf="content">
 
     <div *ngIf="content.folders">
         <div *ngFor="let folder of content.folders">
-            <a href="{{ path }}">{{ folder }}</a>
+            <button (click)=selectedFolder(folder)>{{ folder }}</button>
         </div>
     </div>
 
     <div *ngIf="content.files">
         <div *ngFor="let file of content.files">
-            <p>A {{ file }}</p>
+            <p>{{ file }}</p>
         </div>
     </div>
 
