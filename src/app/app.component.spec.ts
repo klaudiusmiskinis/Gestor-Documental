@@ -23,7 +23,6 @@ describe('AppComponent', () => {
   it(`should have as title 'gestor-documental'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('gestor-documental');
   });
 
   it('should render title', () => {
