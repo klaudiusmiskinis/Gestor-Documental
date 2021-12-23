@@ -25,7 +25,7 @@ export class WorkspaceComponent implements OnInit {
     this.path = path;
   }
 
-  getBack() {
+  getBack(): void {
     if (this.getPath().includes('?path=')){
       if (this.getPath().substring(0, this.getPath().lastIndexOf('/')) === 'http://localhost:3001'){
         this.setPath(this.getPath().substring(0, this.getPath().lastIndexOf('/')) + '/');
@@ -36,7 +36,7 @@ export class WorkspaceComponent implements OnInit {
     }
   }
 
-  async selectedFolder(foldername: string) {
+  async selectedFolder(foldername: string): Promise <void> {
     if (this.getPath().includes('?path')) {
       this.setPath(this.getPath() + '/' + foldername)
     } else {
@@ -45,7 +45,7 @@ export class WorkspaceComponent implements OnInit {
     this.getContent(this.getPath())
   }
 
-  async getContent(path: string) {
+  async getContent(path: string): Promise <void> {
     this.content = await this.request.getWorkspace(path);
   }
 
