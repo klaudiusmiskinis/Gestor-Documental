@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError } from 'rxjs';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -10,7 +10,7 @@ export class RequestService {
   constructor(private http: HttpClient) {}
 
   async getWorkspace(path: string): Promise <Object> {
-    this.setData(await this.http.get(path).toPromise())
+    this.parseData(await this.http.get(path).toPromise())
     return this.getData();
   }
 
@@ -19,17 +19,24 @@ export class RequestService {
     if (path.includes('?')) {
       parameter = '&';
     }
-    const a = await this.http.delete(path + parameter  +'file=' + file).toPromise()
-    console.log(a);
+    await this.http.delete(path + parameter  +'file=' + file).toPromise()
   }
 
-  setData(request: any): void {
+  parseData(request: any): void {
     this.data = JSON.stringify(request)
     this.data = JSON.parse(this.data)
   }
 
+  async postFile(formData: FormData, options: Object, path: string): Promise <void>  {
+    await this.http.post(path, formData, options).toPromise();
+  }
+
   getData(): Object {
     return this.data;
+  }
+
+  setData(data: any): void {
+    this.data = data;
   }
 
 }
