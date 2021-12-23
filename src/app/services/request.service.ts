@@ -17,7 +17,6 @@ export class RequestService {
   setData(request: any): void {
     this.data = JSON.stringify(request)
     this.data = JSON.parse(this.data)
-    console.log(this.data)
   }
 
   getData(): Object {
