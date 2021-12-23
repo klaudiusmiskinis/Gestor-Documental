@@ -8,13 +8,23 @@ import { RequestService } from '../services/request.service';
 
 export class WorkspaceComponent implements OnInit {
   public content: any;
+  private position: string;
   private path: string;
   constructor(private request: RequestService) { 
     this.path = 'http://localhost:3001/';
+    this.position = this.path;
   }
 
   ngOnInit(): void {
     this.getContent(this.getPath());
+  }
+
+  getPosition(): string {
+    return this.position;
+  }
+
+  setPosition(position: string): void {
+    this.position = position;
   }
 
   getPath(): string {
@@ -47,7 +57,6 @@ export class WorkspaceComponent implements OnInit {
 
   async getContent(path: string): Promise <void> {
     this.content = await this.request.getWorkspace(path);
-    console.log(this.content)
   }
 
 }
