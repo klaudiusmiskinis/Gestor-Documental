@@ -9,8 +9,8 @@ export class RequestService {
   private data: any;
   constructor(private http: HttpClient) {}
 
-  async getWorkspace() {
-    this.setData(await this.http.get('http://localhost:3001').toPromise())
+  async getWorkspace(path: string) {
+    this.setData(await this.http.get(path).toPromise())
     return this.getData();
   }
 
