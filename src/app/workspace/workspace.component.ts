@@ -46,6 +46,10 @@ export class WorkspaceComponent implements OnInit {
     }
   }
 
+  deleteFile(file: string): void {
+    this.request.deleteFile(this.getPath(), file)
+  }
+
   async selectedFolder(foldername: string): Promise <void> {
     if (this.getPath().includes('?path')) {
       this.setPath(this.getPath() + '/' + foldername)
