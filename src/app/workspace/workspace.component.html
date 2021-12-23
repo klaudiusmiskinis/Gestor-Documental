@@ -1,1 +1,15 @@
-<p>workspace works!</p>
+<div *ngIf="content">
+
+    <div *ngIf="content.folders">
+        <div *ngFor="let folder of content.folders">
+            <a href="{{ path }}">{{ folder }}</a>
+        </div>
+    </div>
+
+    <div *ngIf="content.files">
+        <div *ngFor="let file of content.files">
+            <p>A {{ file }}</p>
+        </div>
+    </div>
+
+</div>
