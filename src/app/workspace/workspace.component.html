@@ -23,6 +23,6 @@
     <form method="POST" action="{{ getPath() }}" enctype="multipart/form-data">
         <label for="file">Subir archivo</label>
         <input type="file" name="file" id="file">
-        <button type="submit">Subir</button>
+        <button type="button" (click)="postFile($event)">Subir</button>
     </form>
 </div>
