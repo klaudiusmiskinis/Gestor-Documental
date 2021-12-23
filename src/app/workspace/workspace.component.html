@@ -3,7 +3,7 @@
 </div>
 
 <div *ngIf="content">
-
+    <h4>Dirs</h4>
     <div *ngIf="content.folders">
         <div *ngFor="let folder of content.folders">
             <button (click)=selectedFolder(folder)>{{ folder }}</button>
@@ -11,8 +11,9 @@
     </div>
 
     <div *ngIf="content.files">
+        <h4>Files</h4>
         <div *ngFor="let file of content.files">
-            <p>{{ file }}</p>
+            <button (click)=deleteFile(file)>{{ file }}</button>
         </div>
     </div>
 
