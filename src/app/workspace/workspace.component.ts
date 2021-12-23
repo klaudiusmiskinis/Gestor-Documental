@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RequestService } from '../request.service';
+import { RequestService } from '../services/request.service';
 
 @Component({
   selector: 'app-workspace',
@@ -47,6 +47,7 @@ export class WorkspaceComponent implements OnInit {
 
   async getContent(path: string): Promise <void> {
     this.content = await this.request.getWorkspace(path);
+    console.log(this.content)
   }
 
 }
