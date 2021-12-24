@@ -39,17 +39,16 @@ export class WorkspaceComponent implements OnInit {
     this.path = path;
   }
 
-  async postFile(event: any) {
+  async postFile(event: any): Promise <void> {
     if (event.path[1][0].files.length > 0) {
-      const inputField = event.path[1][0].files;
-      let fileList: FileList = inputField;
-      let file: File = fileList[0];
-      let formData: FormData = new FormData();
+      const fileList: FileList = event.path[1][0].files;
+      const file: File = fileList[0];
+      const formData: FormData = new FormData();
+      const headers = new Headers();
       formData.append('file', file, file.name);
-      let headers = new Headers();
       headers.append('Content-Type', 'multipart/form-data');
       headers.append('Accept', 'application/json');
-      let options = { headers: headers };
+      const options = { headers: headers };
       await this.request.postFile(formData, options, this.getPath())
     }
     this.getContent(this.getPath());
@@ -66,7 +65,7 @@ export class WorkspaceComponent implements OnInit {
     }
   }
 
-  async deleteFile(file: string) {
+  async deleteFile(file: string): Promise <void> {
     await this.request.deleteFile(this.getPath(), file)
     this.getContent(this.getPath());
   }
