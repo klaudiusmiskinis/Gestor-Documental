@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RequestService } from '../services/request.service';
+import { Path } from '../models/path';
 
 @Component({
   selector: 'app-workspace',
@@ -78,7 +79,7 @@ export class WorkspaceComponent implements OnInit {
       this.getContent(this.getPath());
     }
   }
-  
+
   async deleteFile(file: string): Promise <void> {
     await this.request.deleteFile(this.getPath(), file)
     this.getContent(this.getPath());
