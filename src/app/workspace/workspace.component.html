@@ -1,5 +1,5 @@
 <div *ngIf="getPath().includes('?path=')">
-    <button (click)=getBack()>Volver</button>
+    <button (click)=goBack()>Volver</button>
 </div>
 
 <div *ngIf="content">
@@ -7,22 +7,31 @@
     <div *ngIf="content.folders">
         <div *ngFor="let folder of content.folders">
             <button (click)=selectedFolder(folder)>{{ folder }}</button>
+            <button (click)=deleteFolder(folder)>X</button>
         </div>
     </div>
 
     <div *ngIf="content.files">
         <h4>Files</h4>
         <div *ngFor="let file of content.files">
-            <button (click)=deleteFile(file)>{{ file }}</button>
+            <button (click)=getFile(file)>{{ file }}</button>
+            <button (click)=deleteFile(file)>X</button>
         </div>
     </div>
-
 </div>
 
 <div style="margin-top: 2rem;">
-    <form method="POST" action="{{ getPath() }}" enctype="multipart/form-data">
+    <form action="{{ getPath() }}" enctype="multipart/form-data">
         <label for="file">Subir archivo</label>
         <input type="file" name="file" id="file">
         <button type="button" (click)="postFile($event)">Subir</button>
+    </form>
+</div>
+
+<div>
+    <h4>Crear carpeta</h4>
+    <form>
+        <input type="text" name="directoryName" id="directoryName">
+        <button type="button" (click)="postDirectory($event)">Crear carpeta</button>
     </form>
 </div>
