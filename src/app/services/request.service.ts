@@ -56,13 +56,8 @@ export class RequestService {
 
   async getFile(path: string, file: string): Promise <void> {
     let char = this.setParameterChar(path);
-    console.log(char)
-    const status = this.parse(await this.http.get(path + char + 'download=' + file).toPromise());
-    if (!status.success) {
-      this.setError('Error con la subida del archivo');
-    } else {
-      this.setContent(status);
-    }
+    if (path == 'http://localhost:3001/') await this.http.get(path.split('?').join('download?') + 'download' + char + 'download=' + file).toPromise();
+    else await this.http.post(path.split('?').join('download?') + char + 'download=' + file, []).toPromise();
   }
   
   parse(request: any): any {
