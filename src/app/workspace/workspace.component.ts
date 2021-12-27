@@ -39,6 +39,18 @@ export class WorkspaceComponent implements OnInit {
     this.path = path;
   }
 
+  async postDirectory(event: any): Promise <void> {
+    const directoryName = event.path[1][0].value;
+    if (directoryName) {
+      await this.request.postDirectory(this.getPath(), directoryName);
+    }
+    this.getContent(this.getPath());
+  }
+
+  async getFile(file: string): Promise <void> {
+    await this.request.getFile(this.getPath(), file);
+  }
+
   async postFile(event: any): Promise <void> {
     if (event.path[1][0].files.length > 0) {
       const fileList: FileList = event.path[1][0].files;
@@ -48,13 +60,15 @@ export class WorkspaceComponent implements OnInit {
       formData.append('file', file, file.name);
       headers.append('Content-Type', 'multipart/form-data');
       headers.append('Accept', 'application/json');
-      const options = { headers: headers };
+      const options = { 
+        headers: headers 
+      };
       await this.request.postFile(formData, options, this.getPath())
     }
     this.getContent(this.getPath());
   }
 
-  getBack(): void {
+  goBack(): void {
     if (this.getPath().includes('?path=')){
       if (this.getPath().substring(0, this.getPath().lastIndexOf('/')) === 'http://localhost:3001'){
         this.setPath(this.getPath().substring(0, this.getPath().lastIndexOf('/')) + '/');
@@ -64,9 +78,14 @@ export class WorkspaceComponent implements OnInit {
       this.getContent(this.getPath());
     }
   }
-
+  
   async deleteFile(file: string): Promise <void> {
     await this.request.deleteFile(this.getPath(), file)
+    this.getContent(this.getPath());
+  }
+
+  async deleteFolder(folder: string): Promise <void> {
+    await this.request.deleteDirectory(this.getPath(), folder);
     this.getContent(this.getPath());
   }
 
