@@ -14,7 +14,10 @@
     <div *ngIf="content.files">
         <h4>Files</h4>
         <div *ngFor="let file of content.files">
-            <button (click)=getFile(file)>{{ file }}</button>
+            <form method="POST" action="{{ getPath() }}">
+                <input type="hidden" value="{{ file }}">
+                <button type="button" (click)="getFile(file)">{{ file }} | Descargar</button>
+            </form>
             <button (click)=deleteFile(file)>X</button>
         </div>
     </div>
