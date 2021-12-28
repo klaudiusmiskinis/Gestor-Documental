@@ -14,10 +14,8 @@
     <div *ngIf="content.files">
         <h4>Files</h4>
         <div *ngFor="let file of content.files">
-            <form method="POST" action="{{ getPath() }}">
-                <input type="hidden" value="{{ file }}">
-                <button type="button" (click)="getFile(file)">{{ file }} | Descargar</button>
-            </form>
+            <input type="hidden" value="{{ file }}">
+            <a href="{{getFile(file)}}">Descargar {{ file }}</a>
             <button (click)=deleteFile(file)>X</button>
         </div>
     </div>
@@ -27,7 +25,7 @@
     <form action="{{ getPath() }}" enctype="multipart/form-data">
         <label for="file">Subir archivo</label>
         <input type="file" name="file" id="file">
-        <button type="button" (click)="postFile($event)">Subir</button>
+        <button type="button" (click)="uploadFile($event)">Subir</button>
     </form>
 </div>
 
@@ -35,6 +33,6 @@
     <h4>Crear carpeta</h4>
     <form>
         <input type="text" name="directoryName" id="directoryName">
-        <button type="button" (click)="postDirectory($event)">Crear carpeta</button>
+        <button type="button" (click)="makeDirectory($event)">Crear carpeta</button>
     </form>
 </div>

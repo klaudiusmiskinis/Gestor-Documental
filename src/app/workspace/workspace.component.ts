@@ -40,19 +40,19 @@ export class WorkspaceComponent implements OnInit {
     this.path = path;
   }
 
-  async postDirectory(event: any): Promise <void> {
+  async makeDirectory(event: any): Promise <void> {
     const directoryName = event.path[1][0].value;
     if (directoryName) {
-      await this.request.postDirectory(this.getPath(), directoryName);
+      await this.request.makeDirectory(this.getPath(), directoryName);
     }
     this.getContent(this.getPath());
   }
 
-  async getFile(file: string): Promise <void> {
-    await this.request.getFile(this.getPath(), file);
+  getFile(file: string): string {
+    return this.request.getFile(this.getPath(), file);
   }
 
-  async postFile(event: any): Promise <void> {
+  async uploadFile(event: any): Promise <void> {
     if (event.path[1][0].files.length > 0) {
       const fileList: FileList = event.path[1][0].files;
       const file: File = fileList[0];
@@ -64,7 +64,7 @@ export class WorkspaceComponent implements OnInit {
       const options = { 
         headers: headers 
       };
-      await this.request.postFile(formData, options, this.getPath())
+      await this.request.uploadFile(formData, options, this.getPath())
     }
     this.getContent(this.getPath());
   }

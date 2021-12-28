@@ -13,7 +13,7 @@ export class RequestService {
   async getWorkspace(path: string): Promise <Object> {
     this.setContent(this.parse(await this.http.get(path).toPromise()));
     return this.getContent();
-  }
+  };
 
   async deleteFile(path: string, file: string): Promise <void> {
     let char = this.setParameterChar(path);
@@ -22,8 +22,8 @@ export class RequestService {
       this.setError('Ha habido un error eliminando el archivo.');
     } else {
       this.setContent(status);
-    }
-  }
+    };
+  };
   
   async deleteDirectory(path: string, folder: string): Promise <void> {
     let char = this.setParameterChar(path);
@@ -32,44 +32,47 @@ export class RequestService {
       this.setError('Ha habido un error eliminando el archivo.');
     } else {
       this.setContent(status);
-    }
-  }
+    };
+  };
 
-  async postDirectory(path: string, directoryName: string): Promise <void> {
+  async makeDirectory(path: string, directoryName: string): Promise <void> {
     let char = this.setParameterChar(path);
     const status = this.parse(await this.http.post(path +  char + 'folder=' + directoryName, []).toPromise());
     if (!status.success) {
       this.setError('Error con la creación de la carpeta');
     } else {
       this.setContent(status);
-    }
-  }
+    };
+  };
 
-  async postFile(formData: FormData, options: Object, path: string): Promise <void>  {
+  async uploadFile(formData: FormData, options: Object, path: string): Promise <void> {
     const status = this.parse(await this.http.post(path, formData, options).toPromise());
     if (!status.success) {
       this.setError('Error con la subida del archivo');
     } else {
       this.setContent(status);
-    }
-  }
+    };
+  };
 
-  async getFile(path: string, file: string): Promise <void> {
+  getFile(path: string, file: string): string {
     let char = this.setParameterChar(path);
-    if (path == 'http://localhost:3001/') await this.http.get(path.split('?').join('download?') + 'download' + char + 'download=' + file).toPromise();
-    else await this.http.post(path.split('?').join('download?') + char + 'download=' + file, []).toPromise();
-  }
+    if (path == 'http://localhost:3001/') {
+      return path.split('?').join('download?') + 'download' + char + 'download=' + file;
+    } else {
+      return path.split('?').join('download?') + char + 'download=' + file;
+    }
+  };
   
   parse(request: any): any {
     return JSON.parse(JSON.stringify(request));
-  }
+  };
 
   setParameterChar(path: string): string {
     if (path.includes('?')) {
       return '&' as string;
     } else {
       return '?' as string;
-    }
+    };
   };
 
   getContent(): Object {
