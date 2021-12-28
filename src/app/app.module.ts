@@ -8,19 +8,27 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ButtonModule } from "primeng/button";
 import { InputTextModule } from "primeng/inputtext";
+import { CardModule } from 'primeng/card';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { PanelMenuModule } from 'primeng/panelmenu';
+import { PosicionComponent } from './posicion/posicion.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    WorkspaceComponent
+    WorkspaceComponent,
+    PosicionComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    BreadcrumbModule,
+    PanelMenuModule,
     ButtonModule,
     InputTextModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    CardModule
   ],
   providers: [{provide: APP_BASE_HREF, useValue: '/' }],
   bootstrap: [AppComponent]
