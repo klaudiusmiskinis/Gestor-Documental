@@ -19,48 +19,48 @@ export class WorkspaceComponent implements OnInit {
   constructor(private request: RequestService) { 
     this.path = 'http://localhost:3001/';
     this.position = this.path;
-  }
+  };
 
   /* Methods */
   ngOnInit(): void {
     this.getContent(this.getPath());
-  }
+  };
 
   getItems(): MenuItem[]{
-    return this.items
-  }
+    return this.items;
+  };
 
   setItems(items: MenuItem[]): void {
     this.items = items;
-  }
+  };
 
   getPosition(): string {
     return this.position;
-  }
+  };
 
   setPosition(position: string): void {
     this.position = position;
-  }
+  };
 
   getPath(): string {
     return this.path;
-  }
+  };
 
   setPath(path: string): void {
     this.path = path;
-  }
+  };
 
   async makeDirectory(event: any): Promise <void> {
     const directoryName = event.path[1][0].value;
     if (directoryName) {
       await this.request.makeDirectory(this.getPath(), directoryName);
-    }
+    };
     this.getContent(this.getPath());
-  }
+  };
 
   getFile(file: string): string {
     return this.request.getFile(this.getPath(), file);
-  }
+  };
 
   async uploadFile(event: any): Promise <void> {
     if (event.path[1][0].files.length > 0) {
@@ -75,9 +75,9 @@ export class WorkspaceComponent implements OnInit {
         headers: headers 
       };
       await this.request.uploadFile(formData, options, this.getPath())
-    }
+    };
     this.getContent(this.getPath());
-  }
+  };
 
   goBack(): void {
     if (this.getPath().includes('?path=')) {
@@ -87,30 +87,30 @@ export class WorkspaceComponent implements OnInit {
         this.setPath(this.getPath().substring(0, this.getPath().lastIndexOf('/')));
       }
       this.getContent(this.getPath());
-    }
-  }
+    };
+  };
 
   async deleteFile(file: string): Promise <void> {
-    await this.request.deleteFile(this.getPath(), file)
+    await this.request.deleteFile(this.getPath(), file);
     this.getContent(this.getPath());
-  }
+  };
 
   async deleteFolder(folder: string): Promise <void> {
     await this.request.deleteDirectory(this.getPath(), folder);
     this.getContent(this.getPath());
-  }
+  };
 
   async selectedFolder(foldername: string): Promise <void> {
     if (this.getPath().includes('?path')) {
-      this.setPath(this.getPath() + '/' + foldername)
+      this.setPath(this.getPath() + '/' + foldername);
     } else {
-      this.setPath(this.getPath() + '?path=' + foldername)
+      this.setPath(this.getPath() + '?path=' + foldername);
     }
-    this.getContent(this.getPath())
-  }
+    this.getContent(this.getPath());
+  };
 
   async getContent(path: string): Promise <void> {
     this.content = await this.request.getWorkspace(path);
-  }
+  };
 
 }
