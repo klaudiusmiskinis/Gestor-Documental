@@ -1,6 +1,10 @@
+<posicion [path]="getPath()"></posicion>
+
 <div *ngIf="getPath().includes('?path=')">
     <button (click)=goBack()>Volver</button>
 </div>
+
+<p-panelMenu></p-panelMenu>
 
 <div *ngIf="content">
     <h4>Dirs</h4>
