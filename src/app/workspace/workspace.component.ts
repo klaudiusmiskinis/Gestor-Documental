@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
 import { RequestService } from '../services/request.service';
+import { Component, OnInit } from '@angular/core';
+import { MenuItem } from 'primeng/api';
+
 
 @Component({
   selector: 'app-workspace',
@@ -11,6 +13,7 @@ export class WorkspaceComponent implements OnInit {
   public content: any;
   private position: string;
   private path: string;
+  private items: MenuItem[];
 
   /* Constructor */
   constructor(private request: RequestService) { 
@@ -21,6 +24,14 @@ export class WorkspaceComponent implements OnInit {
   /* Methods */
   ngOnInit(): void {
     this.getContent(this.getPath());
+  }
+
+  getItems(): MenuItem[]{
+    return this.items
+  }
+
+  setItems(items: MenuItem[]): void {
+    this.items = items;
   }
 
   getPosition(): string {
@@ -69,8 +80,8 @@ export class WorkspaceComponent implements OnInit {
   }
 
   goBack(): void {
-    if (this.getPath().includes('?path=')){
-      if (this.getPath().substring(0, this.getPath().lastIndexOf('/')) === 'http://localhost:3001'){
+    if (this.getPath().includes('?path=')) {
+      if (this.getPath().substring(0, this.getPath().lastIndexOf('/')) === 'http://localhost:3001') {
         this.setPath(this.getPath().substring(0, this.getPath().lastIndexOf('/')) + '/');
       } else {
         this.setPath(this.getPath().substring(0, this.getPath().lastIndexOf('/')));
