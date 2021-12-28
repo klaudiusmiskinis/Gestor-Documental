@@ -4,7 +4,15 @@
     <button (click)=goBack()>Volver</button>
 </div>
 
-<p-panelMenu></p-panelMenu>
+<div *ngIf="content">
+    <p-orderList [value]="content.folders" header="List of Products" filterBy="folder" filterPlaceholder="Filter by folder" [dragdrop]="true">
+        <ng-template let-folder pTemplate="folder">
+            <div class="p-d-flex"><button pButton pRipple type="button" class="p-button-rounded p-button-secondary p-mr-3"><i class="pi pi-folder-open"></i></button>{{folder}}</div>
+            
+        </ng-template>
+    </p-orderList>
+</div>
+
 
 <div *ngIf="content">
     <h4>Dirs</h4>

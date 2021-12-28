@@ -10,6 +10,7 @@ import { ButtonModule } from "primeng/button";
 import { InputTextModule } from "primeng/inputtext";
 import { CardModule } from 'primeng/card';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { OrderListModule } from 'primeng/orderlist';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { PosicionComponent } from './posicion/posicion.component';
 
@@ -28,6 +29,7 @@ import { PosicionComponent } from './posicion/posicion.component';
     InputTextModule,
     AppRoutingModule,
     HttpClientModule,
+    OrderListModule,
     CardModule
   ],
   providers: [{provide: APP_BASE_HREF, useValue: '/' }],
