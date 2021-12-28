@@ -5,6 +5,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { WorkspaceComponent } from './workspace/workspace.component';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ButtonModule } from "primeng/button";
+import { InputTextModule } from "primeng/inputtext";
 
 @NgModule({
   declarations: [
@@ -13,6 +16,9 @@ import { HttpClientModule } from '@angular/common/http';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
+    ButtonModule,
+    InputTextModule,
     AppRoutingModule,
     HttpClientModule
   ],
