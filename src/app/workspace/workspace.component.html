@@ -1,16 +1,10 @@
-<posicion [path]="getPath()"></posicion>
 
 <div *ngIf="getPath().includes('?path=')">
     <button (click)=goBack()>Volver</button>
 </div>
 
 <div *ngIf="content">
-    <p-orderList [value]="content.folders" header="List of Products" filterBy="folder" filterPlaceholder="Filter by folder" [dragdrop]="true">
-        <ng-template let-folder pTemplate="folder">
-            <div class="p-d-flex"><button pButton pRipple type="button" class="p-button-rounded p-button-secondary p-mr-3"><i class="pi pi-folder-open"></i></button>{{folder}}</div>
-            
-        </ng-template>
-    </p-orderList>
+   
 </div>
 
 

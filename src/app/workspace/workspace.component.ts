@@ -1,7 +1,5 @@
 import { RequestService } from '../services/request.service';
 import { Component, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
-
 
 @Component({
   selector: 'app-workspace',
@@ -13,7 +11,6 @@ export class WorkspaceComponent implements OnInit {
   public content: any;
   private position: string;
   private path: string;
-  private items: MenuItem[];
 
   /* Constructor */
   constructor(private request: RequestService) { 
@@ -23,42 +20,8 @@ export class WorkspaceComponent implements OnInit {
 
   /* Methods */
   async ngOnInit(): Promise <void> {
-    const itemsContent = [];
     await this.getContent(this.getPath());
-    for (let attr in this.content) {
-      if (attr === 'folders') {
-        this.content[attr].forEach(folder => {
-          [{
-            label: folder,
-            icon: 'pi pi-folder'
-          }]
-        });
-      } 
-    }
-    this.setItems([{
-      label: 'Directorios',
-      icon:'pi pi-fw pi-folder',
-      items: [
-          {
-              label: 'New',
-              icon:'pi pi-fw pi-plus',
-          }
-      ]
-      }])
-      console.log(this.getItems())
   };
-
-  getItems(): MenuItem[]{
-    return this.items;
-  };
-
-  setItems(items: MenuItem[]): void {
-    this.items = items;
-  };
-
-  addItem(item: MenuItem): void {
-    this.items.push(item)
-  }
 
   getPosition(): string {
     return this.position;
