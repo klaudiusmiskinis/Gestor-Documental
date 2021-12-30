@@ -1,5 +1,6 @@
 import { RequestService } from '../services/request.service';
 import { Component, OnInit } from '@angular/core';
+import { moveItemInArray, CdkDragDrop } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-workspace',
@@ -90,16 +91,20 @@ export class WorkspaceComponent implements OnInit {
   };
 
   async selectedFolder(foldername: string): Promise <void> {
-    if (this.getPath().includes('?path')) {
-      this.setPath(this.getPath() + '/' + foldername);
-    } else {
-      this.setPath(this.getPath() + '?path=' + foldername);
-    }
-    this.getContent(this.getPath());
+      if (this.getPath().includes('?path')) {
+        this.setPath(this.getPath() + '/' + foldername);
+      } else {
+        this.setPath(this.getPath() + '?path=' + foldername);
+      }
+      this.getContent(this.getPath());
   };
 
   async getContent(path: string): Promise <void> {
     this.content = await this.request.getWorkspace(path);
   };
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.content.folders, event.previousIndex, event.currentIndex);
+  }
 
 }
