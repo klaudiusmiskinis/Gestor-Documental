@@ -1,5 +1,39 @@
 
-<div *ngIf="getPath().includes('?path=')">
+<div class="container-fluid g-0">
+
+    <div class="row bg-danger text-light g-0 p-0 m-0">
+        <div class="col text-start ms-2">Home</div>
+        <div class="col text-center">{{ getPath() }}</div>
+        <div class="col text-end me-2">Session</div>
+    </div>
+
+    <div *ngIf="content">
+        <div class="card m-1">
+            <ul class="list-group list-group-flush">
+            <li class="list-group-item bg-danger text-light">Directorios</li>
+            <div cdkDropList (cdkDropListDropped)="drop($event)">
+                <mat-accordion class="list-group-item" *ngFor="let folder of content.folders" cdkDrag>
+                    <div class="list-group-item-placeholder" *cdkDragPlaceholder></div>
+                        <mat-expansion-panel hideToggle class="m-0 p-0">
+                            <mat-expansion-panel-header class="m-0 p-0">
+                            <h5>{{ folder }}</h5>
+                            </mat-expansion-panel-header>
+                                <div class="d-flex justify-content-start gap-2">
+                                    <button class="btn btn-sm btn-dark" (click)="selectedFolder(folder)">
+                                        <i class="bi bi-folder-symlink-fill"></i>
+                                    </button>
+                                    <button class="btn btn-danger" (click)=deleteFolder(folder)><i class="bi bi-trash-fill"></i></button>
+                                </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                </div>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<div *ngIf="getPath().includes('?path=')" class="mt-5">
     <button (click)=goBack()>Volver</button>
 </div>
 
@@ -8,13 +42,6 @@
 </div>
 
 <div *ngIf="content">
-    <h4>Dirs</h4>
-    <div *ngIf="content.folders">
-        <div *ngFor="let folder of content.folders">
-            <button (click)=selectedFolder(folder)>{{ folder }}</button>
-            <button (click)=deleteFolder(folder)>X</button>
-        </div>
-    </div>
 
     <div *ngIf="content.files">
         <h4>Files</h4>
@@ -38,6 +65,11 @@
     <h4>Crear carpeta</h4>
     <form>
         <input type="text" name="directoryName" id="directoryName">
-        <button type="button" (click)="makeDirectory($event)">Crear carpeta</button>
+        <button type="button" class="is-danger" (click)="makeDirectory($event)">Crear carpeta</button>
     </form>
 </div>
+
+<div class="container-fluid is-danger">
+    
+</div>
+
