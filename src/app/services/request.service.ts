@@ -79,7 +79,7 @@ export class RequestService {
     return this.content;
   };
 
-  setContent(content: any): void {
+  setContent(content: Object): void {
     this.content = content;
   };
 
