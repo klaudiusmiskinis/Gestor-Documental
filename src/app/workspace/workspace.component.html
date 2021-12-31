@@ -7,51 +7,104 @@
         <div class="col text-end me-2">Session</div>
     </div>
 
-    <div *ngIf="content">
-        <div class="card m-1">
-            <ul class="list-group list-group-flush">
-            <li class="list-group-item bg-danger text-light">Directorios</li>
-            <div cdkDropList (cdkDropListDropped)="drop($event)">
-                <mat-accordion class="list-group-item" *ngFor="let folder of content.folders" cdkDrag>
-                    <div class="list-group-item-placeholder" *cdkDragPlaceholder></div>
-                        <mat-expansion-panel hideToggle class="m-0 p-0">
-                            <mat-expansion-panel-header class="m-0 p-0">
-                            <h5>{{ folder }}</h5>
-                            </mat-expansion-panel-header>
-                                <div class="d-flex justify-content-start gap-2">
-                                    <button class="btn btn-sm btn-dark" (click)="selectedFolder(folder)">
-                                        <i class="bi bi-folder-symlink-fill"></i>
-                                    </button>
-                                    <button class="btn btn-danger" (click)=deleteFolder(folder)><i class="bi bi-trash-fill"></i></button>
-                                </div>
-                        </mat-expansion-panel>
-                    </mat-accordion>
+    <div class="row gap-2">
+        <div class="col-auto mt-2" *ngIf="getPath().includes('?path=')">
+            <button class="btn btn-sm btn-dark mx-1" (click)=goBack()>Volver</button>
+        </div>
+    </div>
+
+
+    <div *ngIf="content" class="container-fluid border border-danger">
+        <p>Zona de trabajo</p>
+        
+        <mat-accordion class="card border border-danger m-1">
+            <mat-expansion-panel class="m-0 p-0" hideToggle>
+                <mat-expansion-panel-header class="m-0 p-1">
+                    <h5>Directorios</h5>
+                </mat-expansion-panel-header>
+                <div *ngFor="let folder of content.folders; let i = index" cdkDropList (cdkDropListDropped)="drop($event)">
+                    <div *ngIf="i % 3 == 0" class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <div class="d-grid col m-1" cdkDrag>
+                            <div class="card">
+                                {{ folder }}
+                            </div>
+                        </div>
+                        <div class="d-grid col m-1" *ngIf="i + 1 < content.folders.length" cdkDrag>
+                            <div class="card">
+                                {{ content.folders[i + 1] }}
+                            </div>
+                        </div>
+                        <div class="d-grid col m-1" *ngIf="i + 2 < content.folders.length" cdkDrag>
+                            <div class="card">
+                                {{ content.folders[i + 2] }}
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </ul>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+    <!-- <div *ngIf="content">
+        <div class="row">
+            <div *ngIf="content.folders.length > 0" class="col col-sm col-md col-lg col-xl">
+                <mat-accordion class="card border border-danger m-1">
+                    <mat-expansion-panel class="m-0 p-0" hideToggle>
+                        <mat-expansion-panel-header class="m-0 p-1">
+                            <h5>Directorios</h5>
+                        </mat-expansion-panel-header>
+                        <div cdkDropList (cdkDropListDropped)="drop($event)">
+                            <mat-accordion class="card m-0 p-0 m-1" *ngFor="let folder of content.folders" cdkDrag>
+                                <div class="list-group-item-placeholder" *cdkDragPlaceholder></div>
+                                    <mat-expansion-panel hideToggle class="m-1 p-0">
+                                        <mat-expansion-panel-header class="m-0 p-0">
+                                        <h5>{{ folder }}</h5>
+                                        </mat-expansion-panel-header>
+                                            <div class="d-flex justify-content-start gap-2">
+                                                <button class="btn btn-sm btn-dark" (click)="selectedFolder(folder)">
+                                                    <i class="bi bi-folder-symlink-fill"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-danger" (click)=deleteFolder(folder)>
+                                                    <i class="bi bi-trash-fill"></i>
+                                                </button>
+                                            </div>
+                                    </mat-expansion-panel>
+                                </mat-accordion>
+                            </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+
+            <div *ngIf="content.files.length > 0"  class="col col-sm col-md col-lg col-xl">
+                <mat-accordion class="card border border-danger m-1">
+                    <mat-expansion-panel class="m-0 p-0" hideToggle>
+                        <mat-expansion-panel-header class="m-0 p-1">
+                            <h5>Archivos</h5>
+                        </mat-expansion-panel-header>
+                        <div cdkDropList (cdkDropListDropped)="drop($event)">
+                            <mat-accordion class="card m-0 p-0 m-1" *ngFor="let file of content.files" cdkDrag>
+                                <div class="list-group-item-placeholder" *cdkDragPlaceholder></div>
+                                    <mat-expansion-panel hideToggle class="m-1 p-0">
+                                        <mat-expansion-panel-header class="m-0 p-0">
+                                        <h5>{{ file }}</h5>
+                                        </mat-expansion-panel-header>
+                                            <div class="d-flex justify-content-start gap-2">
+                                                <a class="btn btn-sm btn-dark" href="{{getFile(file)}}">
+                                                    <i class="bi bi-download"></i>
+                                                </a>
+                                                <button class="btn btn-sm btn-danger" (click)=deleteFile(file)>
+                                                    <i class="bi bi-trash-fill"></i>
+                                                </button>
+                                            </div>
+                                    </mat-expansion-panel>
+                                </mat-accordion>
+                            </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
         </div>
     </div>
-</div>
+</div> -->
 
-
-<div *ngIf="getPath().includes('?path=')" class="mt-5">
-    <button (click)=goBack()>Volver</button>
-</div>
-
-<div *ngIf="content">
-   
-</div>
-
-<div *ngIf="content">
-
-    <div *ngIf="content.files">
-        <h4>Files</h4>
-        <div *ngFor="let file of content.files">
-            <input type="hidden" value="{{ file }}">
-            <a href="{{getFile(file)}}">Descargar {{ file }}</a>
-            <button (click)=deleteFile(file)>X</button>
-        </div>
-    </div>
-</div>
 
 <div style="margin-top: 2rem;">
     <form action="{{ getPath() }}" enctype="multipart/form-data">
@@ -68,8 +121,3 @@
         <button type="button" class="is-danger" (click)="makeDirectory($event)">Crear carpeta</button>
     </form>
 </div>
-
-<div class="container-fluid is-danger">
-    
-</div>
-
