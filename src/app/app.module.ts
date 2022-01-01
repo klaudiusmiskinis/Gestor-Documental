@@ -11,14 +11,12 @@ import { HttpClientModule } from '@angular/common/http';
 
 /* NG-Material */
 import { MatExpansionModule } from '@angular/material/expansion';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatCardModule } from '@angular/material/card';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatTabsModule } from '@angular/material/tabs';
 
 /* NG-cdk */
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
+/* NGX-Bootstrap */
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 @NgModule({
   declarations: [
@@ -32,12 +30,11 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     HttpClientModule,
     BrowserModule,
 
+    /* NGX-Bootstrap */
+    BsDropdownModule.forRoot(),
+
     /* NG-Material */
     MatExpansionModule,
-    MatSidenavModule,
-    MatCardModule,
-    MatMenuModule,
-    MatTabsModule,
 
     /* NG-cdk */
     DragDropModule
