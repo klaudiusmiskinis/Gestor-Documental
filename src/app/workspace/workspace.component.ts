@@ -1,10 +1,11 @@
 import { RequestService } from '../services/request.service';
 import { Component, OnInit } from '@angular/core';
-import { moveItemInArray, CdkDragDrop } from '@angular/cdk/drag-drop';
+import { BsDropdownConfig } from 'ngx-bootstrap/dropdown';
 
 @Component({
   selector: 'app-workspace',
-  templateUrl: './workspace.component.html'
+  templateUrl: './workspace.component.html',
+  providers: [{ provide: BsDropdownConfig, useValue: { isAnimated: true, autoClose: true } }]
 })
 
 export class WorkspaceComponent implements OnInit {
@@ -102,9 +103,5 @@ export class WorkspaceComponent implements OnInit {
   async getContent(path: string): Promise <void> {
     this.content = await this.request.getWorkspace(path);
   };
-
-  drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.content.folders, event.previousIndex, event.currentIndex);
-  }
 
 }

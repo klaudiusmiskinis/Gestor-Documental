@@ -15,27 +15,26 @@
 
 
     <div *ngIf="content" class="container-fluid border border-danger">
-        <p>Zona de trabajo</p>
         
         <mat-accordion class="card border border-danger m-1">
             <mat-expansion-panel class="m-0 p-0" hideToggle>
                 <mat-expansion-panel-header class="m-0 p-1">
-                    <h5>Directorios</h5>
+                    <div>Directorios</div>
                 </mat-expansion-panel-header>
-                <div *ngFor="let folder of content.folders; let i = index" cdkDropList (cdkDropListDropped)="drop($event)">
-                    <div *ngIf="i % 3 == 0" class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <div class="d-grid col m-1" cdkDrag>
-                            <div class="card">
+                <div *ngFor="let folder of content.folders; let i = index">
+                    <div *ngIf="i % 3 == 0" class="d-grid d-xl-flex justify-content-xl-end">
+                        <div class="d-grid col text-truncate m-1">
+                            <div class="card card-body border border-danger">
                                 {{ folder }}
                             </div>
                         </div>
-                        <div class="d-grid col m-1" *ngIf="i + 1 < content.folders.length" cdkDrag>
-                            <div class="card">
+                        <div class="d-grid col text-truncate m-1" *ngIf="i + 1 < content.folders.length">
+                            <div class="card card-body border border-danger">
                                 {{ content.folders[i + 1] }}
                             </div>
                         </div>
-                        <div class="d-grid col m-1" *ngIf="i + 2 < content.folders.length" cdkDrag>
-                            <div class="card">
+                        <div class="d-grid col text-truncate m-1" *ngIf="i + 2 < content.folders.length">
+                            <div class="card card-body border border-danger">
                                 {{ content.folders[i + 2] }}
                             </div>
                         </div>
@@ -43,81 +42,100 @@
                 </div>
             </mat-expansion-panel>
         </mat-accordion>
-    </div>
-    <!-- <div *ngIf="content">
-        <div class="row">
-            <div *ngIf="content.folders.length > 0" class="col col-sm col-md col-lg col-xl">
-                <mat-accordion class="card border border-danger m-1">
-                    <mat-expansion-panel class="m-0 p-0" hideToggle>
-                        <mat-expansion-panel-header class="m-0 p-1">
-                            <h5>Directorios</h5>
-                        </mat-expansion-panel-header>
-                        <div cdkDropList (cdkDropListDropped)="drop($event)">
-                            <mat-accordion class="card m-0 p-0 m-1" *ngFor="let folder of content.folders" cdkDrag>
-                                <div class="list-group-item-placeholder" *cdkDragPlaceholder></div>
-                                    <mat-expansion-panel hideToggle class="m-1 p-0">
-                                        <mat-expansion-panel-header class="m-0 p-0">
-                                        <h5>{{ folder }}</h5>
-                                        </mat-expansion-panel-header>
-                                            <div class="d-flex justify-content-start gap-2">
-                                                <button class="btn btn-sm btn-dark" (click)="selectedFolder(folder)">
-                                                    <i class="bi bi-folder-symlink-fill"></i>
-                                                </button>
-                                                <button class="btn btn-sm btn-danger" (click)=deleteFolder(folder)>
-                                                    <i class="bi bi-trash-fill"></i>
-                                                </button>
-                                            </div>
-                                    </mat-expansion-panel>
-                                </mat-accordion>
-                            </div>
-                    </mat-expansion-panel>
-                </mat-accordion>
-            </div>
 
-            <div *ngIf="content.files.length > 0"  class="col col-sm col-md col-lg col-xl">
-                <mat-accordion class="card border border-danger m-1">
-                    <mat-expansion-panel class="m-0 p-0" hideToggle>
-                        <mat-expansion-panel-header class="m-0 p-1">
-                            <h5>Archivos</h5>
-                        </mat-expansion-panel-header>
-                        <div cdkDropList (cdkDropListDropped)="drop($event)">
-                            <mat-accordion class="card m-0 p-0 m-1" *ngFor="let file of content.files" cdkDrag>
-                                <div class="list-group-item-placeholder" *cdkDragPlaceholder></div>
-                                    <mat-expansion-panel hideToggle class="m-1 p-0">
-                                        <mat-expansion-panel-header class="m-0 p-0">
-                                        <h5>{{ file }}</h5>
-                                        </mat-expansion-panel-header>
-                                            <div class="d-flex justify-content-start gap-2">
-                                                <a class="btn btn-sm btn-dark" href="{{getFile(file)}}">
-                                                    <i class="bi bi-download"></i>
-                                                </a>
-                                                <button class="btn btn-sm btn-danger" (click)=deleteFile(file)>
-                                                    <i class="bi bi-trash-fill"></i>
-                                                </button>
-                                            </div>
-                                    </mat-expansion-panel>
-                                </mat-accordion>
+        <mat-accordion class="card border border-danger m-1">
+            <mat-expansion-panel class="m-0 p-0" hideToggle>
+                <mat-expansion-panel-header class="m-0 p-1">
+                    <div>Archivos</div>
+                </mat-expansion-panel-header>
+                <div *ngFor="let file of content.files; let i = index">
+
+                    <div *ngIf="i % 3 == 0" class="d-grid d-xl-flex justify-content-xl-end">
+
+                        <div class="d-grid col text-truncate m-1">
+                            <div class="d-grid col text-truncate m-1">
+                                <div class="d-flex align-content-center border border-danger">
+                                    <div class="w-100 bd-highlight">
+                                        {{ file }}
+                                    </div>
+                                    <div>
+                                        <div class="btn-group" dropdown>
+                                            <button id="button-basic" dropdownToggle type="button" class="btn btn-sm btn-danger" aria-controls="dropdown-basic">
+                                                    <i class="bi bi-three-dots-vertical"></i>
+                                            </button>
+                                            <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
+                                                role="menu" aria-labelledby="button-basic">
+                                            <li role="menuitem"><a class="dropdown-item" href="#">{{ file }}</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                    </mat-expansion-panel>
-                </mat-accordion>
-            </div>
+                        </div>
+                        
+                        <div class="d-grid col text-truncate m-1" *ngIf="i + 1 < content.files.length">
+                            <div class="d-grid col text-truncate m-1">
+                                <div class="d-flex align-content-center border border-danger">
+                                    <div class="w-100 bd-highlight">
+                                        {{ content.files[i + 1] }}
+                                    </div>
+                                    <div>
+                                        <div class="btn-group" dropdown>
+                                            <button id="button-basic" dropdownToggle type="button" class="btn btn-sm btn-danger" aria-controls="dropdown-basic">
+                                                    <i class="bi bi-three-dots-vertical"></i>
+                                            </button>
+                                            <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
+                                                role="menu" aria-labelledby="button-basic">
+                                            <li role="menuitem"><a class="dropdown-item" href="#">{{ content.files[i + 1] }}</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-grid col text-truncate m-1" *ngIf="i + 2 < content.files.length">
+                            <div class="d-grid col text-truncate m-1">
+                                <div class="d-flex align-content-center border border-danger">
+                                    <div class="w-100 bd-highlight">
+                                        {{ content.files[i + 2] }}
+                                    </div>
+                                    <div>
+                                        <div class="btn-group" dropdown>
+                                            <button id="button-basic" dropdownToggle type="button" class="btn btn-sm btn-danger" aria-controls="dropdown-basic">
+                                                    <i class="bi bi-three-dots-vertical"></i>
+                                            </button>
+                                            <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
+                                                role="menu" aria-labelledby="button-basic">
+                                            <li role="menuitem"><a class="dropdown-item" href="#">{{ content.files[i + 2] }}</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+
+    <div style="margin-top: 2rem;">
+        <form action="{{ getPath() }}" enctype="multipart/form-data">
+            <label for="file">Subir archivo</label>
+            <input type="file" name="file" id="file">
+            <button type="button" (click)="uploadFile($event)">Subir</button>
+        </form>
+    </div>
+
+    <div>
+        <h4>Crear carpeta</h4>
+        <div>
+            <input type="text" name="directoryName" id="directoryName">
+            <button type="button" class="is-danger" (click)="makeDirectory($event)">Crear carpeta</button>
         </div>
     </div>
-</div> -->
 
-
-<div style="margin-top: 2rem;">
-    <form action="{{ getPath() }}" enctype="multipart/form-data">
-        <label for="file">Subir archivo</label>
-        <input type="file" name="file" id="file">
-        <button type="button" (click)="uploadFile($event)">Subir</button>
-    </form>
-</div>
-
-<div>
-    <h4>Crear carpeta</h4>
-    <form>
-        <input type="text" name="directoryName" id="directoryName">
-        <button type="button" class="is-danger" (click)="makeDirectory($event)">Crear carpeta</button>
-    </form>
 </div>
