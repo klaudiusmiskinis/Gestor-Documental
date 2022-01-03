@@ -140,7 +140,7 @@
 
                         <div class="d-grid col text-truncate m-1">
                             <div class="d-grid col text-truncate m-1">
-                                <div class="d-flex border border-danger">
+                                <div class="d-flex">
                                     <div class="w-100 bd-highlight">
                                         {{ file }}
                                     </div>
@@ -148,45 +148,41 @@
                             </div>
                         </div>
                         
-                        <div class="d-grid col text-truncate m-1" *ngIf="i + 1 < content.files.length">
-                            <div class="d-grid col text-truncate m-1">
-                                <div class="d-flex border border-danger">
-                                    <div class="w-100 bd-highlight">
-                                        {{ content.files[i + 1] }}
-                                    </div>
-                                    <div>
-                                        <div class="btn-group" dropdown>
-                                            <button id="button-basic" dropdownToggle type="button" class="btn btn-sm btn-danger" aria-controls="dropdown-basic">
-                                                    <i class="bi bi-three-dots-vertical"></i>
-                                            </button>
-                                            <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
-                                                role="menu" aria-labelledby="button-basic">
-                                            <li role="menuitem"><a class="dropdown-item" href="#">{{ content.files[i + 1] }}</a></li>
-                                            <li role="menuitem"><p class="dropdown-item">{{ content.files[i + 1] }}</p></li>
-                                            </ul>
+                        <div class="d-grid col text-truncate m-1" *ngIf="i + 2 < content.files.length">
+                            <accordion [isAnimated]="true" class="text-truncate">
+                                <accordion-group>
+                                    <div class="badge bg-secondary pull-left float-left mb-2"><i class="bi bi-gear-fill me-2"></i>Opciones</div>
+                                    <button
+                                        class="btn justify-content-between d-flex w-100 shadow-none"
+                                        accordion-heading type="button">
+                                        <div class="text-danger pull-left float-left">{{content.files[i + 2]}}</div>
+                                        <a class="text-danger" href="{{getFile(content.files[i + 2])}}"><i class="bi bi-cloud-arrow-down-fill"></i></a>
+                                    </button>
+                                    <div class="row">
+                                        <div class="col d-grid">
+                                            <a href="{{getFile(content.files[i + 2])}}" class="btn btn-sm btn-outline-primary"><i class="bi bi-cloud-arrow-down-fill icon-size"></i></a>
+                                            <span class="badge bg-primary mt-1">Descargar</span>
+                                        </div>
+                                        <div class="col d-grid">
+                                            <button class="btn btn-sm btn-outline-success"><i class="bi bi-pencil-fill"></i></button>
+                                            <span class="badge bg-success mt-1">Editar</span>
+                                        </div>
+                                        <div class="col d-grid">
+                                            <button class="btn btn-sm btn-outline-danger" (click)="deleteFile(content.files[i + 2])"><i class="bi bi-trash-fill"></i></button>
+                                            <span class="badge bg-danger mt-1">Eliminar</span>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
+                                </accordion-group>
+                            </accordion>
                         </div>
 
                         <div class="d-grid col text-truncate m-1" *ngIf="i + 2 < content.files.length">
                             <div class="d-grid col text-truncate m-1">
-                                <div class="d-flex border border-danger">
+                                <div class="d-flex">
                                     <div class="w-100 bd-highlight">
                                         {{ content.files[i + 2] }}
                                     </div>
                                     <div>
-                                        <div class="btn-group" dropdown>
-                                            <button id="button-basic" dropdownToggle type="button" class="btn btn-sm btn-danger" aria-controls="dropdown-basic">
-                                                    <i class="bi bi-three-dots-vertical"></i>
-                                            </button>
-                                            <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
-                                                role="menu" aria-labelledby="button-basic">
-                                            <li role="menuitem"><a class="dropdown-item" href="#">{{ content.files[i + 2] }}</a></li>
-                                            <li role="menuitem"><p class="dropdown-item">{{ content.files[i + 2] }}</p></li>
-                                            </ul>
-                                        </div>
                                     </div>
                                 </div>
                             </div>

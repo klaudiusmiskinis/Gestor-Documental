@@ -32,10 +32,9 @@ const customNotifierOptions: NotifierOptions = {
 	},
   theme: 'material',
   behaviour: {
-    autoHide: 5000,
+    autoHide: 3000,
     onClick: 'hide',
     onMouseover: 'pauseAutoHide',
-    showDismissButton: true,
     stacking: 4
   },
   animations: {
@@ -46,7 +45,7 @@ const customNotifierOptions: NotifierOptions = {
       easing: 'ease'
     },
     hide: {
-      preset: 'fade',
+      preset: 'slide',
       speed: 300,
       easing: 'ease',
       offset: 50

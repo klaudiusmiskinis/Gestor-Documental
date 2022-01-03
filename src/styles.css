@@ -17,3 +17,11 @@
   color: var(--bs-danger) !important;
   text-decoration: none !important;
 }
+
+.notifier__notification-button {
+  display: none !important;
+}
+
+.icon-size {
+  font-size: 1.5rem !important;
+}
