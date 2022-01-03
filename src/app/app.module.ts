@@ -16,8 +16,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
 /* NGX-Bootstrap */
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-
+import { AccordionModule } from 'ngx-bootstrap/accordion';
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,7 +30,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
     BrowserModule,
 
     /* NGX-Bootstrap */
-    BsDropdownModule.forRoot(),
+    AccordionModule.forRoot(),
 
     /* NG-Material */
     MatExpansionModule,
