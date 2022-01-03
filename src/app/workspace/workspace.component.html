@@ -9,25 +9,25 @@
 
     <div class="row ms-1 g-0 gap-1">
         <div class="col-auto">
-            <div class="badge bg-secondary">Opciones</div>
+            <div class="badge bg-secondary" (click)="showNotification('error', 'Click en opciones')">Opciones</div>
         </div>
     </div>
 
     <div class="row my-1 ms-1 g-0 gap-1">
         <div class="col-auto d-grid" *ngIf="getPath().includes('?path=')">
-            <button class="btn btn-sm btn-outline-secondary" (click)=goBack()>Volver<i class="bi bi-arrow-left-short ms-1"></i></button>
+            <button class="btn btn-sm btn-outline-secondary shadow-sm" (click)=goBack()>Volver<i class="bi bi-arrow-left-short ms-1"></i></button>
         </div>
         <div class="col-auto d-grid">
-            <button class="btn btn-sm btn-outline-secondary">Actualizar<i class="bi bi-arrow-clockwise ms-1"></i></button>
+            <button class="btn btn-sm btn-outline-secondary shadow-sm" (click)="getContent(getPath())">Actualizar<i class="bi bi-arrow-clockwise ms-1"></i></button>
         </div>
         <div class="col-auto d-grid">
-            <button class="btn btn-sm btn-outline-secondary">Desplegar directorios<i class="bi bi-arrow-down-short ms-1"></i></button>
+            <button class="btn btn-sm btn-outline-secondary shadow-sm">Desplegar directorios<i class="bi bi-arrow-down-short ms-1"></i></button>
         </div>
         <div class="col-auto d-grid">
-            <button class="btn btn-sm btn-outline-secondary">Desplegar archivos<i class="bi bi-arrow-down-short ms-1"></i></button>
+            <button class="btn btn-sm btn-outline-secondary shadow-sm">Desplegar archivos<i class="bi bi-arrow-down-short ms-1"></i></button>
         </div>
         <div class="col-auto d-grid">
-            <button class="btn btn-sm btn-outline-secondary">Ver ultimas versiones<i class="bi bi-eye-fill ms-1"></i></button>
+            <button class="btn btn-sm btn-outline-secondary shadow-sm">Ver ultimas versiones<i class="bi bi-eye-fill ms-1"></i></button>
         </div>
     </div>
 
@@ -42,7 +42,7 @@
                     <div *ngIf="i % 3 == 0" class="d-grid d-xl-flex justify-content-xl-end">
 
                         <div class="d-grid col text-truncate m-1">
-                            <accordion [isAnimated]="true" class="text-truncate">
+                            <accordion [isAnimated]="true" class="text-truncate" (click)="showNotification('default', folder)">
                                 <accordion-group>
                                     <div class="badge bg-secondary pull-left float-left mb-2"><i class="bi bi-gear-fill me-2"></i>Opciones</div>
                                     <button
@@ -70,7 +70,7 @@
                         </div>
 
                         <div class="d-grid col text-truncate m-1" *ngIf="i + 1 < content.folders.length">
-                            <accordion [isAnimated]="true" class="text-truncate">
+                            <accordion [isAnimated]="true" class="text-truncate" (click)="showNotification('default', content.folders[i + 1])">
                                 <accordion-group>
                                     <div class="badge bg-secondary pull-left float-left mb-2"><i class="bi bi-gear-fill me-2"></i>Opciones</div>
                                     <button
@@ -98,7 +98,7 @@
                         </div>
 
                         <div class="d-grid col text-truncate m-1" *ngIf="i + 2 < content.folders.length">
-                            <accordion [isAnimated]="true" class="text-truncate">
+                            <accordion [isAnimated]="true" class="text-truncate" (click)="showNotification('default', content.folders[i + 2])">
                                 <accordion-group>
                                     <div class="badge bg-secondary pull-left float-left mb-2"><i class="bi bi-gear-fill me-2"></i>Opciones</div>
                                     <button
@@ -216,3 +216,4 @@
     </div>
 
 </div>
+<notifier-container></notifier-container>

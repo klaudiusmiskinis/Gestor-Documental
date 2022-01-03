@@ -2,6 +2,7 @@ import { RequestService } from '../services/request.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { BsDropdownConfig } from 'ngx-bootstrap/dropdown';
 import { MatAccordion } from '@angular/material/expansion';
+import { NotifierService } from 'angular-notifier';
 
 @Component({
   selector: 'app-workspace',
@@ -14,9 +15,11 @@ export class WorkspaceComponent implements OnInit {
   public content: any;
   private position: string;
   private path: string;
+  private notifier: NotifierService;
 
   /* Constructor */
-  constructor(private request: RequestService) { 
+  constructor(private request: RequestService, notifier: NotifierService) { 
+    this.notifier = notifier;
     this.path = 'http://localhost:3001/';
     this.position = this.path;
   };
@@ -35,6 +38,10 @@ export class WorkspaceComponent implements OnInit {
   setPosition(position: string): void {
     this.position = position;
   };
+
+  public showNotification( type: string, message: string ): void {
+		this.notifier.notify( type, message );
+	}
 
   getPath(): string {
     return this.path;
