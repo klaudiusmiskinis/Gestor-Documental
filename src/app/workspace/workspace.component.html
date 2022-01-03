@@ -7,68 +7,118 @@
         <div class="col text-end me-2">Session</div>
     </div>
 
-    <div class="row gap-2">
-        <div class="col-auto mt-2" *ngIf="getPath().includes('?path=')">
-            <button class="btn btn-sm btn-dark mx-1" (click)=goBack()>Volver</button>
+    <div class="row ms-1 g-0 gap-1">
+        <div class="col-auto">
+            <div class="badge bg-secondary">Opciones</div>
         </div>
     </div>
 
+    <div class="row my-1 ms-1 g-0 gap-1">
+        <div class="col-auto d-grid" *ngIf="getPath().includes('?path=')">
+            <button class="btn btn-sm btn-outline-secondary" (click)=goBack()>Volver<i class="bi bi-arrow-left-short ms-1"></i></button>
+        </div>
+        <div class="col-auto d-grid">
+            <button class="btn btn-sm btn-outline-secondary">Actualizar<i class="bi bi-arrow-clockwise ms-1"></i></button>
+        </div>
+        <div class="col-auto d-grid">
+            <button class="btn btn-sm btn-outline-secondary">Desplegar directorios<i class="bi bi-arrow-down-short ms-1"></i></button>
+        </div>
+        <div class="col-auto d-grid">
+            <button class="btn btn-sm btn-outline-secondary">Desplegar archivos<i class="bi bi-arrow-down-short ms-1"></i></button>
+        </div>
+        <div class="col-auto d-grid">
+            <button class="btn btn-sm btn-outline-secondary">Ver ultimas versiones<i class="bi bi-eye-fill ms-1"></i></button>
+        </div>
+    </div>
 
-    <div *ngIf="content" class="container-fluid border border-danger">
+    <div *ngIf="content" class="container-fluid">
         
-        <mat-accordion class="card border border-danger m-1">
-            <mat-expansion-panel class="m-0 p-0" hideToggle>
+        <mat-accordion class="card border-0 bg-transparent m-1" open>
+            <mat-expansion-panel class="m-0 p-0" hideToggle [expanded]="true">
                 <mat-expansion-panel-header class="m-0 p-1">
-                    <div>Directorios</div>
+                    <div class="p-2 card bg-light">Directorios</div>
                 </mat-expansion-panel-header>
                 <div *ngFor="let folder of content.folders; let i = index">
                     <div *ngIf="i % 3 == 0" class="d-grid d-xl-flex justify-content-xl-end">
+
                         <div class="d-grid col text-truncate m-1">
                             <accordion [isAnimated]="true" class="text-truncate">
-                                <accordion-group heading="{{ folder }}">
+                                <accordion-group>
+                                    <div class="badge bg-secondary pull-left float-left mb-2"><i class="bi bi-gear-fill me-2"></i>Opciones</div>
+                                    <button
+                                        class="btn justify-content-between d-flex w-100 shadow-none"
+                                        accordion-heading type="button">
+                                        <div class="text-danger pull-left float-left">{{folder}}</div>
+                                        <span class="badge btn-secondary float-right pull-right" (click)="selectedFolder(folder)"><i class="bi bi-folder-symlink-fill"></i></span>
+                                    </button>
                                     <div class="row">
                                         <div class="col d-grid">
-                                            <button class="btn btn-sm btn-outline-primary"><i class="bi bi-arrow-right-circle-fill me-2"></i></button>
+                                            <button class="btn btn-sm btn-outline-primary" (click)="selectedFolder(folder)"><i class="bi bi-arrow-right-circle-fill"></i></button>
+                                            <span class="badge bg-primary mt-1">Entrar</span>
                                         </div>
                                         <div class="col d-grid">
                                             <button class="btn btn-sm btn-outline-success"><i class="bi bi-pencil-fill"></i></button>
+                                            <span class="badge bg-success mt-1">Editar</span>
                                         </div>
                                         <div class="col d-grid">
-                                            <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash-fill"></i></button>
+                                            <button class="btn btn-sm btn-outline-danger" (click)="deleteFolder(folder)"><i class="bi bi-trash-fill"></i></button>
+                                            <span class="badge bg-danger mt-1">Eliminar</span>
                                         </div>
                                     </div>
                                 </accordion-group>
                             </accordion>
                         </div>
+
                         <div class="d-grid col text-truncate m-1" *ngIf="i + 1 < content.folders.length">
                             <accordion [isAnimated]="true" class="text-truncate">
-                                <accordion-group heading="{{ content.folders[i + 1] }}">
+                                <accordion-group>
+                                    <div class="badge bg-secondary pull-left float-left mb-2"><i class="bi bi-gear-fill me-2"></i>Opciones</div>
+                                    <button
+                                        class="btn justify-content-between d-flex w-100 shadow-none"
+                                        accordion-heading type="button">
+                                        <div class="text-danger pull-left float-left">{{content.folders[i + 1]}}</div>
+                                        <span class="badge btn-secondary float-right pull-right" (click)="selectedFolder(content.folders[i + 1])"><i class="bi bi-folder-symlink-fill"></i></span>
+                                    </button>
                                     <div class="row">
                                         <div class="col d-grid">
-                                            <button class="btn btn-sm btn-outline-primary"><i class="bi bi-arrow-right-circle-fill me-2"></i></button>
+                                            <button class="btn btn-sm btn-outline-primary" (click)="selectedFolder(content.folders[i + 1])"><i class="bi bi-arrow-right-circle-fill"></i></button>
+                                            <span class="badge bg-primary mt-1">Entrar</span>
                                         </div>
                                         <div class="col d-grid">
                                             <button class="btn btn-sm btn-outline-success"><i class="bi bi-pencil-fill"></i></button>
+                                            <span class="badge bg-success mt-1">Editar</span>
                                         </div>
                                         <div class="col d-grid">
-                                            <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash-fill"></i></button>
+                                            <button class="btn btn-sm btn-outline-danger" (click)="deleteFolder(content.folders[i + 1])"><i class="bi bi-trash-fill"></i></button>
+                                            <span class="badge bg-danger mt-1">Eliminar</span>
                                         </div>
                                     </div>
                                 </accordion-group>
                             </accordion>
                         </div>
+
                         <div class="d-grid col text-truncate m-1" *ngIf="i + 2 < content.folders.length">
                             <accordion [isAnimated]="true" class="text-truncate">
-                                <accordion-group heading="{{ content.folders[i + 2] }}">
+                                <accordion-group>
+                                    <div class="badge bg-secondary pull-left float-left mb-2"><i class="bi bi-gear-fill me-2"></i>Opciones</div>
+                                    <button
+                                        class="btn justify-content-between d-flex w-100 shadow-none"
+                                        accordion-heading type="button">
+                                        <div class="text-danger pull-left float-left">{{content.folders[i + 2]}}</div>
+                                        <span class="badge btn-secondary float-right pull-right" (click)="selectedFolder(content.folders[i + 2])"><i class="bi bi-folder-symlink-fill"></i></span>
+                                    </button>
                                     <div class="row">
                                         <div class="col d-grid">
-                                            <button class="btn btn-sm btn-outline-primary"><i class="bi bi-arrow-right-circle-fill me-2"></i></button>
+                                            <button class="btn btn-sm btn-outline-primary" (click)="selectedFolder(content.folders[i + 2])"><i class="bi bi-arrow-right-circle-fill me-2"></i></button>
+                                            <span class="badge bg-primary mt-1">Entrar</span>
                                         </div>
                                         <div class="col d-grid">
                                             <button class="btn btn-sm btn-outline-success"><i class="bi bi-pencil-fill"></i></button>
+                                            <span class="badge bg-success mt-1">Editar</span>
                                         </div>
                                         <div class="col d-grid">
-                                            <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash-fill"></i></button>
+                                            <button class="btn btn-sm btn-outline-danger" (click)="deleteFolder(content.folders[i + 2])"><i class="bi bi-trash-fill"></i></button>
+                                            <span class="badge bg-danger mt-1">Eliminar</span>
                                         </div>
                                     </div>
                                 </accordion-group>
@@ -79,10 +129,10 @@
             </mat-expansion-panel>
         </mat-accordion>
 
-        <mat-accordion class="card border border-danger m-1">
-            <mat-expansion-panel class="m-0 p-0" hideToggle>
+        <mat-accordion class="card border-0 bg-transparent m-1">
+            <mat-expansion-panel class="m-0 p-0" hideToggle [expanded]="true">
                 <mat-expansion-panel-header class="m-0 p-1">
-                    <div>Archivos</div>
+                    <div class="p-2 card bg-light">Archivos</div>
                 </mat-expansion-panel-header>
                 <div *ngFor="let file of content.files; let i = index">
 
@@ -94,7 +144,6 @@
                                     <div class="w-100 bd-highlight">
                                         {{ file }}
                                     </div>
-                                    
                                 </div>
                             </div>
                         </div>

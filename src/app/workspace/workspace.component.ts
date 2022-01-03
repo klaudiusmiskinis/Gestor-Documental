@@ -1,6 +1,7 @@
 import { RequestService } from '../services/request.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { BsDropdownConfig } from 'ngx-bootstrap/dropdown';
+import { MatAccordion } from '@angular/material/expansion';
 
 @Component({
   selector: 'app-workspace',
@@ -19,6 +20,8 @@ export class WorkspaceComponent implements OnInit {
     this.path = 'http://localhost:3001/';
     this.position = this.path;
   };
+
+  @ViewChild(MatAccordion) accordion: MatAccordion;
 
   /* Methods */
   async ngOnInit(): Promise <void> {
@@ -42,7 +45,7 @@ export class WorkspaceComponent implements OnInit {
   };
 
   async makeDirectory(event: any): Promise <void> {
-    const directoryName = event.path[1][0].value;
+    const directoryName = event.path[1].firstChild.value;
     if (directoryName) {
       await this.request.makeDirectory(this.getPath(), directoryName);
     };
