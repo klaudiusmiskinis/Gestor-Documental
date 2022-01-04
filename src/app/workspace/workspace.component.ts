@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { BsDropdownConfig } from 'ngx-bootstrap/dropdown';
 import { MatAccordion } from '@angular/material/expansion';
 import { NotifierService } from 'angular-notifier';
+import { Path } from '../models/path.model';
 
 @Component({
   selector: 'app-workspace',
@@ -13,42 +14,50 @@ import { NotifierService } from 'angular-notifier';
 export class WorkspaceComponent implements OnInit {
   /* Atributes */
   public content: any;
-  private position: string;
-  private path: string;
+  private path: Path;
   private notifier: NotifierService;
 
   /* Constructor */
   constructor(private request: RequestService, notifier: NotifierService) { 
     this.notifier = notifier;
-    this.path = 'http://localhost:3001/';
-    this.position = this.path;
+    this.path = new Path('http://localhost:3001/');
   };
 
   @ViewChild(MatAccordion) accordion: MatAccordion;
 
   /* Methods */
   async ngOnInit(): Promise <void> {
-    await this.getContent(this.getPath());
+    await this.getContent(this.path._path);
   };
 
-  getPosition(): string {
-    return this.position;
-  };
+  folderEvent(event) {
+    switch (event.type) {
+      case 'edit':
+          console.log('edit', event.folder)
+      break;
+      case 'goinside':
+        console.log('goIn', event.folder)
+      break;
+      case 'delete': 
+        console.log('delete', event.folder)
+      break;
+    }
+  }
 
-  setPosition(position: string): void {
-    this.position = position;
-  };
+  fileEvent(event) {
+    console.log(event)
+  }
 
   public showNotification( type: string, message: string ): void {
 		this.notifier.notify( type, message );
 	}
 
-  getPath(): string {
-    return this.path;
-  };
+  getPath() {
+    return this.path._path;
+  }
 
   setPath(path: string): void {
-    this.path = path;
+    this.path._path = path;
   };
 
   async makeDirectory(event: any): Promise <void> {
@@ -57,10 +66,6 @@ export class WorkspaceComponent implements OnInit {
       await this.request.makeDirectory(this.getPath(), directoryName);
     };
     this.getContent(this.getPath());
-  };
-
-  getFile(file: string): string {
-    return this.request.getFile(this.getPath(), file);
   };
 
   async uploadFile(event: any): Promise <void> {
