@@ -1,16 +1,16 @@
 /* NG */
-import { NgModule } from '@angular/core';
-import { AppComponent } from './app.component';
-import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
-import { APP_BASE_HREF } from '@angular/common';
-import { AppRoutingModule } from './app-routing.module';
 import { WorkspaceComponent } from './workspace/workspace.component';
+import { BrowserModule } from '@angular/platform-browser';
+import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
-import { NotifierModule, NotifierOptions } from 'angular-notifier';
+import { APP_BASE_HREF } from '@angular/common';
+import { AppComponent } from './app.component';
+import { NgModule } from '@angular/core';
 
 /* NG-Material */
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 /* NG-cdk */
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -18,45 +18,9 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 /* NGX-Bootstrap */
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 
-const customNotifierOptions: NotifierOptions = {
-  position: {
-		horizontal: {
-			position: 'right',
-			distance: 12
-		},
-		vertical: {
-			position: 'bottom',
-			distance: 32,
-			gap: 10
-		}
-	},
-  theme: 'material',
-  behaviour: {
-    autoHide: 3000,
-    onClick: 'hide',
-    onMouseover: 'pauseAutoHide',
-    stacking: 4
-  },
-  animations: {
-    enabled: true,
-    show: {
-      preset: 'slide',
-      speed: 300,
-      easing: 'ease'
-    },
-    hide: {
-      preset: 'slide',
-      speed: 300,
-      easing: 'ease',
-      offset: 50
-    },
-    shift: {
-      speed: 300,
-      easing: 'ease'
-    },
-    overlap: 150
-  }
-};
+/* NG-notifier */
+import { NotifierModule } from 'angular-notifier';
+import { NotifierConfiguration } from './models/notifier';
 
 @NgModule({
   declarations: [
@@ -70,13 +34,14 @@ const customNotifierOptions: NotifierOptions = {
     HttpClientModule,
     BrowserModule,
     /* NG-notifier */
-    NotifierModule.withConfig(customNotifierOptions),
+    NotifierModule.withConfig(NotifierConfiguration),
 
     /* NGX-Bootstrap */
     AccordionModule.forRoot(),
 
     /* NG-Material */
     MatExpansionModule,
+    MatSidenavModule,
 
     /* NG-cdk */
     DragDropModule
