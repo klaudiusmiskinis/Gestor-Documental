@@ -12,7 +12,7 @@ export class NavbarComponent implements OnInit {
   @Input() path: string;
 
   ngOnInit(): void {
-    console.log(this.path)
+    this.path
   }
 
 }
