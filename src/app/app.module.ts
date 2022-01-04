@@ -21,11 +21,21 @@ import { AccordionModule } from 'ngx-bootstrap/accordion';
 /* NG-notifier */
 import { NotifierModule } from 'angular-notifier';
 import { NotifierConfiguration } from './models/notifier.config';
+import { FoldersComponent } from './folders/folders.component';
+import { FilesComponent } from './files/files.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { UploadComponent } from './upload/upload.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     WorkspaceComponent,
+    FoldersComponent,
+    FilesComponent,
+    NavbarComponent,
+    SidebarComponent,
+    UploadComponent,
   ],
   imports: [
     /* NG */
