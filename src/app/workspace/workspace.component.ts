@@ -45,14 +45,7 @@ export class WorkspaceComponent implements OnInit {
   }
 
   fileEvent(event) {
-    switch (event.type) {
-      case 'edit':
-          console.log('edit', event.file)
-      break;
-      case 'delete': 
-        this.deleteFile(event.file)
-      break;
-    }
+    console.log(event)
   }
 
   public showNotification( type: string, message: string ): void {
