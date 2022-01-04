@@ -20,7 +20,7 @@ import { AccordionModule } from 'ngx-bootstrap/accordion';
 
 /* NG-notifier */
 import { NotifierModule } from 'angular-notifier';
-import { NotifierConfiguration } from './models/notifier';
+import { NotifierConfiguration } from './models/notifier.config';
 
 @NgModule({
   declarations: [
