@@ -2,6 +2,19 @@
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
+/* SCROLLBAR */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+  overflow-y: scroll;
+  background: transparent;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar-thumb {
+  background: var(--bs-danger);
+  border-radius: 10px;
+}
 
 .mat-expansion-panel-body {
   padding: 0 !important;
