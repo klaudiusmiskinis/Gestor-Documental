@@ -12,7 +12,7 @@
                             <div class="badge bg-secondary pull-left float-left mb-2"><i class="bi bi-gear-fill me-2"></i>Opciones de {{folder}}</div>
                             <button class="btn justify-content-between d-flex w-100 shadow-none" accordion-heading type="button">
                                 <div class="text-danger pull-left float-left">{{folder}}</div>
-                                <span class="text-danger icon-size"><i class="bi bi-folder-symlink-fill"></i></span>
+                                <span class="text-danger icon-size" (click)="folderEmitter('goinside', folder)"><i class="bi bi-folder-symlink-fill"></i></span>
                             </button>
                             <div class="row">
                                 <div class="col d-grid">
@@ -38,19 +38,19 @@
                             <div class="badge bg-secondary pull-left float-left mb-2"><i class="bi bi-gear-fill me-2"></i>Opciones de {{folders[i + 1]}}</div>
                             <button class="btn justify-content-between d-flex w-100 shadow-none" accordion-heading type="button">
                                 <div class="text-danger pull-left float-left">{{folders[i + 1]}}</div>
-                                <span class="text-danger icon-size"><i class="bi bi-folder-symlink-fill"></i></span>
+                                <span class="text-danger icon-size" (click)="folderEmitter('goinside', folders[i + 1])"><i class="bi bi-folder-symlink-fill"></i></span>
                             </button>
                             <div class="row">
                                 <div class="col d-grid">
-                                    <button class="btn btn-sm btn-outline-primary"><i class="bi bi-arrow-right-circle-fill"></i></button>
+                                    <button class="btn btn-sm btn-outline-primary" (click)="folderEmitter('goinside', folders[i + 1])"><i class="bi bi-arrow-right-circle-fill"></i></button>
                                     <span class="badge bg-primary mt-1">Entrar</span>
                                 </div>
                                 <div class="col d-grid">
-                                    <button class="btn btn-sm btn-outline-success"><i class="bi bi-pencil-fill"></i></button>
+                                    <button class="btn btn-sm btn-outline-success" (click)="folderEmitter('edit', folders[i + 1])"><i class="bi bi-pencil-fill"></i></button>
                                     <span class="badge bg-success mt-1">Editar</span>
                                 </div>
                                 <div class="col d-grid">
-                                    <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash-fill"></i></button>
+                                    <button class="btn btn-sm btn-outline-danger" (click)="folderEmitter('delete', folders[i + 1])"><i class="bi bi-trash-fill"></i></button>
                                     <span class="badge bg-danger mt-1">Eliminar</span>
                                 </div>
                             </div>
@@ -64,19 +64,19 @@
                             <div class="badge bg-secondary pull-left float-left mb-2"><i class="bi bi-gear-fill me-2"></i>Opciones de {{folders[i + 2]}}</div>
                             <button class="btn justify-content-between d-flex w-100 shadow-none" accordion-heading type="button">
                                 <div class="text-danger pull-left float-left">{{folders[i + 2]}}</div>
-                                <span class="text-danger icon-size"><i class="bi bi-folder-symlink-fill"></i></span>
+                                <span class="text-danger icon-size" (click)="folderEmitter('goinside', folders[i + 2])"><i class="bi bi-folder-symlink-fill"></i></span>
                             </button>
                             <div class="row">
                                 <div class="col d-grid">
-                                    <button class="btn btn-sm btn-outline-primary"><i class="bi bi-arrow-right-circle-fill me-2"></i></button>
+                                    <button class="btn btn-sm btn-outline-primary" (click)="folderEmitter('goinside', folders[i + 2])"><i class="bi bi-arrow-right-circle-fill me-2"></i></button>
                                     <span class="badge bg-primary mt-1">Entrar</span>
                                 </div>
                                 <div class="col d-grid">
-                                    <button class="btn btn-sm btn-outline-success"><i class="bi bi-pencil-fill"></i></button>
+                                    <button class="btn btn-sm btn-outline-success" (click)="folderEmitter('edit', folders[i + 2])"><i class="bi bi-pencil-fill"></i></button>
                                     <span class="badge bg-success mt-1">Editar</span>
                                 </div>
                                 <div class="col d-grid">
-                                    <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash-fill"></i></button>
+                                    <button class="btn btn-sm btn-outline-danger" (click)="folderEmitter('delete', folders[i + 2])"><i class="bi bi-trash-fill"></i></button>
                                     <span class="badge bg-danger mt-1">Eliminar</span>
                                 </div>
                             </div>
