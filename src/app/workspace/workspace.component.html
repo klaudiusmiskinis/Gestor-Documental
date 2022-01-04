@@ -28,8 +28,12 @@
     </div>
 
     <div *ngIf="content" class="container-fluid">
-        <folders [folders]="content.folders" (folderEvent)="folderEvent($event)"></folders>
-        <files [files]="content.files" [path]="getPath()" (fileEvent)="fileEvent($event)"></files>
+        <div *ngIf="content.folders && content.folders.length > 0">
+            <folders [folders]="content.folders" (folderEvent)="folderEvent($event)"></folders>
+        </div>
+        <div *ngIf="content.files && content.files.length > 0">
+            <files [files]="content.files" [path]="getPath()" (fileEvent)="fileEvent($event)"></files>
+        </div>
     </div>
 
     <div style="margin-top: 2rem;">
