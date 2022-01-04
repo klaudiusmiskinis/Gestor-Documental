@@ -23,9 +23,9 @@ import { NotifierModule } from 'angular-notifier';
 import { NotifierConfiguration } from './models/notifier.config';
 import { FoldersComponent } from './folders/folders.component';
 import { FilesComponent } from './files/files.component';
-import { NavbarComponent } from './navbar/navbar.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { UploadComponent } from './upload/upload.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [

@@ -36,10 +36,10 @@ export class WorkspaceComponent implements OnInit {
           console.log('edit', event.folder)
       break;
       case 'goinside':
-        console.log('goIn', event.folder)
+        this.selectedFolder(event.folder)
       break;
       case 'delete': 
-        console.log('delete', event.folder)
+        this.deleteFolder(event.folder)
       break;
     }
   }
