@@ -3,13 +3,12 @@
 
     <navbar [path]="getPath()"></navbar>
 
-    <div class="row ms-1 g-0 gap-1">
-        <div class="col-auto">
-            <div class="badge bg-secondary" (click)="showNotification('error', 'Click en opciones')">Opciones</div>
+    <div class="row p-2 g-0 gap-1">
+        <div class="row g-0 gap-1">
+            <div class="col-auto">
+                <div class="badge bg-secondary" (click)="showNotification('error', 'Click en opciones')">Opciones</div>
+            </div>
         </div>
-    </div>
-
-    <div class="row my-1 ms-1 g-0 gap-1">
         <div class="col-auto d-grid" *ngIf="getPath().includes('?path=')">
             <button class="btn btn-sm btn-outline-secondary shadow-sm" (click)=goBack()>Volver<i class="bi bi-arrow-left-short ms-1"></i></button>
         </div>
@@ -36,12 +35,18 @@
         </div>
     </div>
 
-    <div style="margin-top: 2rem;">
-        <form action="{{ getPath() }}" enctype="multipart/form-data">
-            <label for="file">Subir archivo</label>
-            <input type="file" name="file" id="file">
-            <button type="button" (click)="uploadFile($event)">Subir</button>
-        </form>
+    <div class="container-fluid">
+        <div class="row g-0 gap-1 p-2">
+            <label class="col d-grid" for="file">
+                <div class="btn btn-sm btn-outline-danger">
+                    <span class="align-middle" (click)="uploadFile($event, false)">Subir un archivo</span>
+                </div>
+                <input #fileInputField type="file" name="file" id="file" class="visually-hidden">
+            </label>
+            <div *ngIf="file" class="col-auto">
+                <button type="button" class="btn btn-sm btn-outline-danger px-4" (click)="uploadFile($event, true)"><i class="bi bi-cloud-arrow-up-fill icon-size"></i></button>
+            </div>
+        </div>
     </div>
 
     <div>

@@ -1,1 +1,31 @@
-<p>sidebar works!</p>
+<mat-drawer-container >
+    <mat-drawer #drawer class="col-3 g-0 p-0 m-0" mode="side">
+        <div class="container-fluid text-center">
+            <div class="p-2b bg-danger">
+                <button class="btn text-light" (click)="drawer.toggle()">Sidebar</button>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="badge bg-danger mx-2">Filtrar directorios</div>
+            <div class="input-group p-2">
+                <span class="input-group-text text-light bg-danger border-danger"><i class="bi bi-folder-fill"></i></span>
+                <input type="search" class="form-control" placeholder="Filtrar directorios">
+            </div>
+            <div class="badge bg-danger mx-2">Filtrar archivos</div>
+            <div class="input-group p-2">
+                <span class="input-group-text text-light bg-danger border-danger"><i class="bi bi-file-earmark-text"></i></span>
+                <input type="search" class="form-control" placeholder="Filtrar archivos">
+            </div>
+            <div class="badge bg-danger mx-2">Opciones</div>
+            <div class="col mx-2 mt-2">
+                <div class="col d-grid gap-2">
+                    <button class="btn btn-sm btn-outline-danger">Actualizar<i class="bi bi-arrow-clockwise ms-1"></i></button>
+                    <button class="btn btn-sm btn-outline-danger">Desplegar directorios<i class="bi bi-arrow-down-short ms-1"></i></button>
+                    <button class="btn btn-sm btn-outline-danger">Desplegar archivos<i class="bi bi-arrow-down-short ms-1"></i></button>
+                    <button class="btn btn-sm btn-outline-danger">Ver ultimas versiones<i class="bi bi-eye-fill ms-1"></i></button>
+                </div>
+            </div>
+        </div>
+    </mat-drawer>
+    <workspace></workspace>
+</mat-drawer-container>

@@ -1,12 +1,12 @@
 import { RequestService } from '../services/request.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { BsDropdownConfig } from 'ngx-bootstrap/dropdown';
 import { MatAccordion } from '@angular/material/expansion';
 import { NotifierService } from 'angular-notifier';
 import { Path } from '../models/path.model';
 
 @Component({
-  selector: 'app-workspace',
+  selector: 'workspace',
   templateUrl: './workspace.component.html',
   providers: [{ provide: BsDropdownConfig, useValue: { isAnimated: true, autoClose: true } }]
 })
@@ -16,14 +16,16 @@ export class WorkspaceComponent implements OnInit {
   public content: any;
   private path: Path;
   private notifier: NotifierService;
+  public file: Object;
 
   /* Constructor */
-  constructor(private request: RequestService, notifier: NotifierService) { 
+  constructor(private request: RequestService, notifier: NotifierService) {
     this.notifier = notifier;
     this.path = new Path('http://localhost:3001/');
   };
 
   @ViewChild(MatAccordion) accordion: MatAccordion;
+  @ViewChild('fileInputField') fileInputField: ElementRef
 
   /* Methods */
   async ngOnInit(): Promise <void> {
@@ -33,23 +35,30 @@ export class WorkspaceComponent implements OnInit {
   folderEvent(event) {
     switch (event.type) {
       case 'edit':
-          console.log('edit', event.folder)
+          console.log('edit', event.folder);
       break;
       case 'goinside':
-        this.selectedFolder(event.folder)
+        this.selectedFolder(event.folder);
       break;
       case 'delete': 
-        this.deleteFolder(event.folder)
+        this.deleteFolder(event.folder);
       break;
     }
   }
 
   fileEvent(event) {
-    console.log(event)
+    switch (event.type) {
+      case 'edit':
+        console.log('edit', event.file);
+      break;
+      case 'delete': 
+        this.deleteFile(event.file);
+      break;
+    }
   }
 
   public showNotification( type: string, message: string ): void {
-		this.notifier.notify( type, message );
+		this.notifier.notify(type, message);
 	}
 
   getPath() {
@@ -68,21 +77,27 @@ export class WorkspaceComponent implements OnInit {
     this.getContent(this.getPath());
   };
 
-  async uploadFile(event: any): Promise <void> {
-    if (event.path[1][0].files.length > 0) {
-      const fileList: FileList = event.path[1][0].files;
-      const file: File = fileList[0];
-      const formData: FormData = new FormData();
-      const headers = new Headers();
-      formData.append('file', file, file.name);
-      headers.append('Content-Type', 'multipart/form-data');
-      headers.append('Accept', 'application/json');
-      const options = { 
-        headers: headers 
-      };
-      await this.request.uploadFile(formData, options, this.getPath())
+  async uploadFile(event: any, upload: Boolean): Promise <void> {
+    console.log(this.fileInputField.nativeElement.files.length)
+    if (event.path[1].children[1].files.length > 0 && upload) {
+        const fileList: FileList = event.path[1].children[1].files;
+        const file: File = fileList[0];
+        this.file = file;
+        const formData: FormData = new FormData();
+        const headers = new Headers();
+        formData.append('file', file, file.name);
+        headers.append('Content-Type', 'multipart/form-data');
+        headers.append('Accept', 'application/json');
+        const options = { 
+          headers: headers 
+        };
+        await this.request.uploadFile(formData, options, this.getPath());
+        this.getContent(this.getPath());
+    } else {
+      console.log('asd')
+      const fileList: FileList = event.path[1].children[1].files;
+      this.file = fileList[0];
     };
-    this.getContent(this.getPath());
   };
 
   goBack(): void {
