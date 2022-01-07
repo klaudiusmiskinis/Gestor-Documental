@@ -133,6 +133,7 @@ export class WorkspaceComponent implements OnInit {
   };
 
   async getContent(path: string): Promise <void> {
+    this.content = [];
     this.content = await this.request.getWorkspace(path);
   };
 
