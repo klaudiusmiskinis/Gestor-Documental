@@ -6,15 +6,13 @@ import { BehaviorSubject } from 'rxjs';
 })
 
 export class SidebarToggleService {
-
   private childEvent = new BehaviorSubject<Boolean>(true);
 
-  childEventEmitter(toggle: Boolean){
-    console.log(toggle)
-    this.childEvent.next(toggle)
+  childEventEmitter(toggle: Boolean) {
+    this.childEvent.next(toggle);
   }
 
-  parentListenerEvent(){
+  parentListenerEvent() {
     return this.childEvent.asObservable();
   }
 }
