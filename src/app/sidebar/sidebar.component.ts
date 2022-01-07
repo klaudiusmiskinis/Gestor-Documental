@@ -7,11 +7,11 @@ import { SidebarToggleService } from '../services/sidebar-toggle.service';
   templateUrl: './sidebar.component.html'
 })
 export class SidebarComponent implements OnInit {
-  showFiller = false;
+
+  constructor(private sidebarService: SidebarToggleService) { }
 
   @ViewChild('drawer') drawer: MatSidenav;
 
-  constructor(private sidebarService: SidebarToggleService) { }
 
   ngOnInit(): void {
     this.sidebarService.parentListenerEvent().subscribe(info => {
