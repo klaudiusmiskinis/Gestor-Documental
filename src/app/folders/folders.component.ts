@@ -1,28 +1,26 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { slideIn } from '../models/animations.config';
+import { slideIn, fadeIn } from '../models/animations.config';
 
 @Component({
   selector: 'folders',
   templateUrl: './folders.component.html',
   styleUrls: ['./folders.component.css'],
-  animations: [slideIn]
+  animations: [slideIn, fadeIn]
 })
 
 export class FoldersComponent implements OnInit {
-
   public expanded: Boolean;
-
-  constructor() { 
-    this.expanded = false;
-  }
 
   @Input() folders: any;
   @Output() folderEvent = new EventEmitter<Object>();
 
   ngOnInit(): void {
+    this.expanded = true
   }
 
   folderEmitter (type: string, folder: string) {
-    this.folderEvent.emit({type: type, folder: folder});
+    this.folderEvent.emit({
+      type: type, folder: folder
+    });
   }
 }
