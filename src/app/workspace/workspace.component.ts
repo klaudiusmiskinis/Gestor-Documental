@@ -6,6 +6,7 @@ import { NotifierService } from 'angular-notifier';
 import { FileInfo } from '../models/file.model';
 import { Path } from '../models/path.model';
 import { slideIn } from '../config/animations.config';
+import { AppUrl } from '../models/appurl.model';
 
 @Component({
   selector: 'workspace',
@@ -17,11 +18,17 @@ export class WorkspaceComponent implements OnInit {
   /* Atributes */
   public content: any;
   public fileInfo: FileInfo;
+  public testModel: AppUrl;
   private path: Path;
   private notifier: NotifierService;
 
   /* Constructor */
   constructor(private request: RequestService, notifier: NotifierService) {
+    this.testModel = new AppUrl('http://localhost:3001/', [{name: 'folder', data: 'asd'}]);
+    this.testModel.addParameter({name: 'file', data: 'asdasd'})
+    this.testModel.getFinalUrl();
+    this.testModel.removeParameter('folder');
+    this.testModel.getFinalUrl();
     this.fileInfo = new FileInfo(false);
     this.notifier = notifier;
     this.path = new Path('http://localhost:3001/');
@@ -92,6 +99,7 @@ export class WorkspaceComponent implements OnInit {
     const file: File = fileList[0];
     const formData: FormData = new FormData();
     const headers = new Headers();
+    console.log(file)
     formData.append('file', file, file.name);
     headers.append('Content-Type', 'multipart/form-data');
     headers.append('Accept', 'application/json');
