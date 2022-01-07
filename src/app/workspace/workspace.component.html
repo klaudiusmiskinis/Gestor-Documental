@@ -39,13 +39,18 @@
         <div class="row g-0 gap-1 p-2">
             <label class="col d-grid" for="file">
                 <div class="btn btn-sm btn-outline-danger">
-                    <span class="align-middle" (click)="uploadFile($event, false)">Subir un archivo</span>
+                    Selecciona un archivo
                 </div>
-                <input #fileInputField type="file" name="file" id="file" class="visually-hidden">
+                <input #fileInputField type="file" name="file" id="file" class="visually-hidden" (change)="checkExistence()">
             </label>
-            <div *ngIf="file" class="col-auto">
-                <button type="button" class="btn btn-sm btn-outline-danger px-4" (click)="uploadFile($event, true)"><i class="bi bi-cloud-arrow-up-fill icon-size"></i></button>
+            <div *ngIf="fileInfo.exists" [@slideInRight] class="col-auto">
+                <button type="button" class="btn btn-sm btn-outline-danger px-4" (click)="uploadFile()"><i class="bi bi-cloud-arrow-up-fill"></i></button>
             </div>
+        </div>
+        <div *ngIf="fileInfo.exists" [@slideInLeft] class="d-flex g-0 gap-1 p-1">
+            <span class="badge bg-danger">{{fileInfo.name}}</span>
+            <span class="badge bg-danger">{{fileInfo.size}}</span>
+            <span class="badge bg-danger">{{fileInfo.extension}}</span>
         </div>
     </div>
 
