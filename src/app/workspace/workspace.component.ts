@@ -1,25 +1,28 @@
-import { RequestService } from '../services/request.service';
+
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { BsDropdownConfig } from 'ngx-bootstrap/dropdown';
+import { RequestService } from '../services/request.service';
 import { MatAccordion } from '@angular/material/expansion';
 import { NotifierService } from 'angular-notifier';
+import { FileInfo } from '../models/fileInfo';
 import { Path } from '../models/path.model';
+import { slideIn } from '../models/animations.config';
 
 @Component({
   selector: 'workspace',
   templateUrl: './workspace.component.html',
-  providers: [{ provide: BsDropdownConfig, useValue: { isAnimated: true, autoClose: true } }]
+  animations: [slideIn]
 })
 
 export class WorkspaceComponent implements OnInit {
   /* Atributes */
   public content: any;
+  public fileInfo: FileInfo;
   private path: Path;
   private notifier: NotifierService;
-  public file: Object;
 
   /* Constructor */
   constructor(private request: RequestService, notifier: NotifierService) {
+    this.fileInfo = new FileInfo(false);
     this.notifier = notifier;
     this.path = new Path('http://localhost:3001/');
   };
@@ -77,27 +80,26 @@ export class WorkspaceComponent implements OnInit {
     this.getContent(this.getPath());
   };
 
-  async uploadFile(event: any, upload: Boolean): Promise <void> {
-    console.log(this.fileInputField.nativeElement.files.length)
-    if (event.path[1].children[1].files.length > 0 && upload) {
-        const fileList: FileList = event.path[1].children[1].files;
-        const file: File = fileList[0];
-        this.file = file;
-        const formData: FormData = new FormData();
-        const headers = new Headers();
-        formData.append('file', file, file.name);
-        headers.append('Content-Type', 'multipart/form-data');
-        headers.append('Accept', 'application/json');
-        const options = { 
-          headers: headers 
-        };
-        await this.request.uploadFile(formData, options, this.getPath());
-        this.getContent(this.getPath());
-    } else {
-      console.log('asd')
-      const fileList: FileList = event.path[1].children[1].files;
-      this.file = fileList[0];
+  checkExistence() {
+    const file = this.fileInputField.nativeElement;
+    if (file.files.length > 0) {
+      this.fileInfo = new FileInfo(true, file.files[0].name, file.files[0].size)
+    }
+  }
+
+  async uploadFile(): Promise <void> {
+    const fileList: FileList = this.fileInputField.nativeElement.files;
+    const file: File = fileList[0];
+    const formData: FormData = new FormData();
+    const headers = new Headers();
+    formData.append('file', file, file.name);
+    headers.append('Content-Type', 'multipart/form-data');
+    headers.append('Accept', 'application/json');
+    const options = { 
+      headers: headers 
     };
+    await this.request.uploadFile(formData, options, this.getPath());
+    this.getContent(this.getPath());
   };
 
   goBack(): void {
