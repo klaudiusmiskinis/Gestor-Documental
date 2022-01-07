@@ -3,9 +3,9 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { RequestService } from '../services/request.service';
 import { MatAccordion } from '@angular/material/expansion';
 import { NotifierService } from 'angular-notifier';
-import { FileInfo } from '../models/fileInfo';
+import { FileInfo } from '../models/file.model';
 import { Path } from '../models/path.model';
-import { slideIn } from '../models/animations.config';
+import { slideIn } from '../config/animations.config';
 
 @Component({
   selector: 'workspace',

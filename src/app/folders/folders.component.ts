@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { slideIn, fadeIn } from '../models/animations.config';
+import { slideIn, fadeIn } from '../config/animations.config';
 
 @Component({
   selector: 'folders',
