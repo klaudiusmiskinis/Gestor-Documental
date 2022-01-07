@@ -5,8 +5,15 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { APP_BASE_HREF } from '@angular/common';
-import { AppComponent } from './app.component';
 import { NgModule } from '@angular/core';
+
+/* Componentes */
+import { AppComponent } from './app.component';
+import { FoldersComponent } from './folders/folders.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { UploadComponent } from './upload/upload.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { FilesComponent } from './files/files.component';
 
 /* NG-Material */
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -19,13 +26,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 
 /* NG-notifier */
+import { NotifierConfiguration } from './config/notifier.config';
 import { NotifierModule } from 'angular-notifier';
-import { NotifierConfiguration } from './models/notifier.config';
-import { FoldersComponent } from './folders/folders.component';
-import { FilesComponent } from './files/files.component';
-import { SidebarComponent } from './sidebar/sidebar.component';
-import { UploadComponent } from './upload/upload.component';
-import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
