@@ -11,7 +11,6 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { FoldersComponent } from './folders/folders.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
-import { UploadComponent } from './upload/upload.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FilesComponent } from './files/files.component';
 
@@ -37,7 +36,6 @@ import { NotifierModule } from 'angular-notifier';
     FilesComponent,
     NavbarComponent,
     SidebarComponent,
-    UploadComponent,
   ],
   imports: [
     /* NG */
