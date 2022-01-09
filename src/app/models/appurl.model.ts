@@ -12,19 +12,12 @@ export class AppUrl {
         this.parameters = parameters;
     }
 
-    print() {
-        console.log(this.url, this.parameters)
-    }
-
     addParameter(parameter: Parameter): void {
         this.parameters.push(parameter);
-        this.print();
     }
 
     removeParameter(parameterName: string) {
-        console.log('REMOVE', this.parameters.filter(parameter => parameterName != parameter.name))
         this.parameters = this.parameters.filter(parameter => parameterName != parameter.name);
-        this.print();
     }
 
     getFinalUrl() {
@@ -32,8 +25,6 @@ export class AppUrl {
         this.parameters.forEach(parameter => {
             finalUrl = finalUrl + this.setParameterChar(finalUrl) + (parameter.name) + ('=' + parameter.data)
         })
-        console.log(finalUrl)
-        this.print();
     }
 
     setParameterChar(url): string {
