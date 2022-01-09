@@ -24,18 +24,14 @@ export class WorkspaceComponent implements OnInit {
 
   /* Constructor */
   constructor(private request: RequestService, notifier: NotifierService) {
-    this.testModel = new AppUrl('http://localhost:3001/', [{name: 'folder', data: 'asd'}]);
-    this.testModel.addParameter({name: 'file', data: 'asdasd'})
-    this.testModel.getFinalUrl();
-    this.testModel.removeParameter('folder');
-    this.testModel.getFinalUrl();
+    this.testModel = new AppUrl('http://localhost:3001/');
     this.fileInfo = new FileInfo(false);
     this.notifier = notifier;
     this.path = new Path('http://localhost:3001/');
   };
 
   @ViewChild(MatAccordion) accordion: MatAccordion;
-  @ViewChild('fileInputField') fileInputField: ElementRef
+  @ViewChild('fileInputField') fileInputField: ElementRef;
 
   /* Methods */
   async ngOnInit(): Promise <void> {
