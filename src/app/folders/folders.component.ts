@@ -4,7 +4,6 @@ import { slideIn, fadeIn } from '../config/animations.config';
 @Component({
   selector: 'folders',
   templateUrl: './folders.component.html',
-  styleUrls: ['./folders.component.css'],
   animations: [slideIn, fadeIn]
 })
 
