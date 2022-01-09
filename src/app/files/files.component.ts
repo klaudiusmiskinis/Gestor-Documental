@@ -3,8 +3,7 @@ import { RequestService } from '../services/request.service';
 
 @Component({
   selector: 'files',
-  templateUrl: './files.component.html',
-  styleUrls: ['./files.component.css']
+  templateUrl: './files.component.html'
 })
 
 export class FilesComponent implements OnInit {
