@@ -55,43 +55,85 @@
         </div>
     </div>
 
-    <div *ngIf="selected" class="modal fade bg-opacity-10 bg-danger" id="confirmationDelete" tabindex="-1" aria-labelledby="confirmationDeleteLabel" aria-hidden="true">
-    <div class="modal-dialog mt-5">
-        <div *ngIf="selected.isFile; then isFile; else isFolder"></div>
-        <ng-template #isFile>
-            <div class="modal-content">
-                <div class="modal-header bg-danger border-0">
-                    <h5 class="modal-title text-light" id="confirmationDeleteLabel">¿Deseas eliminar este archivo?</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body text-center">
-                    <p class="m-0">Vas a eliminar el archivo:</p>
-                    <span *ngIf="selected.element" class="badge bg-light text-danger">{{selected.element}}</span>
-                    <div class="row gap-2 mt-3 mx-2">
-                        <button type="button" class="col d-grid btn btn-sm btn-danger" (click)="deleteFile(selected.element)">Eliminar</button>
-                        <button type="button" class="col d-grid btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+    <div *ngIf="selected" class="modal fade bg-opacity-75 bg-light" id="confirmationDelete" tabindex="-1" aria-labelledby="confirmationDeleteLabel" aria-hidden="true">
+        <div class="modal-dialog mt-5">
+            <div *ngIf="selected.isFile; then isFile; else isFolder"></div>
+            <ng-template #isFile>
+                <div class="modal-content">
+                    <div class="modal-header bg-danger border-0">
+                        <h5 class="modal-title text-light" id="confirmationDeleteLabel">¿Deseas eliminar este archivo?</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <p class="m-0">Vas a eliminar el archivo:</p>
+                        <span *ngIf="selected.element" class="badge bg-light text-danger">{{selected.element}}</span>
+                        <div class="row gap-2 mt-3 mx-2">
+                            <button type="button" class="col d-grid btn btn-sm btn-danger" (click)="deleteFile(selected.element)">Eliminar</button>
+                            <button type="button" class="col d-grid btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </ng-template>
-        <ng-template #isFolder>
-            <div class="modal-content">
-                <div class="modal-header bg-danger border-0">
-                    <h5 class="modal-title text-light" id="confirmationDeleteLabel">¿Deseas eliminar esta carpeta?</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body text-center">
-                    <p class="m-0">Vas a eliminar la carpeta:</p>
-                    <span *ngIf="selected.element" class="badge bg-light text-danger">{{selected.element}}</span>
-                    <div class="row gap-2 mt-3 mx-2">
-                        <button type="button" class="col d-grid btn btn-sm btn-danger" (click)="deleteFolder(selected.element)">Eliminar</button>
-                        <button type="button" class="col d-grid btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            </ng-template>
+            <ng-template #isFolder>
+                <div class="modal-content">
+                    <div class="modal-header bg-danger border-0">
+                        <h5 class="modal-title text-light" id="confirmationDeleteLabel">¿Deseas eliminar esta carpeta?</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <p class="m-0">Vas a eliminar la carpeta:</p>
+                        <span *ngIf="selected.element" class="badge bg-light text-danger">{{selected.element}}</span>
+                        <div class="row gap-2 mt-3 mx-2">
+                            <button type="button" class="col d-grid btn btn-sm btn-danger" (click)="deleteFolder(selected.element)">Eliminar</button>
+                            <button type="button" class="col d-grid btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </ng-template>
+            </ng-template>
+        </div>
     </div>
-</div>
+
+        <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#uploadNameChange">
+        Launch demo modal
+    </button>
+    
+    <!-- Modal -->
+    <div class="modal fade bg-opacity-75 bg-light" id="uploadNameChange" tabindex="-1" aria-labelledby="uploadNameChangeLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger border-0">
+                <h5 class="modal-title text-light" id="uploadNameChangeLabel">Subida de archivo</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <p class="text-danger"><i class="bi bi-info-square-fill me-2"></i>Puedes cambiar el nombre del archivo y añadirle una versión.</p>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-check">
+                                    <input #editNewNameCheckBox (change)="info()" class="form-check-input" type="checkbox">
+                                    <label class="form-check-label" for="editNewNameCheckBox">Editar nombre</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text bg-danger text-light" id="name">Nombre</span>
+                                    <input type="text" class="form-control" placeholder="{{fileInfo.name || 'Introduce el nombre'}}" aria-describedby="name">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row gap-2 mt-3 mx-2">
+                        <button type="button" class="col d-grid btn btn-sm btn-danger">Subir</button>
+                        <button type="button" class="col d-grid btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
 <notifier-container></notifier-container>
