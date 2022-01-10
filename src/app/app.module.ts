@@ -1,6 +1,7 @@
 /* NG */
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 import { WorkspaceComponent } from './workspace/workspace.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
@@ -17,6 +18,7 @@ import { FilesComponent } from './files/files.component';
 /* NG-Material */
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSidenavModule } from '@angular/material/sidenav';
+
 
 /* NG-cdk */
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -43,6 +45,8 @@ import { NotifierModule } from 'angular-notifier';
     AppRoutingModule,
     HttpClientModule,
     BrowserModule,
+    ReactiveFormsModule, 
+    FormsModule,
     /* NG-notifier */
     NotifierModule.withConfig(NotifierConfiguration),
 
@@ -52,7 +56,7 @@ import { NotifierModule } from 'angular-notifier';
     /* NG-Material */
     MatExpansionModule,
     MatSidenavModule,
-
+    
     /* NG-cdk */
     DragDropModule
 
