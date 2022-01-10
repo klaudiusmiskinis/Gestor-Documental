@@ -23,43 +23,47 @@ html, body {
 }
 
 .mat-expansion-panel-body {
-  padding: 0 !important;
+  padding: 0;
 }
 
 .btn-check:focus+.btn, .btn:focus, .form-control:focus {
   outline: 0;
-  box-shadow: 0 0 0 0.25rem transparent !important;
+  box-shadow: 0 0 0 0.25rem transparent;
 }
 
 .btn-link {
   font-weight: 400;
-  color: var(--bs-danger) !important;
-  text-decoration: none !important;
+  color: var(--bs-danger);
+  text-decoration: none;
 }
 
 .notifier__notification-button {
-  display: none !important;
+  display: none;
 }
 
 .icon-size {
-  font-size: 1.5rem !important;
+  font-size: 1.5rem;
 }
 
 .form-control:focus {
-  border-color: var(--bs-danger) !important;
+  border-color: var(--bs-danger);
 }
 
 @media screen and (max-width: 1024px) {
   .mat-drawer {
-      display: none !important;
+      display: none;
   }
 }
 
 .upload-file {
-  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out !important;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
 .upload-file:hover {
-  border: 2px dotted white !important;
-  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out !important;
+  border: 2px dotted white;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.modal-backdrop {
+  display: none;
 }
