@@ -4,30 +4,30 @@ import { RequestService } from '../services/request.service';
 import { MatAccordion } from '@angular/material/expansion';
 import { NotifierService } from 'angular-notifier';
 import { FileInfo } from '../models/file.model';
-import { Path } from '../models/path.model';
-import { slideIn } from '../config/animations.config';
+import { slideIn, fadeIn } from '../config/animations.config';
 import { AppUrl } from '../models/appurl.model';
+declare var $: any;
 
 @Component({
   selector: 'workspace',
   templateUrl: './workspace.component.html',
-  animations: [slideIn]
+  animations: [slideIn, fadeIn]
 })
 
 export class WorkspaceComponent implements OnInit {
   /* Atributes */
+  public url: AppUrl;
   public content: any;
   public fileInfo: FileInfo;
-  public testModel: AppUrl;
-  private path: Path;
+  public selected: any;
   private notifier: NotifierService;
 
   /* Constructor */
   constructor(private request: RequestService, notifier: NotifierService) {
-    this.testModel = new AppUrl('http://localhost:3001/');
+    this.url = new AppUrl('http://localhost:3001/');
     this.fileInfo = new FileInfo(false);
     this.notifier = notifier;
-    this.path = new Path('http://localhost:3001/');
+    this.selected = true;
   };
 
   @ViewChild(MatAccordion) accordion: MatAccordion;
@@ -35,10 +35,22 @@ export class WorkspaceComponent implements OnInit {
 
   /* Methods */
   async ngOnInit(): Promise <void> {
-    await this.getContent(this.path._path);
+    await this.getContent(this.url.url);
   };
 
+  setSelected(element: string, isFile: boolean): void {
+    this.selected = {
+      element: element,
+      isFile: isFile
+    }
+  }
+
+  modalDelete(state: string): void {
+    $('#confirmationDelete').modal(state);
+  }
+
   folderEvent(event) {
+    this.setSelected(event.folder, false);
     switch (event.type) {
       case 'edit':
           console.log('edit', event.folder);
@@ -46,19 +58,20 @@ export class WorkspaceComponent implements OnInit {
       case 'goinside':
         this.selectedFolder(event.folder);
       break;
-      case 'delete': 
-        this.deleteFolder(event.folder);
+      case 'delete':
+        this.modalDelete('show');
       break;
     }
   }
 
   fileEvent(event) {
+    this.setSelected(event.file, true);
     switch (event.type) {
       case 'edit':
         console.log('edit', event.file);
       break;
       case 'delete': 
-        this.deleteFile(event.file);
+        this.modalDelete('show');
       break;
     }
   }
@@ -67,20 +80,20 @@ export class WorkspaceComponent implements OnInit {
 		this.notifier.notify(type, message);
 	}
 
-  getPath() {
-    return this.path._path;
+  geUrl() {
+    return this.url.url;
   }
 
   setPath(path: string): void {
-    this.path._path = path;
+    this.url.url = path;
   };
 
   async makeDirectory(event: any): Promise <void> {
     const directoryName = event.path[1].firstChild.value;
     if (directoryName) {
-      await this.request.makeDirectory(this.getPath(), directoryName);
+      await this.request.makeDirectory(this.geUrl(), directoryName);
     };
-    this.getContent(this.getPath());
+    this.getContent(this.geUrl());
   };
 
   checkExistence() {
@@ -102,38 +115,40 @@ export class WorkspaceComponent implements OnInit {
     const options = { 
       headers: headers 
     };
-    await this.request.uploadFile(formData, options, this.getPath());
-    this.getContent(this.getPath());
+    await this.request.uploadFile(formData, options, this.geUrl());
+    this.getContent(this.geUrl());
   };
 
   goBack(): void {
-    if (this.getPath().includes('?path=')) {
-      if (this.getPath().substring(0, this.getPath().lastIndexOf('/')) === 'http://localhost:3001') {
-        this.setPath(this.getPath().substring(0, this.getPath().lastIndexOf('/')) + '/');
+    if (this.geUrl().includes('?path=')) {
+      if (this.geUrl().substring(0, this.geUrl().lastIndexOf('/')) === 'http://localhost:3001') {
+        this.setPath(this.geUrl().substring(0, this.geUrl().lastIndexOf('/')) + '/');
       } else {
-        this.setPath(this.getPath().substring(0, this.getPath().lastIndexOf('/')));
+        this.setPath(this.geUrl().substring(0, this.geUrl().lastIndexOf('/')));
       }
-      this.getContent(this.getPath());
+      this.getContent(this.geUrl());
     };
   };
 
   async deleteFile(file: string): Promise <void> {
-    await this.request.deleteFile(this.getPath(), file);
-    this.getContent(this.getPath());
+    await this.request.deleteFile(this.geUrl(), file);
+    this.getContent(this.geUrl());
+    this.modalDelete('hide');
   };
 
   async deleteFolder(folder: string): Promise <void> {
-    await this.request.deleteDirectory(this.getPath(), folder);
-    this.getContent(this.getPath());
+    await this.request.deleteDirectory(this.geUrl(), folder);
+    this.getContent(this.geUrl());
+    this.modalDelete('hide');
   };
 
   async selectedFolder(foldername: string): Promise <void> {
-      if (this.getPath().includes('?path')) {
-        this.setPath(this.getPath() + '/' + foldername);
+      if (this.geUrl().includes('?path')) {
+        this.setPath(this.geUrl() + '/' + foldername);
       } else {
-        this.setPath(this.getPath() + '?path=' + foldername);
+        this.setPath(this.geUrl() + '?path=' + foldername);
       }
-      this.getContent(this.getPath());
+      this.getContent(this.geUrl());
   };
 
   async getContent(path: string): Promise <void> {
