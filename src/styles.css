@@ -2,6 +2,10 @@
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important;
 }
 
+:root {
+  --bs-danger-htransparent: #dc354559;
+}
+
 html, body {
   min-height: 100vh;
   height: auto;
@@ -26,9 +30,10 @@ html, body {
   padding: 0 !important;
 }
 
-.btn-check:focus+.btn, .btn:focus, .form-control:focus {
+.btn-check:focus+.btn, .btn:focus, .form-control:focus, .form-check-input:focus {
   outline: 0;
-  box-shadow: 0 0 0 0.25rem transparent;
+  border-color: var(--bs-danger);
+  box-shadow: 0 0 0 0.1rem var(--bs-danger-htransparent);
 }
 
 .btn-link {
@@ -43,10 +48,6 @@ html, body {
 
 .icon-size {
   font-size: 1.5rem;
-}
-
-.form-control:focus {
-  border-color: var(--bs-danger);
 }
 
 @media screen and (max-width: 1024px) {
@@ -66,4 +67,9 @@ html, body {
 
 .modal-backdrop {
   display: none;
+}
+
+.form-check-input:checked {
+  background-color: var(--bs-danger);
+  border-color: var(--bs-danger);
 }
