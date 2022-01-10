@@ -24,7 +24,7 @@ export class AppUrl {
         let finalUrl = this.url;
         this.parameters.forEach(parameter => {
             finalUrl = finalUrl + this.setParameterChar(finalUrl) + (parameter.name) + ('=' + parameter.data)
-        })
+        });
     }
 
     setParameterChar(url): string {
