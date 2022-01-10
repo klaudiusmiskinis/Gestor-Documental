@@ -1,19 +1,18 @@
-
 <div class="container-fluid g-0">
 
-    <navbar [path]="getPath()"></navbar>
+    <navbar [path]="geUrl()"></navbar>
 
     <div class="row p-2 g-0 gap-1">
         <div class="row g-0 gap-1">
             <div class="col-auto">
-                <div class="badge bg-secondary" (click)="showNotification('error', 'Click en opciones')">Opciones</div>
+                <div class="badge bg-secondary" (click)="showNotification('default', 'Click en opciones')">Opciones</div>
             </div>
         </div>
-        <div class="col-auto d-grid" *ngIf="getPath().includes('?path=')">
+        <div class="col-auto d-grid" *ngIf="geUrl().includes('?path=')">
             <button class="btn btn-sm btn-outline-secondary shadow-sm" (click)=goBack()>Volver<i class="bi bi-arrow-left-short ms-1"></i></button>
         </div>
         <div class="col-auto d-grid">
-            <button class="btn btn-sm btn-outline-secondary shadow-sm" (click)="getContent(getPath())">Actualizar<i class="bi bi-arrow-clockwise ms-1"></i></button>
+            <button class="btn btn-sm btn-outline-secondary shadow-sm" (click)="getContent(geUrl())">Actualizar<i class="bi bi-arrow-clockwise ms-1"></i></button>
         </div>
         <div class="col-auto d-grid">
             <button class="btn btn-sm btn-outline-secondary shadow-sm">Desplegar directorios<i class="bi bi-arrow-down-short ms-1"></i></button>
@@ -31,23 +30,23 @@
             <folders [folders]="content.folders" (folderEvent)="folderEvent($event)"></folders>
         </div>
         <div *ngIf="content.files && content.files.length > 0">
-            <files [files]="content.files" [path]="getPath()" (fileEvent)="fileEvent($event)"></files>
+            <files [files]="content.files" [path]="geUrl()" (fileEvent)="fileEvent($event)"></files>
         </div>
     </div>
 
     <div class="container-fluid">
         <div class="row g-0 gap-1 p-2">
             <label class="col d-grid" for="file">
-                <div class="btn btn-sm btn-outline-danger">
+                <div class="btn btn-sm btn-danger">
                     Selecciona un archivo
                 </div>
                 <input #fileInputField type="file" name="file" id="file" class="visually-hidden" (change)="checkExistence()">
             </label>
             <div *ngIf="fileInfo.exists" [@slideInRight] class="col-auto">
-                <button type="button" class="btn btn-sm btn-outline-danger px-4" (click)="uploadFile()"><i class="bi bi-cloud-arrow-up-fill"></i></button>
+                <button type="button" class="btn btn-sm btn-danger px-4" (click)="uploadFile()"><i class="bi bi-cloud-arrow-up-fill"></i></button>
             </div>
         </div>
-        <div *ngIf="fileInfo.exists" [@slideInLeft] class="d-flex g-0 gap-1 p-1">
+        <div *ngIf="fileInfo.exists" [@slideInLeft] class="d-flex g-0 gap-1 px-2">
             <span class="badge bg-danger">{{fileInfo.name}}</span>
             <span class="badge bg-danger">{{fileInfo.size}}</span>
             <span class="badge bg-danger">{{fileInfo.extension}}</span>
@@ -62,5 +61,45 @@
         </div>
     </div>
 
+    <div *ngIf="selected" class="modal fade bg-opacity-10 bg-danger" id="confirmationDelete" tabindex="-1" aria-labelledby="confirmationDeleteLabel" aria-hidden="true">
+    <div class="modal-dialog mt-5">
+        <div *ngIf="selected.isFile; then isFile; else isFolder"></div>
+        <ng-template #isFile>
+            <div class="modal-content">
+                <div class="modal-header bg-danger border-0">
+                    <h5 class="modal-title text-light" id="confirmationDeleteLabel">¿Deseas eliminar este archivo?</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <p class="m-0">Vas a eliminar el archivo:</p>
+                    <span *ngIf="selected.element" class="badge bg-light text-danger">{{selected.element}}</span>
+                    <div class="row gap-2 mt-3 mx-2">
+                        <button type="button" class="col d-grid btn btn-sm btn-danger" (click)="deleteFile(selected.element)">Eliminar</button>
+                        <button type="button" class="col d-grid btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template #isFolder>
+            <div class="modal-content">
+                <div class="modal-header bg-danger border-0">
+                    <h5 class="modal-title text-light" id="confirmationDeleteLabel">¿Deseas eliminar esta carpeta?</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <p class="m-0">Vas a eliminar la carpeta:</p>
+                    <span *ngIf="selected.element" class="badge bg-light text-danger">{{selected.element}}</span>
+                    <div class="row gap-2 mt-3 mx-2">
+                        <button type="button" class="col d-grid btn btn-sm btn-danger" (click)="deleteFolder(selected.element)">Eliminar</button>
+                        <button type="button" class="col d-grid btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </div>
+</div>
+
 </div>
 <notifier-container></notifier-container>
+
+    
