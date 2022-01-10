@@ -6,6 +6,7 @@ import { NotifierService } from 'angular-notifier';
 import { FileInfo } from '../models/file.model';
 import { slideIn, fadeIn } from '../config/animations.config';
 import { AppUrl } from '../models/appurl.model';
+import { FormControl, Validators } from '@angular/forms';
 declare var $: any;
 
 @Component({
@@ -20,11 +21,13 @@ export class WorkspaceComponent implements OnInit {
   public content: any;
   public fileInfo: FileInfo;
   public selected: any;
+  public newResourceName: FormControl;
   private notifier: NotifierService;
 
   /* Constructor */
   constructor(private request: RequestService, notifier: NotifierService) {
     this.url = new AppUrl('http://localhost:3001/');
+    this.newResourceName = new FormControl('', [Validators.required])
     this.fileInfo = new FileInfo(false);
     this.notifier = notifier;
     this.selected = true;
@@ -32,11 +35,16 @@ export class WorkspaceComponent implements OnInit {
 
   @ViewChild(MatAccordion) accordion: MatAccordion;
   @ViewChild('fileInputField') fileInputField: ElementRef;
+  @ViewChild('editNewNameCheckBox') checkBoxName: ElementRef;
 
   /* Methods */
   async ngOnInit(): Promise <void> {
     await this.getContent(this.url.url);
   };
+
+  info() {
+    console.log(this.checkBoxName.nativeElement.value)
+  }
 
   setSelected(element: string, isFile: boolean): void {
     this.selected = {
@@ -112,7 +120,7 @@ export class WorkspaceComponent implements OnInit {
     formData.append('file', file, file.name);
     headers.append('Content-Type', 'multipart/form-data');
     headers.append('Accept', 'application/json');
-    const options = { 
+    const options = {
       headers: headers 
     };
     await this.request.uploadFile(formData, options, this.geUrl());
