@@ -17,6 +17,9 @@
         <div class="col-auto d-grid">
             <button class="btn btn-sm btn-outline-secondary shadow-sm">Ver ultimas versiones<i class="bi bi-eye-fill ms-1"></i></button>
         </div>
+        <div class="col-auto d-grid">
+            <button class="btn btn-sm btn-outline-secondary shadow-sm" data-bs-toggle="modal" data-bs-target="#makeDirectoryModal">Crear una carpeta<i class="bi bi-folder-plus ms-1"></i></button>
+        </div>
     </div>
 
     <div *ngIf="content" class="container-fluid">
@@ -47,49 +50,9 @@
         </div>
     </div>
 
-    <div>
-        <h4>Crear carpeta</h4>
-        <div>
-            <input type="text" name="directoryName" id="directoryName">
-            <button type="button" class="is-danger" (click)="makeDirectory($event)">Crear carpeta</button>
-        </div>
-    </div>
-
     <div *ngIf="selected" class="modal fade bg-opacity-75 bg-light" id="confirmationDelete" tabindex="-1" aria-labelledby="confirmationDeleteLabel" aria-hidden="true">
         <div class="modal-dialog mt-5">
             <div *ngIf="selected.isFile; then isFile; else isFolder"></div>
-            <ng-template #isFile>
-                <div class="modal-content">
-                    <div class="modal-header bg-danger border-0">
-                        <h5 class="modal-title text-light" id="confirmationDeleteLabel">¿Deseas eliminar este archivo?</h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body text-center">
-                        <p class="m-0">Vas a eliminar el archivo:</p>
-                        <span *ngIf="selected.element" class="badge bg-light text-danger">{{selected.element}}</span>
-                        <div class="row gap-2 mt-3 mx-2">
-                            <button type="button" class="col d-grid btn btn-sm btn-danger" (click)="deleteFile(selected.element)">Eliminar</button>
-                            <button type="button" class="col d-grid btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        </div>
-                    </div>
-                </div>
-            </ng-template>
-            <ng-template #isFolder>
-                <div class="modal-content">
-                    <div class="modal-header bg-danger border-0">
-                        <h5 class="modal-title text-light" id="confirmationDeleteLabel">¿Deseas eliminar esta carpeta?</h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body text-center">
-                        <p class="m-0">Vas a eliminar la carpeta:</p>
-                        <span *ngIf="selected.element" class="badge bg-light text-danger">{{selected.element}}</span>
-                        <div class="row gap-2 mt-3 mx-2">
-                            <button type="button" class="col d-grid btn btn-sm btn-danger" (click)="deleteFolder(selected.element)">Eliminar</button>
-                            <button type="button" class="col d-grid btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        </div>
-                    </div>
-                </div>
-            </ng-template>
         </div>
     </div>
     
@@ -115,13 +78,6 @@
                         </div>
                         <div class="d-grid mt-2 mx-1">
                             <div *ngIf="checkBoxBoolean; then checkBoxBooleanIsTrue; else checkBoxBooleanIsFalse"></div>
-                            <ng-template #checkBoxBooleanIsTrue>
-                                <input type="text" class="form-control" #newName placeholder="{{fileInfo.name || 'Introduce el nombre'}}" aria-describedby="newName">
-                                <p [@fadeIn] class="text-danger my-0 mt-1"><i class="bi bi-exclamation-triangle-fill me-2"></i>Si el nombre del archivo coincide con otro, se sobreescribira.</p>
-                            </ng-template>
-                            <ng-template #checkBoxBooleanIsFalse>
-                                <input type="text" class="form-control" #newName placeholder="{{fileInfo.name || 'Introduce el nombre'}}" aria-describedby="newName" disabled>
-                            </ng-template>
                         </div>
                     </div>
                     <div class="row gap-2 mt-3 mx-1">
@@ -133,7 +89,79 @@
         </div>
     </div>
 
+    <div class="modal fade bg-opacity-75 bg-light" id="makeDirectoryModal" tabindex="-1" aria-labelledby="makeDirectoryModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger border-0">
+                    <h5 class="modal-title text-light" id="makeDirectoryModalLabel">Crear una carpeta</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="row mx-2" [formGroup]="makeDirectoryForm">
+                        <span class="p-0 mb-1">Nombre de la carpeta</span>
+                        <input class="form-control" type="text" formControlName="directory" id="directoryName" placeholder="Introduce el nombre de la carpeta" autocomplete="off">
+                        <div *ngIf="(makeDirectoryForm.controls['directory'].errors || makeDirectoryForm.controls['directory'].errors?.['required'] && makeDirectoryForm.controls['directory'].touched); then invalid else valid"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 <notifier-container></notifier-container>
 
-    
+<ng-template #isFile>
+    <div class="modal-content">
+        <div class="modal-header bg-danger border-0">
+            <h5 class="modal-title text-light" id="confirmationDeleteLabel">¿Deseas eliminar este archivo?</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-center">
+            <p class="m-0">Vas a eliminar el archivo:</p>
+            <span *ngIf="selected.element" class="badge bg-light text-danger">{{ selected.element }}</span>
+            <div class="row gap-2 mt-3 mx-2">
+                <button type="button" class="col d-grid btn btn-sm btn-danger" (click)="deleteFile(selected.element)">Eliminar</button>
+                <button type="button" class="col d-grid btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</ng-template>
+<ng-template #isFolder>
+    <div class="modal-content">
+        <div class="modal-header bg-danger border-0">
+            <h5 class="modal-title text-light" id="confirmationDeleteLabel">¿Deseas eliminar esta carpeta?</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-center">
+            <p class="m-0">Vas a eliminar la carpeta:</p>
+            <span *ngIf="selected.element" class="badge bg-light text-danger">{{ selected.element }}</span>
+            <div class="row gap-2 mt-3 mx-2">
+                <button type="button" class="col d-grid btn btn-sm btn-danger" (click)="deleteFolder(selected.element)">Eliminar</button>
+                <button type="button" class="col d-grid btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #invalid>
+    <span [@fadeIn] class="p-0 text-danger"><i class="bi bi-x me-1"></i>Esta nombre no es válido (solo letras y mínimo 4 caracteres).</span>
+    <div class="row g-0 gap-2 mt-3">
+        <button type="button" class="col d-grid btn btn-sm btn-danger" disabled>Crear</button>
+        <button type="button" class="col d-grid btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+    </div>
+</ng-template>
+<ng-template #valid>
+    <span [@fadeIn] class="p-0 text-success"><i class="bi bi-check-lg me-1"></i>Puedes crear la carpeta</span>
+    <div class="row g-0 gap-2 mt-3">
+        <button type="button" class="col d-grid btn btn-sm btn-danger" (click)="makeDirectory()">Crear</button>
+        <button type="button" class="col d-grid btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+    </div>
+</ng-template>
+
+<ng-template #checkBoxBooleanIsTrue>
+    <input type="text" class="form-control" #newName placeholder="{{fileInfo.name || 'Introduce el nombre'}}">
+    <p [@fadeIn] class="text-danger my-0 mt-1"><i class="bi bi-exclamation-triangle-fill me-2"></i>Si el nombre del archivo coincide con otro, se sobreescribira.</p>
+</ng-template>
+<ng-template #checkBoxBooleanIsFalse>
+    <input type="text" class="form-control" #newName placeholder="{{fileInfo.name || 'Introduce el nombre'}}" disabled>
+</ng-template>
