@@ -21,7 +21,7 @@ export class WorkspaceComponent implements OnInit {
   public content: any;
   public fileInfo: FileInfo;
   public selected: any;
-  public checkBoxName: boolean;
+  public checkBoxBoolean: boolean;
   public newResourceName: FormControl;
   private notifier: NotifierService;
 
@@ -30,8 +30,8 @@ export class WorkspaceComponent implements OnInit {
     this.url = new AppUrl('http://localhost:3001/');
     this.newResourceName = new FormControl('', [Validators.required])
     this.fileInfo = new FileInfo(false);
+    this.checkBoxBoolean = false;
     this.notifier = notifier;
-    this.checkBoxName = false;
     this.selected = true;
   };
 
@@ -44,8 +44,8 @@ export class WorkspaceComponent implements OnInit {
     await this.getContent(this.url.url);
   };
 
-  toggleCheckBoxName() {
-    this.checkBoxName = !this.checkBoxName;
+  togglecheckBoxBoolean() {
+    this.checkBoxBoolean = !this.checkBoxBoolean;
   }
 
   setSelected(element: string, isFile: boolean): void {
@@ -90,7 +90,7 @@ export class WorkspaceComponent implements OnInit {
 		this.notifier.notify(type, message);
 	}
 
-  geUrl() {
+  getUrl() {
     return this.url.url;
   }
 
@@ -101,9 +101,9 @@ export class WorkspaceComponent implements OnInit {
   async makeDirectory(event: any): Promise <void> {
     const directoryName = event.path[1].firstChild.value;
     if (directoryName) {
-      await this.request.makeDirectory(this.geUrl(), directoryName);
+      await this.request.makeDirectory(this.getUrl(), directoryName);
     };
-    this.getContent(this.geUrl());
+    this.getContent(this.getUrl());
   };
 
   checkExistence() {
@@ -114,51 +114,51 @@ export class WorkspaceComponent implements OnInit {
   }
 
   async uploadFile(): Promise <void> {
+    console.log(this.getUrl())
     const fileList: FileList = this.fileInputField.nativeElement.files;
     const file: File = fileList[0];
     const formData: FormData = new FormData();
     const headers = new Headers();
-    console.log(file)
     formData.append('file', file, file.name);
     headers.append('Content-Type', 'multipart/form-data');
     headers.append('Accept', 'application/json');
     const options = {
       headers: headers 
-    }; 
-    await this.request.uploadFile(formData, options, this.geUrl(), this.newName.nativeElement.value);
-    this.getContent(this.geUrl());
+    };
+    await this.request.uploadFile(formData, options, this.getUrl(), this.newName.nativeElement.value);
+    this.getContent(this.getUrl());
   };
 
   goBack(): void {
-    if (this.geUrl().includes('?path=')) {
-      if (this.geUrl().substring(0, this.geUrl().lastIndexOf('/')) === 'http://localhost:3001') {
-        this.setPath(this.geUrl().substring(0, this.geUrl().lastIndexOf('/')) + '/');
+    if (this.getUrl().includes('?path=')) {
+      if (this.getUrl().substring(0, this.getUrl().lastIndexOf('/')) === 'http://localhost:3001') {
+        this.setPath(this.getUrl().substring(0, this.getUrl().lastIndexOf('/')) + '/');
       } else {
-        this.setPath(this.geUrl().substring(0, this.geUrl().lastIndexOf('/')));
+        this.setPath(this.getUrl().substring(0, this.getUrl().lastIndexOf('/')));
       }
-      this.getContent(this.geUrl());
+      this.getContent(this.getUrl());
     };
   };
 
   async deleteFile(file: string): Promise <void> {
-    await this.request.deleteFile(this.geUrl(), file);
-    this.getContent(this.geUrl());
+    await this.request.deleteFile(this.getUrl(), file);
+    this.getContent(this.getUrl());
     this.modalDelete('hide');
   };
 
   async deleteFolder(folder: string): Promise <void> {
-    await this.request.deleteDirectory(this.geUrl(), folder);
-    this.getContent(this.geUrl());
+    await this.request.deleteDirectory(this.getUrl(), folder);
+    this.getContent(this.getUrl());
     this.modalDelete('hide');
   };
 
   async selectedFolder(foldername: string): Promise <void> {
-      if (this.geUrl().includes('?path')) {
-        this.setPath(this.geUrl() + '/' + foldername);
+      if (this.getUrl().includes('?path')) {
+        this.setPath(this.getUrl() + '/' + foldername);
       } else {
-        this.setPath(this.geUrl() + '?path=' + foldername);
+        this.setPath(this.getUrl() + '?path=' + foldername);
       }
-      this.getContent(this.geUrl());
+      this.getContent(this.getUrl());
   };
 
   async getContent(path: string): Promise <void> {
