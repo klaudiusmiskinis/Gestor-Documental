@@ -58,6 +58,18 @@ export const fadeIn = [
   ]),
 ]
 
+export const fadeOut = [
+  /* FadeIn */
+  trigger('fadeOut', [
+    transition('* => void', [
+      style({
+        opacity: '1',
+      }),
+      animate('1000ms ease')
+    ]),
+  ]),
+]
+
 export const allCustomAnimations = [
   slideIn, 
   fadeIn
