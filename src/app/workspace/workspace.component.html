@@ -1,6 +1,6 @@
 <div class="container-fluid g-0">
 
-    <navbar [path]="geUrl()"></navbar>
+    <navbar [path]="getUrl()"></navbar>
 
     <div class="row p-2 g-0 gap-1">
         <div class="row g-0 gap-1">
@@ -8,11 +8,11 @@
                 <div class="badge bg-secondary" (click)="showNotification('default', 'Click en opciones')">Opciones</div>
             </div>
         </div>
-        <div class="col-auto d-grid" *ngIf="geUrl().includes('?path=')">
+        <div class="col-auto d-grid" *ngIf="getUrl().includes('?path=')">
             <button class="btn btn-sm btn-outline-secondary shadow-sm" (click)=goBack()>Volver<i class="bi bi-arrow-left-short ms-1"></i></button>
         </div>
         <div class="col-auto d-grid">
-            <button class="btn btn-sm btn-outline-secondary shadow-sm" (click)="getContent(geUrl())">Actualizar<i class="bi bi-arrow-clockwise ms-1"></i></button>
+            <button class="btn btn-sm btn-outline-secondary shadow-sm" (click)="getContent(getUrl())">Actualizar<i class="bi bi-arrow-clockwise ms-1"></i></button>
         </div>
         <div class="col-auto d-grid">
             <button class="btn btn-sm btn-outline-secondary shadow-sm">Ver ultimas versiones<i class="bi bi-eye-fill ms-1"></i></button>
@@ -24,7 +24,7 @@
             <folders [folders]="content.folders" (folderEvent)="folderEvent($event)"></folders>
         </div>
         <div *ngIf="content.files && content.files.length > 0">
-            <files [files]="content.files" [path]="geUrl()" (fileEvent)="fileEvent($event)"></files>
+            <files [files]="content.files" [path]="getUrl()" (fileEvent)="fileEvent($event)"></files>
         </div>
     </div>
 
@@ -36,7 +36,7 @@
                 </div>
                 <input #fileInputField type="file" name="file" id="file" class="visually-hidden" (change)="checkExistence()">
             </label>
-            <div *ngIf="fileInfo.exists" [@slideInRight] class="col-auto">
+            <div *ngIf="fileInfo.exists" [@fadeIn] class="col-auto">
                 <button type="button" class="btn btn-sm btn-danger px-4" data-bs-toggle="modal" data-bs-target="#uploadNameChange"><i class="bi bi-cloud-arrow-up-fill"></i></button>
             </div>
         </div>
@@ -102,23 +102,24 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <p class="text-danger"><i class="bi bi-info-square-fill me-2"></i>Puedes cambiar el nombre del archivo y añadirle una versión.</p>
-                        <div *ngIf="fileInfo.exists" [@slideInLeft] class="d-flex gap-1 justify-content-center">
+                        <div *ngIf="fileInfo.exists" class="d-flex gap-1 mb-2">
                             <span class="badge bg-danger">{{fileInfo.name}}</span>
                             <span class="badge bg-danger">{{fileInfo.size}}</span>
                         </div>
+                        <p class="text-danger my-0"><i class="bi bi-info-square-fill me-2"></i>Puedes cambiar el nombre del archivo y añadirle una versión.</p>
                         <div class="d-grid mx-1 mt-2">
                             <div class="form-check form-switch">
-                                <input #editNewNameCheckBox (change)="toggleCheckBoxName()" class="form-check-input" type="checkbox" role="switch">
+                                <input #editNewNameCheckBox (change)="togglecheckBoxBoolean()" class="form-check-input" type="checkbox" role="switch">
                                 <label class="form-check-label" for="editNewNameCheckBox">Editar nombre</label>
                             </div>
                         </div>
                         <div class="d-grid mt-2 mx-1">
-                            <div *ngIf="checkBoxName; then checkBoxNameIsTrue; else checkBoxNameIsFalse"></div>
-                            <ng-template #checkBoxNameIsTrue>
+                            <div *ngIf="checkBoxBoolean; then checkBoxBooleanIsTrue; else checkBoxBooleanIsFalse"></div>
+                            <ng-template #checkBoxBooleanIsTrue>
                                 <input type="text" class="form-control" #newName placeholder="{{fileInfo.name || 'Introduce el nombre'}}" aria-describedby="newName">
+                                <p [@fadeIn] class="text-danger my-0 mt-1"><i class="bi bi-exclamation-triangle-fill me-2"></i>Si el nombre del archivo coincide con otro, se sobreescribira.</p>
                             </ng-template>
-                            <ng-template #checkBoxNameIsFalse>
+                            <ng-template #checkBoxBooleanIsFalse>
                                 <input type="text" class="form-control" #newName placeholder="{{fileInfo.name || 'Introduce el nombre'}}" aria-describedby="newName" disabled>
                             </ng-template>
                         </div>
