@@ -45,7 +45,8 @@ export class RequestService {
     };
   };
 
-  async uploadFile(formData: FormData, options: Object, path: string): Promise <void> {
+  async uploadFile(formData: FormData, options: Object, path: string, name: string): Promise <void> {
+    console.log(path + '?newFileName=' + name);
     const status = this.parse(await this.http.post<any>(path, formData, options).toPromise());
     if (!status.success) {
       this.setError('Error con la subida del archivo');
