@@ -37,7 +37,7 @@
                 <input #fileInputField type="file" name="file" id="file" class="visually-hidden" (change)="checkExistence()">
             </label>
             <div *ngIf="fileInfo.exists" [@slideInRight] class="col-auto">
-                <button type="button" class="btn btn-sm btn-danger px-4" (click)="uploadFile()"><i class="bi bi-cloud-arrow-up-fill"></i></button>
+                <button type="button" class="btn btn-sm btn-danger px-4" data-bs-toggle="modal" data-bs-target="#uploadNameChange"><i class="bi bi-cloud-arrow-up-fill"></i></button>
             </div>
         </div>
         <div *ngIf="fileInfo.exists" [@slideInLeft] class="d-flex g-0 gap-1 px-2">
@@ -92,42 +92,39 @@
             </ng-template>
         </div>
     </div>
-
-        <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#uploadNameChange">
-        Launch demo modal
-    </button>
     
-    <!-- Modal -->
     <div class="modal fade bg-opacity-75 bg-light" id="uploadNameChange" tabindex="-1" aria-labelledby="uploadNameChangeLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header bg-danger border-0">
-                <h5 class="modal-title text-light" id="uploadNameChangeLabel">Subida de archivo</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="modal-title text-light" id="uploadNameChangeLabel">Subida de archivo</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         <p class="text-danger"><i class="bi bi-info-square-fill me-2"></i>Puedes cambiar el nombre del archivo y añadirle una versión.</p>
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-check">
-                                    <input #editNewNameCheckBox (change)="info()" class="form-check-input" type="checkbox">
-                                    <label class="form-check-label" for="editNewNameCheckBox">Editar nombre</label>
-                                </div>
+                        <div *ngIf="fileInfo.exists" [@slideInLeft] class="d-flex gap-1 justify-content-center">
+                            <span class="badge bg-danger">{{fileInfo.name}}</span>
+                            <span class="badge bg-danger">{{fileInfo.size}}</span>
+                        </div>
+                        <div class="d-grid mx-1 mt-2">
+                            <div class="form-check form-switch">
+                                <input #editNewNameCheckBox (change)="toggleCheckBoxName()" class="form-check-input" type="checkbox" role="switch">
+                                <label class="form-check-label" for="editNewNameCheckBox">Editar nombre</label>
                             </div>
                         </div>
-                        <div class="row mt-2">
-                            <div class="col">
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text bg-danger text-light" id="name">Nombre</span>
-                                    <input type="text" class="form-control" placeholder="{{fileInfo.name || 'Introduce el nombre'}}" aria-describedby="name">
-                                </div>
-                            </div>
+                        <div class="d-grid mt-2 mx-1">
+                            <div *ngIf="checkBoxName; then checkBoxNameIsTrue; else checkBoxNameIsFalse"></div>
+                            <ng-template #checkBoxNameIsTrue>
+                                <input type="text" class="form-control" #newName placeholder="{{fileInfo.name || 'Introduce el nombre'}}" aria-describedby="newName">
+                            </ng-template>
+                            <ng-template #checkBoxNameIsFalse>
+                                <input type="text" class="form-control" #newName placeholder="{{fileInfo.name || 'Introduce el nombre'}}" aria-describedby="newName" disabled>
+                            </ng-template>
                         </div>
                     </div>
-                    <div class="row gap-2 mt-3 mx-2">
-                        <button type="button" class="col d-grid btn btn-sm btn-danger">Subir</button>
+                    <div class="row gap-2 mt-3 mx-1">
+                        <button type="button" class="col d-grid btn btn-sm btn-danger" (click)="uploadFile()">Subir</button>
                         <button type="button" class="col d-grid btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                     </div>
                 </div>
