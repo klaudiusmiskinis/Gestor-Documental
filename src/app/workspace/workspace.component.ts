@@ -21,6 +21,7 @@ export class WorkspaceComponent implements OnInit {
   public content: any;
   public fileInfo: FileInfo;
   public selected: any;
+  public checkBoxName: boolean;
   public newResourceName: FormControl;
   private notifier: NotifierService;
 
@@ -30,20 +31,21 @@ export class WorkspaceComponent implements OnInit {
     this.newResourceName = new FormControl('', [Validators.required])
     this.fileInfo = new FileInfo(false);
     this.notifier = notifier;
+    this.checkBoxName = false;
     this.selected = true;
   };
 
   @ViewChild(MatAccordion) accordion: MatAccordion;
   @ViewChild('fileInputField') fileInputField: ElementRef;
-  @ViewChild('editNewNameCheckBox') checkBoxName: ElementRef;
+  @ViewChild('newName') newName: ElementRef;
 
   /* Methods */
   async ngOnInit(): Promise <void> {
     await this.getContent(this.url.url);
   };
 
-  info() {
-    console.log(this.checkBoxName.nativeElement.value)
+  toggleCheckBoxName() {
+    this.checkBoxName = !this.checkBoxName;
   }
 
   setSelected(element: string, isFile: boolean): void {
@@ -122,8 +124,8 @@ export class WorkspaceComponent implements OnInit {
     headers.append('Accept', 'application/json');
     const options = {
       headers: headers 
-    };
-    await this.request.uploadFile(formData, options, this.geUrl());
+    }; 
+    await this.request.uploadFile(formData, options, this.geUrl(), this.newName.nativeElement.value);
     this.getContent(this.geUrl());
   };
 
