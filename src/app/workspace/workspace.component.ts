@@ -4,24 +4,24 @@ import { RequestService } from '../services/request.service';
 import { MatAccordion } from '@angular/material/expansion';
 import { NotifierService } from 'angular-notifier';
 import { FileInfo } from '../models/file.model';
-import { slideIn, fadeIn } from '../config/animations.config';
+import { slideIn, fadeIn, fadeOut } from '../config/animations.config';
 import { AppUrl } from '../models/appurl.model';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 declare var $: any;
-
 @Component({
   selector: 'workspace',
   templateUrl: './workspace.component.html',
-  animations: [slideIn, fadeIn]
+  animations: [slideIn, fadeIn, fadeOut]
 })
 
 export class WorkspaceComponent implements OnInit {
   /* Atributes */
   public url: AppUrl;
   public content: any;
-  public fileInfo: FileInfo;
   public selected: any;
+  public fileInfo: FileInfo;
   public checkBoxBoolean: boolean;
+  public makeDirectoryForm: FormGroup;
   public newResourceName: FormControl;
   private notifier: NotifierService;
 
@@ -33,6 +33,9 @@ export class WorkspaceComponent implements OnInit {
     this.checkBoxBoolean = false;
     this.notifier = notifier;
     this.selected = true;
+    this.makeDirectoryForm = new FormGroup({
+      directory: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(50), Validators.pattern('^[a-zA-Z]+$')])
+    })
   };
 
   @ViewChild(MatAccordion) accordion: MatAccordion;
@@ -57,6 +60,14 @@ export class WorkspaceComponent implements OnInit {
 
   modalDelete(state: string): void {
     $('#confirmationDelete').modal(state);
+  }
+
+  modalUpload(state: string): void {
+    $('#uploadNameChange').modal(state);
+  }
+
+  modalmakeDirectory(state: string): void {
+    $('#makeDirectoryModal').modal(state);
   }
 
   folderEvent(event) {
@@ -98,8 +109,8 @@ export class WorkspaceComponent implements OnInit {
     this.url.url = path;
   };
 
-  async makeDirectory(event: any): Promise <void> {
-    const directoryName = event.path[1].firstChild.value;
+  async makeDirectory(): Promise <void> {
+    const directoryName = this.makeDirectoryForm.value.directory;
     if (directoryName) {
       await this.request.makeDirectory(this.getUrl(), directoryName);
     };
@@ -114,7 +125,7 @@ export class WorkspaceComponent implements OnInit {
   }
 
   async uploadFile(): Promise <void> {
-    console.log(this.getUrl())
+    console.log()
     const fileList: FileList = this.fileInputField.nativeElement.files;
     const file: File = fileList[0];
     const formData: FormData = new FormData();
