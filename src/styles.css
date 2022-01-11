@@ -33,7 +33,7 @@ html, body {
 
 .btn-check:focus+.btn, .btn:focus, .form-control:focus, .form-check-input:focus {
   outline: 0;
-  border-color: var(--bs-danger);
+  border-color: transparent;
   box-shadow: 0 0 0 0.1rem var(--bs-danger-htransparent);
   transition: var(--tranition);
 }
