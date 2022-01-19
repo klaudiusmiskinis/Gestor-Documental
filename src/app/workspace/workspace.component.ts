@@ -2,7 +2,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { RequestService } from '../services/request.service';
 import { MatAccordion } from '@angular/material/expansion';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { slideIn, fadeIn, fadeOut } from '../config/animations.config';
 import { NotifierService } from 'angular-notifier';
 import { FileInfo } from '../models/file.model';
@@ -34,7 +34,12 @@ export class WorkspaceComponent implements OnInit {
     this.notifier = notifier;
     this.selected = true;
     this.makeDirectoryForm = new FormGroup({
-      directory: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(50), Validators.pattern('^[a-zA-Z]+$')])
+      directory: new FormControl('', [
+        Validators.required, 
+        Validators.minLength(4), 
+        Validators.maxLength(50), 
+        Validators.pattern('^[a-zA-Z\\s]+$')
+      ])
     })
   };
 
@@ -101,7 +106,7 @@ export class WorkspaceComponent implements OnInit {
 		this.notifier.notify(type, message);
 	}
 
-  getUrl() {
+  getUrl(): string {
     return this.url.url;
   }
 
@@ -117,18 +122,24 @@ export class WorkspaceComponent implements OnInit {
     this.getContent(this.getUrl());
   };
 
-  checkExistence() {
+  checkExistence(): void {
     const file = this.fileInputField.nativeElement;
     if (file.files.length > 0) {
       this.fileInfo = new FileInfo(true, file.files[0].name, file.files[0].size)
     }
   }
 
-  checkFolderName() {
-    const directoryName = this.makeDirectoryForm.value.directory;
-    this.content.folders.filter(folder => {
-      console.log(folder)
-    })
+  checkFolderName(): any {
+    if (this.content.folders) {
+      const directoryName = this.makeDirectoryForm.value.directory;
+      this.content.folders.filter(folder => {
+        if(folder === directoryName) {
+          return true;
+        } else {
+          return false;
+        }
+      })
+    }
   }
 
   async uploadFile(): Promise <void> {
@@ -149,11 +160,11 @@ export class WorkspaceComponent implements OnInit {
 
   goBack(): void {
     if (this.getUrl().includes('?path=')) {
-      if (this.getUrl().substring(0, this.getUrl().lastIndexOf('/')) === 'http://localhost:3001') {
+      if (this.getUrl().substring(0, this.getUrl().lastIndexOf('/')) === 'http://192.168.1.148:3001') {
         this.setPath(this.getUrl().substring(0, this.getUrl().lastIndexOf('/')) + '/');
       } else {
         this.setPath(this.getUrl().substring(0, this.getUrl().lastIndexOf('/')));
-      }
+      };
       this.getContent(this.getUrl());
     };
   };
