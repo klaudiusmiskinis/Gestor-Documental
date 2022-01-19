@@ -2,11 +2,11 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { RequestService } from '../services/request.service';
 import { MatAccordion } from '@angular/material/expansion';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { slideIn, fadeIn, fadeOut } from '../config/animations.config';
 import { NotifierService } from 'angular-notifier';
 import { FileInfo } from '../models/file.model';
-import { slideIn, fadeIn, fadeOut } from '../config/animations.config';
 import { AppUrl } from '../models/appurl.model';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 declare var $: any;
 @Component({
   selector: 'workspace',
@@ -124,8 +124,14 @@ export class WorkspaceComponent implements OnInit {
     }
   }
 
+  checkFolderName() {
+    const directoryName = this.makeDirectoryForm.value.directory;
+    this.content.folders.filter(folder => {
+      console.log(folder)
+    })
+  }
+
   async uploadFile(): Promise <void> {
-    console.log()
     const fileList: FileList = this.fileInputField.nativeElement.files;
     const file: File = fileList[0];
     const formData: FormData = new FormData();
@@ -137,6 +143,7 @@ export class WorkspaceComponent implements OnInit {
       headers: headers 
     };
     await this.request.uploadFile(formData, options, this.getUrl(), this.newName.nativeElement.value);
+    this.modalUpload('hide');
     this.getContent(this.getUrl());
   };
 
