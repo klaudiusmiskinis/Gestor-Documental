@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { SidebarComponent } from './sidebar/sidebar.component';
+import { WorkspaceComponent } from './workspace/workspace.component';
 
 const routes: Routes = [
-  { path: 'workspace', component: SidebarComponent, pathMatch: 'full' },
+  { path: 'workspace', component: WorkspaceComponent, pathMatch: 'full' },
   { path: '',   redirectTo: '/workspace', pathMatch: 'full' },
 ];
 
