@@ -11,7 +11,7 @@
                         <accordion-group>
                             <div class="badge bg-secondary pull-left float-left mb-2"><i class="bi bi-gear-fill me-2"></i>Opciones de {{folder}}</div>
                             <button class="btn justify-content-between d-flex w-100 shadow-none" accordion-heading type="button">
-                                <div class="text-danger pull-left float-left">{{folder}}</div>
+                                <div class="text-danger text-truncate pull-left float-left">{{folder}}</div>
                                 <span class="text-danger icon-size" (click)="folderEmitter('goinside', folder)"><i class="bi bi-folder-symlink-fill"></i></span>
                             </button>
                             <div class="row">
@@ -37,7 +37,7 @@
                         <accordion-group>
                             <div class="badge bg-secondary pull-left float-left mb-2"><i class="bi bi-gear-fill me-2"></i>Opciones de {{folders[i + 1]}}</div>
                             <button class="btn justify-content-between d-flex w-100 shadow-none" accordion-heading type="button">
-                                <div class="text-danger pull-left float-left">{{folders[i + 1]}}</div>
+                                <div class="text-danger text-truncate pull-left float-left">{{folders[i + 1]}}</div>
                                 <span class="text-danger icon-size" (click)="folderEmitter('goinside', folders[i + 1])"><i class="bi bi-folder-symlink-fill"></i></span>
                             </button>
                             <div class="row">
@@ -63,7 +63,7 @@
                         <accordion-group>
                             <div class="badge bg-secondary pull-left float-left mb-2"><i class="bi bi-gear-fill me-2"></i>Opciones de {{folders[i + 2]}}</div>
                             <button class="btn justify-content-between d-flex w-100 shadow-none" accordion-heading type="button">
-                                <div class="text-danger pull-left float-left">{{folders[i + 2]}}</div>
+                                <div class="text-danger text-truncate pull-left float-left">{{folders[i + 2]}}</div>
                                 <span class="text-danger icon-size" (click)="folderEmitter('goinside', folders[i + 2])"><i class="bi bi-folder-symlink-fill"></i></span>
                             </button>
                             <div class="row">
