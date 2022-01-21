@@ -98,6 +98,7 @@
                 </div>
                 <div class="modal-body">
                     <form class="row p-0 m-0" [formGroup]="makeDirectoryForm">
+                        <p class="text-danger mx-0 my-1"><i class="bi bi-info-square-fill me-2"></i>No puedes crear carpetas con nombres iguales.</p>
                         <p class="text-danger mx-0 my-1"><i class="bi bi-info-square-fill me-2"></i>Mínimo 4 caracteres, sin números ni símbolos.</p>
                         <span class="p-0 ms-2 mt-1">Nombre de la carpeta</span>
                         <input class="form-control" type="text" formControlName="directory" id="directoryName" placeholder="Introduce el nombre de la carpeta" (input)="checkFolderName()" autocomplete="off">
