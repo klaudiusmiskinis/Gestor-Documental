@@ -38,7 +38,8 @@ export class WorkspaceComponent implements OnInit {
         Validators.required, 
         Validators.minLength(4), 
         Validators.maxLength(50), 
-        Validators.pattern('^[a-zA-Z\\s]+$')
+        Validators.pattern('^[a-zA-Z\\s]+$'),
+        this.validateFoldername.bind(this)
       ])
     })
   };
@@ -51,6 +52,21 @@ export class WorkspaceComponent implements OnInit {
   async ngOnInit(): Promise <void> {
     await this.getContent(this.url.url);
   };
+
+  validateFoldername(control: AbstractControl): {[key: string]: any} | null  {
+    console.log(control)
+    if (control.value) {
+      let response = this.content.folders.filter(folder => {
+        if(folder === control.value) {
+          return folder;
+        }
+      })
+      if (response.length > 0) {
+        return { 'nameExists': true}
+      }
+    }
+    return null;
+  }
 
   togglecheckBoxBoolean() {
     this.checkBoxBoolean = !this.checkBoxBoolean;
