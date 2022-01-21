@@ -22,6 +22,8 @@ export class WorkspaceComponent implements OnInit {
   public fileInfo: FileInfo;
   public checkBoxBoolean: boolean;
   public makeDirectoryForm: FormGroup;
+  public editDirectoryName: FormGroup;
+  public editFileName: FormGroup;
   public newResourceName: FormControl;
   private notifier: NotifierService;
 
@@ -42,6 +44,26 @@ export class WorkspaceComponent implements OnInit {
         this.validateFoldername.bind(this)
       ])
     })
+
+    this.editDirectoryName = new FormGroup({
+      folderName: new FormControl('', [
+        Validators.required, 
+        Validators.minLength(4), 
+        Validators.maxLength(50), 
+        Validators.pattern('^[a-zA-Z\\s]+$'),
+        this.validateFoldername.bind(this)
+      ])
+    })
+
+    this.editFileName = new FormGroup({
+      fileName: new FormControl('', [
+        Validators.required, 
+        Validators.minLength(4), 
+        Validators.maxLength(50), 
+        Validators.pattern('^[A-Za-z0-9-\\s]+$'),
+        this.validateFilename.bind(this)
+      ])
+    })
   };
 
   @ViewChild(MatAccordion) accordion: MatAccordion;
@@ -54,13 +76,26 @@ export class WorkspaceComponent implements OnInit {
   };
 
   validateFoldername(control: AbstractControl): {[key: string]: any} | null  {
-    console.log(control)
     if (control.value) {
       let response = this.content.folders.filter(folder => {
         if(folder === control.value) {
           return folder;
         }
-      })
+      });
+      if (response.length > 0) {
+        return { 'nameExists': true}
+      }
+    }
+    return null;
+  }
+
+  validateFilename(control: AbstractControl): {[key: string]: any} | null  {
+    if (control.value) {
+      let response = this.content.files.filter(file => {
+        if(file === control.value) {
+          return file;
+        }
+      });
       if (response.length > 0) {
         return { 'nameExists': true}
       }
@@ -91,11 +126,19 @@ export class WorkspaceComponent implements OnInit {
     $('#makeDirectoryModal').modal(state);
   }
 
+  modalEditFile(state: string): void {
+    $('#editFileName').modal(state);
+  }
+
+  modalEditFolder(state: string): void {
+    $('#editFolderName').modal(state);
+  }
+
   folderEvent(event) {
     this.setSelected(event.folder, false);
     switch (event.type) {
       case 'edit':
-          console.log('edit', event.folder);
+          this.modalEditFolder('show');
       break;
       case 'goinside':
         this.selectedFolder(event.folder);
@@ -110,7 +153,7 @@ export class WorkspaceComponent implements OnInit {
     this.setSelected(event.file, true);
     switch (event.type) {
       case 'edit':
-        console.log('edit', event.file);
+        this.modalEditFile('show');
       break;
       case 'delete': 
         this.modalDelete('show');
@@ -118,7 +161,7 @@ export class WorkspaceComponent implements OnInit {
     }
   }
 
-  public showNotification( type: string, message: string ): void {
+  public showNotification(type: string, message: string): void {
 		this.notifier.notify(type, message);
 	}
 
