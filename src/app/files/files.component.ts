@@ -6,7 +6,7 @@ import { RequestService } from '../services/request.service';
   templateUrl: './files.component.html'
 })
 
-export class FilesComponent implements OnInit {
+export class FilesComponent {
 
   constructor(private request: RequestService) { }
 
@@ -14,16 +14,12 @@ export class FilesComponent implements OnInit {
   @Input() path: string;
   @Output() fileEvent = new EventEmitter<Object>();
 
-  ngOnInit(): void {
-  }
-
-  
 
   getFile(file: string): string {
     return this.request.getFile(this.path, file);
   };
 
- fileEmitter (type: string,file: string) {
+  fileEmitter (type: string,file: string) {
     this.fileEvent.emit({type: type, file:file});
   }
 }
