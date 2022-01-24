@@ -34,13 +34,11 @@
     <div class="container-fluid">
         <div class="row g-0 gap-1 p-2">
             <label class="col d-grid" for="file">
-                <div class="btn btn-sm btn-danger">
-                    Selecciona un archivo
-                </div>
+                <div class="btn btn-sm btn-danger"><i class="bi bi-cloud-plus-fill me-2"></i>Subir un archivo</div>
                 <input #fileInputField type="file" name="file" id="file" class="visually-hidden" (change)="checkExistence()">
             </label>
             <div *ngIf="fileInfo.exists" [@fadeIn] class="col-auto">
-                <button type="button" class="btn btn-sm btn-danger px-4" data-bs-toggle="modal" data-bs-target="#uploadNameChange"><i class="bi bi-cloud-arrow-up-fill"></i></button>
+                <button type="button" class="btn btn-sm btn-outline-danger px-4" data-bs-toggle="modal" data-bs-target="#uploadNameChange"><i class="bi bi-cloud-arrow-up-fill"></i></button>
             </div>
         </div>
         <div *ngIf="fileInfo.exists" [@slideInLeft] class="d-flex g-0 gap-1 px-2">
@@ -102,7 +100,7 @@
                         <p class="text-danger mx-0 my-1"><i class="bi bi-info-square-fill me-2"></i>Mínimo 4 caracteres, sin números ni símbolos.</p>
                         <div class="mt-3">
                             <span class="p-0 mt-1">Nombre de la carpeta</span>
-                            <input class="form-control" type="text" formControlName="directory" id="directoryName" placeholder="Introduce el nombre de la carpeta"autocomplete="off">
+                            <input class="form-control" type="text" formControlName="directory" id="directoryName" placeholder="Introduce el nombre de la carpeta" autocomplete="off">
                         </div>
                         <div *ngIf="makeDirectoryForm.controls['directory']?.errors && makeDirectoryForm.controls['directory'].invalid; then invalid; else valid;"></div>
                     </form>
@@ -123,8 +121,8 @@
                         <p class="text-danger mx-0 my-1"><i class="bi bi-info-square-fill me-2"></i>No puedes cambiar a archivos con nombres iguales.</p>
                         <p class="text-danger mx-0 my-1"><i class="bi bi-info-square-fill me-2"></i>No hace falta añadir la extensión.</p>
                         <div class="mt-3">
-                            <span class="p-0 mt-1">Nombre originial</span>
-                            <input class="form-control" type="text" formControlName="fileName" id="fileName" placeholder="{{selected.element}}" readonly>
+                            <span class="p-0 mt-1">Nombre original</span>
+                            <input class="form-control" type="text" placeholder="{{selected.element}}" readonly>
                         </div>
                         <div class="mt-3">
                             <span class="p-0 mt-1">Nombre de la carpeta</span>
@@ -200,7 +198,7 @@
 <ng-template #invalid>
     <label [@fadeIn] class="p-0 mt-1 text-danger mx-2"><i class="bi bi-x me-1"></i>Esta nombre no es válido.</label>
     <div class="row g-0 gap-2 mt-3">
-        <button type="button" class="col d-grid btn btn-sm btn-danger" disabled>Crear</button>
+        <button type="button" class="col d-grid btn btn-sm btn-danger" (click)="editFileNameSubmit()" disabled>Crear</button>
         <button type="button" class="col d-grid btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancelar</button>
     </div>
 </ng-template>
@@ -208,7 +206,7 @@
 <ng-template #valid>
     <label [@fadeIn] class="p-0 mt-2 text-success mx-2"><i class="bi bi-check-lg me-1"></i>Puedes crear la carpeta</label>
     <div class="row g-0 gap-2 mt-3">
-        <button type="button" class="col d-grid btn btn-sm btn-danger" (click)="makeDirectory()">Crear</button>
+        <button type="submit" class="col d-grid btn btn-sm btn-danger" (click)="makeDirectory()">Crear</button>
         <button type="button" class="col d-grid btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancelar</button>
     </div>
 </ng-template>
@@ -224,15 +222,15 @@
 <ng-template #validEditFile>
     <label [@fadeIn] class="p-0 mt-2 text-success mx-2"><i class="bi bi-check-lg me-1"></i>Puedes cambiar el nombre del archivo</label>
     <div class="row g-0 gap-2 mt-3">
-        <button type="button" class="col d-grid btn btn-sm btn-danger">Cambiar</button>
+        <button type="button" class="col d-grid btn btn-sm btn-danger" (click)="editFileNameSubmit()">Cambiar</button>
         <button type="button" class="col d-grid btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancelar</button>
     </div>
 </ng-template>
 
 <ng-template #validEditFolder>
-    <label [@fadeIn] class="p-0 mt-2 text-success mx-2"><i class="bi bi-check-lg me-1"></i>Puedes cambiar el nombre del archivo</label>
+    <label [@fadeIn] class="p-0 mt-2 text-success mx-2"><i class="bi bi-check-lg me-1"></i>Puedes cambiar el nombre del directorio</label>
     <div class="row g-0 gap-2 mt-3">
-        <button type="button" class="col d-grid btn btn-sm btn-danger">Cambiar</button>
+        <button type="button" class="col d-grid btn btn-sm btn-danger" (click)="editFolderNameSubmit()">Cambiar</button>
         <button type="button" class="col d-grid btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancelar</button>
     </div>
 </ng-template>

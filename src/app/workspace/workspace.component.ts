@@ -83,7 +83,7 @@ export class WorkspaceComponent implements OnInit {
         }
       });
       if (response.length > 0) {
-        return { 'nameExists': true}
+        return {'nameExists': true}
       }
     }
     return null;
@@ -92,12 +92,13 @@ export class WorkspaceComponent implements OnInit {
   validateFilename(control: AbstractControl): {[key: string]: any} | null  {
     if (control.value) {
       let response = this.content.files.filter(file => {
-        if(file === control.value) {
+        const fileWithoutDot = file.split('.')[0];
+        if(file === control.value || control.value === fileWithoutDot) {
           return file;
         }
       });
       if (response.length > 0) {
-        return { 'nameExists': true}
+        return {'nameExists': true}
       }
     }
     return null;
@@ -239,6 +240,14 @@ export class WorkspaceComponent implements OnInit {
     this.getContent(this.getUrl());
     this.modalDelete('hide');
   };
+
+  async editFileNameSubmit() {
+    console.log(this.editFileName.value.fileName, this.selected.element);
+  }
+
+  async editFolderNameSubmit() {
+    console.log('asd')
+  }
 
   async selectedFolder(foldername: string): Promise <void> {
       if (this.getUrl().includes('?path')) {
