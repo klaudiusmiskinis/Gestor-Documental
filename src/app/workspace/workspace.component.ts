@@ -174,14 +174,6 @@ export class WorkspaceComponent implements OnInit {
     this.url.url = path;
   };
 
-  async makeDirectory(): Promise <void> {
-    const directoryName = this.makeDirectoryForm.value.directory;
-    if (directoryName) {
-      await this.request.makeDirectory(this.getUrl(), directoryName);
-    };
-    this.getContent(this.getUrl());
-  };
-
   checkExistence(): void {
     const file = this.fileInputField.nativeElement;
     if (file.files.length > 0) {
@@ -229,6 +221,15 @@ export class WorkspaceComponent implements OnInit {
     };
   };
 
+  async makeDirectory(): Promise <void> {
+    const directoryName = this.makeDirectoryForm.value.directory;
+    if (directoryName) {
+      await this.request.makeDirectory(this.getUrl(), directoryName);
+    };
+    this.getContent(this.getUrl());
+    this.modalEditFile('hide');
+  };
+
   async deleteFile(file: string): Promise <void> {
     await this.request.deleteFile(this.getUrl(), file);
     this.getContent(this.getUrl());
@@ -242,7 +243,8 @@ export class WorkspaceComponent implements OnInit {
   };
 
   async editFileNameSubmit() {
-    console.log(this.editFileName.value.fileName, this.selected.element);
+    await this.request.editElementName(this.getUrl(), this.editFileName.value.fileName + '.' + this.selected.element.split('.')[this.selected.element.split('.').length - 1], this.selected.element);
+    this.getContent(this.getUrl());
   }
 
   async editFolderNameSubmit() {
