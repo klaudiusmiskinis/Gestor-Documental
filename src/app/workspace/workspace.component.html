@@ -68,6 +68,7 @@
                             <span class="badge bg-danger">{{fileInfo.size}}</span>
                         </div>
                         <p class="text-danger my-0"><i class="bi bi-info-square-fill me-2"></i>Puedes cambiar el nombre del archivo y añadirle una versión.</p>
+                        <p class="text-danger my-0"><i class="bi bi-info-square-fill me-2"></i>No hace falta añadir la extensión</p>
                         <div class="d-grid mx-1 mt-2">
                             <div class="form-check form-switch">
                                 <input #editNewNameCheckBox (change)="togglecheckBoxBoolean()" class="form-check-input" type="checkbox" role="switch">
@@ -76,6 +77,15 @@
                         </div>
                         <div class="d-grid mt-2 mx-1">
                             <div *ngIf="checkBoxBoolean; then checkBoxBooleanIsTrue; else checkBoxBooleanIsFalse"></div>
+                        </div>
+                        <div class="d-grid mt-2 mx-1">
+                            <label for="exampleDataList" class="form-label">Archivo al que relacionar la versión.</label>
+                            <input class="form-control" list="datalistOptions" id="datalistInput" placeholder="Archivo al que relacionar la versión">
+                            <datalist id="datalistOptions">
+                                <div *ngFor="let file of content.files">
+                                    <option value="{{file}}"></option>
+                                </div>
+                            </datalist>
                         </div>
                     </div>
                     <div class="row gap-2 mt-3 mx-1">
