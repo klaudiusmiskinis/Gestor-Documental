@@ -1,9 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { fadeIn, slideIn } from '../config/animations.config';
 import { RequestService } from '../services/request.service';
 
 @Component({
   selector: 'files',
-  templateUrl: './files.component.html'
+  templateUrl: './files.component.html',
+  animations: [slideIn, fadeIn]
 })
 
 export class FilesComponent {
