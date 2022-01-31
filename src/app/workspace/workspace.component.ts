@@ -244,11 +244,14 @@ export class WorkspaceComponent implements OnInit {
 
   async editFileNameSubmit() {
     await this.request.editElementName(this.getUrl(), this.editFileName.value.fileName + '.' + this.selected.element.split('.')[this.selected.element.split('.').length - 1], this.selected.element);
+    this.modalEditFile('hide');
     this.getContent(this.getUrl());
   }
 
   async editFolderNameSubmit() {
-    console.log('asd')
+    await this.request.editElementName(this.getUrl(), this.editDirectoryName.value.folderName, this.selected.element);
+    this.modalEditFolder('hide');
+    this.getContent(this.getUrl());
   }
 
   async selectedFolder(foldername: string): Promise <void> {
