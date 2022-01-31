@@ -1,4 +1,3 @@
-import { Portal } from '@angular/cdk/portal';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
@@ -59,13 +58,13 @@ export class RequestService {
   };
 
   async editElementName(path: string, newName: string, oldName: string): Promise <void> {
-      path = path + this.setParameterChar(path) + 'edit=' + oldName + '&to=' + newName;
-      const status = this.parse(await this.http.post<any>(path, []).toPromise());
-      if (!status.success) {
-        this.setError('Error con el cambio de nombre');
-      } else {
-        this.setContent(status);
-      };
+    path = path + this.setParameterChar(path) + 'edit=' + oldName + '&to=' + newName;
+    const status = this.parse(await this.http.post<any>(path, []).toPromise());
+    if (!status.success) {
+      this.setError('Error con el cambio de nombre');
+    } else {
+      this.setContent(status);
+    };
   }
 
   getFile(path: string, file: string): string {
