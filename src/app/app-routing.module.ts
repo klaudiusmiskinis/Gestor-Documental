@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { WorkspaceComponent } from './workspace/workspace.component';
 
 const routes: Routes = [
+  { path: 'admin', component: WorkspaceComponent, pathMatch: 'full' },
   { path: 'workspace', component: WorkspaceComponent, pathMatch: 'full' },
   { path: '',   redirectTo: '/workspace', pathMatch: 'full' },
 ];
