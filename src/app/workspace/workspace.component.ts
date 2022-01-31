@@ -196,10 +196,9 @@ export class WorkspaceComponent implements OnInit {
 
   async uploadFile(): Promise <void> {
     const fileList: FileList = this.fileInputField.nativeElement.files;
-    const file: File = fileList[0];
     const formData: FormData = new FormData();
     const headers = new Headers();
-    formData.append('file', file, file.name);
+    formData.append('file', fileList[0], fileList[0].name);
     headers.append('Content-Type', 'multipart/form-data');
     headers.append('Accept', 'application/json');
     const options = {
@@ -212,7 +211,7 @@ export class WorkspaceComponent implements OnInit {
 
   goBack(): void {
     if (this.getUrl().includes('?path=')) {
-      if (this.getUrl().substring(0, this.getUrl().lastIndexOf('/')) === 'http://192.168.1.148:3001') {
+      if (this.getUrl().substring(0, this.getUrl().lastIndexOf('/')) === 'http://localhost:3001') {
         this.setPath(this.getUrl().substring(0, this.getUrl().lastIndexOf('/')) + '/');
       } else {
         this.setPath(this.getUrl().substring(0, this.getUrl().lastIndexOf('/')));
@@ -238,8 +237,8 @@ export class WorkspaceComponent implements OnInit {
 
   async deleteFolder(folder: string): Promise <void> {
     await this.request.deleteDirectory(this.getUrl(), folder);
-    this.getContent(this.getUrl());
     this.modalDelete('hide');
+    this.getContent(this.getUrl());
   };
 
   async editFileNameSubmit() {
