@@ -41,7 +41,8 @@ export class WorkspaceComponent implements OnInit {
         Validators.minLength(4), 
         Validators.maxLength(50), 
         Validators.pattern('^[a-zA-Z\\s]+$'),
-        this.validateFoldername.bind(this)
+        this.validateFoldername.bind(this),
+        this.validateFilename.bind(this)
       ])
     })
 
@@ -51,7 +52,8 @@ export class WorkspaceComponent implements OnInit {
         Validators.minLength(4), 
         Validators.maxLength(50), 
         Validators.pattern('^[a-zA-Z\\s]+$'),
-        this.validateFoldername.bind(this)
+        this.validateFoldername.bind(this),
+        this.validateFilename.bind(this)
       ])
     })
 
@@ -76,9 +78,11 @@ export class WorkspaceComponent implements OnInit {
   };
 
   validateFoldername(control: AbstractControl): {[key: string]: any} | null  {
-    if (control.value) {
+    const name = control.value.toLowerCase()
+    if (name) {
       let response = this.content.folders.filter(folder => {
-        if(folder === control.value) {
+        folder = folder.toLowerCase();
+        if(folder === name) {
           return folder;
         }
       });
@@ -90,10 +94,12 @@ export class WorkspaceComponent implements OnInit {
   }
 
   validateFilename(control: AbstractControl): {[key: string]: any} | null  {
+    const name = control.value.toLowerCase()
     if (control.value) {
       let response = this.content.files.filter(file => {
+        const nameCompare = file.toLowerCase();
         const fileWithoutDot = file.split('.')[0];
-        if(file === control.value || control.value === fileWithoutDot) {
+        if(nameCompare === name || fileWithoutDot === name) {
           return file;
         }
       });
@@ -178,19 +184,6 @@ export class WorkspaceComponent implements OnInit {
     const file = this.fileInputField.nativeElement;
     if (file.files.length > 0) {
       this.fileInfo = new FileInfo(true, file.files[0].name, file.files[0].size)
-    }
-  }
-
-  checkFolderName(): any {
-    if (this.content.folders) {
-      const directoryName = this.makeDirectoryForm.value.directory;
-      this.content.folders.filter(folder => {
-        if(folder === directoryName) {
-          return true;
-        } else {
-          return false;
-        }
-      })
     }
   }
 
