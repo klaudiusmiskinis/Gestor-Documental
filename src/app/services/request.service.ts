@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { NotifierService } from 'angular-notifier';
 
 @Injectable({
   providedIn: 'root'
@@ -7,66 +8,86 @@ import { Injectable } from '@angular/core';
 
 export class RequestService {
   private content: any;
-  private error: any;
-  constructor(private http: HttpClient) {}
+  private notifier: any;
+  constructor(private http: HttpClient, notifier: NotifierService) {
+    this.notifier = notifier;
+  }
 
   async getWorkspace(path: string): Promise <Object> {
-    this.setContent(this.parse(await this.http.get<any>(path).toPromise()));
-    return this.getContent();
+    try {
+      this.setContent(this.parse(await this.http.get<any>(path).toPromise()));
+      return this.getContent();
+    } catch (e) {
+      this.notificate('Error con Backend');
+      return 'Error';
+    }
   };
 
   async deleteFile(path: string, file: string): Promise <void> {
-    let char = this.setParameterChar(path);
-    const status = this.parse(await this.http.delete<any>(path + char + 'file=' + file).toPromise());
-    if (!status.success) {
-      this.setError('Ha habido un error eliminando el archivo.');
-    } else {
-      this.setContent(status);
-    };
+    try {
+        let char = this.setParameterChar(path);
+        const status = this.parse(await this.http.delete<any>(path + char + 'file=' + file).toPromise());
+        if (status.success) {
+          this.notificate('¡Archivo eliminado!');
+          this.setContent(status);
+        }
+    } catch (e) {
+      this.notificate('Ha habido un error eliminando el archivo.');
+    }
   };
   
   async deleteDirectory(path: string, folder: string): Promise <void> {
-    let char = this.setParameterChar(path);
-    const status = this.parse(await this.http.delete<any>(path + char + 'folder=' + folder).toPromise());
-    if (!status.success) {
-      this.setError('Ha habido un error eliminando el archivo.');
-    } else {
-      this.setContent(status);
-    };
+    try {
+      let char = this.setParameterChar(path);
+      const status = this.parse(await this.http.delete<any>(path + char + 'folder=' + folder).toPromise());
+      if (status.success) {
+        this.notificate('Eliminando directorio...');
+        this.setContent(status);
+      }
+    } catch (e) {
+      this.notificate('Ha habido un error eliminando el archivo.');
+    }
   };
 
   async makeDirectory(path: string, directoryName: string): Promise <void> {
-    let char = this.setParameterChar(path);
-    const status = this.parse(await this.http.post<any>(path +  char + 'folder=' + directoryName, []).toPromise());
-    if (!status.success) {
-      this.setError('Error con la creación de la carpeta');
-    } else {
-      this.setContent(status);
-    };
+    try {
+      let char = this.setParameterChar(path);
+      const status = this.parse(await this.http.post<any>(path +  char + 'folder=' + directoryName, []).toPromise());
+      if (status.success) {
+        this.setContent(status);
+      };
+    } catch (e) {
+      this.notificate('Error con la creación de la carpeta');
+    }
   };
 
   async uploadFile(formData: FormData, options: Object, path: string, name: string, fileRelated: string): Promise <void> {
-    if (name) {
-      path = path + this.setParameterChar(path) + 'updateName=' + name;
-    } if (fileRelated !== ',._#falseº@') {
-      path = path + this.setParameterChar(path) + 'fileRelated=' + fileRelated;
+    try{
+      if (name) {
+        path = path + this.setParameterChar(path) + 'updateName=' + name;
+      } if (fileRelated !== ',._#falseº@') {
+        path = path + this.setParameterChar(path) + 'fileRelated=' + fileRelated;
+      }
+      const status = this.parse(await this.http.post<any>(path, formData, options).toPromise());
+      if (status.success) {
+        this.notificate('¡Archivo subido!');
+        this.setContent(status);
+      };
+    } catch (e) {
+      this.notificate('Error con la subida del archivo.');
     }
-    const status = this.parse(await this.http.post<any>(path, formData, options).toPromise());
-    if (!status.success) {
-      this.setError('Error con la subida del archivo');
-    } else {
-      this.setContent(status);
-    };
   };
 
   async editElementName(path: string, newName: string, oldName: string): Promise <void> {
-    path = path + this.setParameterChar(path) + 'edit=' + oldName + '&to=' + newName;
-    const status = this.parse(await this.http.post<any>(path, []).toPromise());
-    if (!status.success) {
-      this.setError('Error con el cambio de nombre');
-    } else {
-      this.setContent(status);
-    };
+    try {
+      path = path + this.setParameterChar(path) + 'edit=' + oldName + '&to=' + newName;
+      const status = this.parse(await this.http.post<any>(path, []).toPromise());
+      if (status.success) {
+        this.setContent(status);
+      }
+    } catch (e) {
+      this.notificate('Error con el cambio de nombre');
+    }
   }
 
   getFile(path: string, file: string): string {
@@ -98,11 +119,7 @@ export class RequestService {
     this.content = content;
   };
 
-  getError(): string {
-    return this.error;
-  };
-
-  setError(error: string): void {
-    this.error = error;
+  notificate(message: string): void {
+    this.notifier.notify('default', message);
   };
 };
