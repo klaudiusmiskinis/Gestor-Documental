@@ -219,7 +219,7 @@ export class WorkspaceComponent implements OnInit {
       await this.request.makeDirectory(this.getUrl(), directoryName);
     };
     this.getContent(this.getUrl());
-    this.modalEditFile('hide');
+    this.modalmakeDirectory('hide');
   };
 
   async deleteFile(file: string): Promise <void> {
