@@ -5,7 +5,7 @@
     <div class="row p-2 g-0 gap-1">
         <div class="row g-0 gap-1">
             <div class="col-auto">
-                <div class="badge bg-secondary" (click)="showNotification('default', 'Click en opciones')">Opciones</div>
+                <div class="badge bg-secondary">Opciones</div>
             </div>
         </div>
         <div class="col-auto d-grid" *ngIf="getUrl().includes('?path=')">
@@ -244,10 +244,10 @@
 </ng-template>
 
 <ng-template #checkBoxBooleanIsTrue>
-    <input type="text" class="form-control" #newName placeholder="{{fileInfo.name || 'Introduce el nombre'}}">
+    <input type="text" class="form-control" #fileNewName placeholder="{{fileInfo.name || 'Introduce el nombre'}}">
     <p [@fadeIn] class="text-danger my-0 mt-1"><i class="bi bi-exclamation-triangle-fill me-2"></i>Si el nombre del archivo coincide con otro, se sobreescribira.</p>
 </ng-template>
 
 <ng-template #checkBoxBooleanIsFalse>
-    <input type="text" class="form-control" #newName placeholder="{{fileInfo.name || 'Introduce el nombre'}}" disabled>
+    <input type="text" class="form-control" #fileNewName placeholder="{{fileInfo.name || 'Introduce el nombre'}}" disabled>
 </ng-template>
