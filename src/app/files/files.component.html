@@ -1,12 +1,10 @@
-<mat-accordion class="card border-0 bg-transparent m-1">
+<mat-accordion [@fadeIn] class="card border-0 bg-transparent m-1">
     <mat-expansion-panel class="m-0 p-0" hideToggle [expanded]="true">
         <mat-expansion-panel-header class="m-0 p-1">
-            <div class="p-2 card bg-light">Archivos</div>
+            <div class="p-2 card bg-light">Archivos {{files.length}}</div>
         </mat-expansion-panel-header>
         <div *ngFor="let file of files; let i = index">
-
             <div *ngIf="i % 3 == 0" class="d-grid d-xl-flex justify-content-xl-end">
-
                 <div class="d-grid col m-1" id="folder + i">
                     <accordion [isAnimated]="true" class="text-truncate">
                         <accordion-group>
@@ -84,10 +82,7 @@
                         </accordion-group>
                     </accordion>
                 </div>
-
-
             </div>
-
         </div>
     </mat-expansion-panel>
 </mat-accordion>
