@@ -18,7 +18,7 @@ export class RequestService {
       this.setContent(this.parse(await this.http.get<any>(path).toPromise()));
       return this.getContent();
     } catch (e) {
-      this.notificate('Error con Backend');
+      this.notificate('Error con el servidor.');
       return 'Error';
     }
   };
@@ -41,7 +41,7 @@ export class RequestService {
       let char = this.setParameterChar(path);
       const status = this.parse(await this.http.delete<any>(path + char + 'folder=' + folder).toPromise());
       if (status.success) {
-        this.notificate('Eliminando directorio...');
+        this.notificate('¡Eliminando directorio!');
         this.setContent(status);
       }
     } catch (e) {
