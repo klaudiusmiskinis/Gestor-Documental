@@ -70,6 +70,8 @@ export class WorkspaceComponent implements OnInit {
 
   @ViewChild(MatAccordion) accordion: MatAccordion;
   @ViewChild('fileInputField') fileInputField: ElementRef;
+  @ViewChild('fileRelated') fileRelated: ElementRef;
+  @ViewChild('fileVersion') fileVersion: ElementRef;
   @ViewChild('newName') newName: ElementRef;
 
   /* Methods */
@@ -189,6 +191,7 @@ export class WorkspaceComponent implements OnInit {
 
   async uploadFile(): Promise <void> {
     const fileList: FileList = this.fileInputField.nativeElement.files;
+    const fileRelated = this.fileRelated.nativeElement;
     const formData: FormData = new FormData();
     const headers = new Headers();
     formData.append('file', fileList[0], fileList[0].name);
@@ -197,7 +200,7 @@ export class WorkspaceComponent implements OnInit {
     const options = {
       headers: headers 
     };
-    await this.request.uploadFile(formData, options, this.getUrl(), this.newName.nativeElement.value);
+    await this.request.uploadFile(formData, options, this.getUrl(), this.newName.nativeElement.value, fileRelated.value);
     this.modalUpload('hide');
     this.getContent(this.getUrl());
   };
