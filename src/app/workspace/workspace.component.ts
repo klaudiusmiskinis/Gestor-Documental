@@ -2,12 +2,13 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { RequestService } from '../services/request.service';
 import { MatAccordion } from '@angular/material/expansion';
-import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { slideIn, fadeIn, fadeOut } from '../config/animations.config';
 import { NotifierService } from 'angular-notifier';
 import { FileInfo } from '../models/file.model';
 import { AppUrl } from '../models/appurl.model';
 declare var $: any;
+
 @Component({
   selector: 'workspace',
   templateUrl: './workspace.component.html',
@@ -72,7 +73,7 @@ export class WorkspaceComponent implements OnInit {
   @ViewChild('fileInputField') fileInputField: ElementRef;
   @ViewChild('fileRelated') fileRelated: ElementRef;
   @ViewChild('fileVersion') fileVersion: ElementRef;
-  @ViewChild('newName') newName: ElementRef;
+  @ViewChild('fileNewName') fileNewName: ElementRef;
 
   /* Methods */
   async ngOnInit(): Promise <void> {
@@ -170,10 +171,6 @@ export class WorkspaceComponent implements OnInit {
     }
   }
 
-  public showNotification(type: string, message: string): void {
-		this.notifier.notify(type, message);
-	}
-
   getUrl(): string {
     return this.url.url;
   }
@@ -200,7 +197,7 @@ export class WorkspaceComponent implements OnInit {
     const options = {
       headers: headers 
     };
-    await this.request.uploadFile(formData, options, this.getUrl(), this.newName.nativeElement.value, fileRelated.value);
+    await this.request.uploadFile(formData, options, this.getUrl(), this.fileNewName.nativeElement.value, fileRelated.value);
     this.modalUpload('hide');
     this.getContent(this.getUrl());
   };
