@@ -15,10 +15,10 @@
             <button class="btn btn-sm btn-outline-secondary shadow-sm" (click)="getContent(getUrl())">Actualizar<i class="bi bi-arrow-clockwise ms-1"></i></button>
         </div>
         <div class="col-auto d-grid">
-            <button class="btn btn-sm btn-outline-secondary shadow-sm">Ver ultimas versiones<i class="bi bi-eye-fill ms-1"></i></button>
+            <button class="btn btn-sm btn-outline-secondary shadow-sm" data-bs-toggle="modal" data-bs-target="#makeDirectoryModal">Crear una carpeta<i class="bi bi-folder-plus ms-1"></i></button>
         </div>
         <div class="col-auto d-grid">
-            <button class="btn btn-sm btn-outline-secondary shadow-sm" data-bs-toggle="modal" data-bs-target="#makeDirectoryModal">Crear una carpeta<i class="bi bi-folder-plus ms-1"></i></button>
+            <button class="btn btn-sm btn-outline-secondary shadow-sm" disabled>Ver ultimas versiones<i class="bi bi-eye-fill ms-1"></i></button>
         </div>
     </div>
 
@@ -138,7 +138,7 @@
                             <span class="p-0 mt-1">Nombre de la carpeta</span>
                             <input class="form-control" type="text" formControlName="fileName" id="fileName" placeholder="Introduce el nombre de la carpeta" autocomplete="off">
                         </div>
-                        <div *ngIf="editFileName.controls['fileName']?.errors && editFileName.controls['fileName'].invalid; then invalid; else validEditFile;" (change)="checkFolderName()"></div>
+                        <div *ngIf="editFileName.controls['fileName']?.errors && editFileName.controls['fileName'].invalid; then invalid; else validEditFile;"></div>
                     </form>
                 </div>
             </div>
