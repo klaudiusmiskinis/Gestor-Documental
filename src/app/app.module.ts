@@ -17,6 +17,7 @@ import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { NotifierConfiguration } from './config/notifier.config';
 import { NotifierModule } from 'angular-notifier';
 import { NgxTippyModule } from 'ngx-tippy-wrapper';
+import { AdminComponent } from './admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { NgxTippyModule } from 'ngx-tippy-wrapper';
     FoldersComponent,
     FilesComponent,
     NavbarComponent,
+    AdminComponent,
   ],
   imports: [
     BrowserAnimationsModule,
