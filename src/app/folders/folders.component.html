@@ -1,7 +1,7 @@
 <mat-accordion [@fadeIn] class="card border-0 bg-transparent m-1">
     <mat-expansion-panel class="m-0 p-0" hideToggle [expanded]="expanded">
         <mat-expansion-panel-header class="m-0 p-1">
-            <div class="p-2 card bg-light">Directorios {{folders.length}}</div>
+            <div class="p-2 card bg-light">{{folders.length}} Directorios</div>
         </mat-expansion-panel-header>
         <div *ngFor="let folder of folders; let i = index">
             <div *ngIf="i % 3 == 0" class="d-grid d-xl-flex justify-content-xl-end">
