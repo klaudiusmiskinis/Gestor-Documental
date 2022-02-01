@@ -250,13 +250,13 @@ export class WorkspaceComponent implements OnInit {
     this.getContent(this.getUrl());
   }
 
-  async selectedFolder(foldername: string): Promise <void> {
-      if (this.getUrl().includes('?path')) {
-        this.setPath(this.getUrl() + '/' + foldername);
-      } else {
-        this.setPath(this.getUrl() + '?path=' + foldername);
-      }
-      this.getContent(this.getUrl());
+  selectedFolder(foldername: string): void {
+    if (this.getUrl().includes('?path')) {
+      this.setPath(this.getUrl() + '/' + foldername);
+    } else {
+      this.setPath(this.getUrl() + '?path=' + foldername);
+    }
+    this.getContent(this.getUrl());
   };
 
   async getContent(path: string): Promise <void> {
