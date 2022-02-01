@@ -16,6 +16,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { NotifierConfiguration } from './config/notifier.config';
 import { NotifierModule } from 'angular-notifier';
+import { NgxTippyModule } from 'ngx-tippy-wrapper';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { NotifierModule } from 'angular-notifier';
     AccordionModule.forRoot(),
     MatExpansionModule,
     MatSidenavModule,
+    NgxTippyModule
   ],
   providers: [{provide: APP_BASE_HREF, useValue: '/' }],
   bootstrap: [AppComponent]
