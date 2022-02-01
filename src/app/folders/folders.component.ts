@@ -9,6 +9,14 @@ import { slideIn, fadeIn } from '../config/animations.config';
 
 export class FoldersComponent implements OnInit {
   public expanded: Boolean;
+  public tooltip: object;
+
+  constructor() {
+    this.tooltip = {
+      arrow: false,
+      placement: 'top'
+    }
+  }
 
   @Input() folders: any;
   @Output() folderEvent = new EventEmitter<Object>();
