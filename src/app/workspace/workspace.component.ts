@@ -4,7 +4,6 @@ import { RequestService } from '../services/request.service';
 import { MatAccordion } from '@angular/material/expansion';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { slideIn, fadeIn, fadeOut } from '../config/animations.config';
-import { NotifierService } from 'angular-notifier';
 import { FileInfo } from '../models/file.model';
 import { AppUrl } from '../models/appurl.model';
 declare var $: any;
@@ -16,6 +15,7 @@ declare var $: any;
 })
 
 export class WorkspaceComponent implements OnInit {
+  
   /* Atributes */
   public url: AppUrl;
   public content: any;
@@ -26,16 +26,20 @@ export class WorkspaceComponent implements OnInit {
   public editDirectoryName: FormGroup;
   public editFileName: FormGroup;
   public newResourceName: FormControl;
-  private notifier: NotifierService;
+  public tooltip: object;
 
   /* Constructor */
-  constructor(private request: RequestService, notifier: NotifierService) {
+  constructor(private request: RequestService) {
     this.url = new AppUrl('http://localhost:3001/');
     this.newResourceName = new FormControl('', [Validators.required])
     this.fileInfo = new FileInfo(false);
     this.checkBoxBoolean = false;
-    this.notifier = notifier;
     this.selected = true;
+    this.tooltip = {
+      arrow: false,
+      placement: 'bottom'
+    }
+
     this.makeDirectoryForm = new FormGroup({
       directory: new FormControl('', [
         Validators.required, 
