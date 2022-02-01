@@ -34,7 +34,7 @@
     <div class="container-fluid">
         <div class="row g-0 gap-1 p-2">
             <label class="col d-grid" for="file">
-                <div class="btn btn-sm btn-danger"><i class="bi bi-cloud-plus-fill me-2"></i>Subir un archivo</div>
+                <div class="btn btn-sm btn-danger" ngxTippy data-tippy-content="Selecciona un archivo" [tippyProps]="tooltip"><i class="bi bi-cloud-plus-fill me-2"></i>Subir un archivo</div>
                 <input #fileInputField type="file" name="file" id="file" class="visually-hidden" (change)="checkExistence()">
             </label>
             <div *ngIf="fileInfo.exists" [@fadeIn]="fileInfo.exists" class="col-auto">
