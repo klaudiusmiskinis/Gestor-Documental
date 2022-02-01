@@ -1,4 +1,4 @@
-<div class="container-fluid g-0">
+<div class="container-fluid g-0" [@fadeIn]>
 
     <navbar [path]="getUrl()"></navbar>
 
@@ -37,14 +37,14 @@
                 <div class="btn btn-sm btn-danger"><i class="bi bi-cloud-plus-fill me-2"></i>Subir un archivo</div>
                 <input #fileInputField type="file" name="file" id="file" class="visually-hidden" (change)="checkExistence()">
             </label>
-            <div *ngIf="fileInfo.exists" [@fadeIn] class="col-auto">
-                <button type="button" class="btn btn-sm btn-outline-danger px-4" data-bs-toggle="modal" data-bs-target="#uploadNameChange"><i class="bi bi-cloud-arrow-up-fill"></i></button>
+            <div *ngIf="fileInfo.exists" [@fadeIn]="fileInfo.exists" class="col-auto">
+                <button type="button" ngxTippy data-tippy-content="¡Subir!" [tippyProps]="tooltip" class="btn btn-sm btn-outline-danger px-4" data-bs-toggle="modal" data-bs-target="#uploadNameChange"><i class="bi bi-cloud-arrow-up-fill"></i></button>
             </div>
         </div>
-        <div *ngIf="fileInfo.exists" [@slideInLeft] class="d-flex g-0 gap-1 px-2">
-            <span class="badge bg-danger">{{fileInfo.name}}</span>
-            <span class="badge bg-danger">{{fileInfo.size}}</span>
-            <span class="badge bg-danger">{{fileInfo.extension}}</span>
+        <div *ngIf="fileInfo.exists" [@slideInLeft]="fileInfo.exists" class="d-flex g-0 gap-1 px-2">
+            <span class="badge bg-danger" ngxTippy data-tippy-content="Nombre del archivo" [tippyProps]="tooltip">{{fileInfo.name}}</span>
+            <span class="badge bg-danger" ngxTippy data-tippy-content="Tamaño del archivo" [tippyProps]="tooltip">{{fileInfo.size}}</span>
+            <span class="badge bg-danger" ngxTippy data-tippy-content="Extensión del archivo" [tippyProps]="tooltip">{{fileInfo.extension}}</span>
         </div>
     </div>
 
@@ -58,7 +58,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header bg-danger border-0">
-                    <h5 class="modal-title text-light" id="uploadNameChangeLabel">Subida de archivo</h5>
+                    <h5 class="modal-title text-light">Subida de archivo</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -121,12 +121,12 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header bg-danger border-0">
-                    <h5 class="modal-title text-light" id="editFileNameLabel">Cambio de nombre para archivo</h5>
+                    <h5 class="modal-title text-light">Cambio de nombre para archivo</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form class="row p-0 m-0" [formGroup]="editFileName">
-                        <p class="text-danger mx-0 my-1"><i class="bi bi-info-square-fill me-2"></i>No puedes cambiar a archivos con nombres iguales.</p>
+                        <p class="text-danger mx-0 my-1"><i class="bi bi-info-square-fill me-2"></i>No puedes poner nombres iguales a otros archivos.</p>
                         <p class="text-danger mx-0 my-1"><i class="bi bi-info-square-fill me-2"></i>No hace falta añadir la extensión.</p>
                         <div class="mt-3">
                             <span class="p-0 mt-1">Nombre original</span>
