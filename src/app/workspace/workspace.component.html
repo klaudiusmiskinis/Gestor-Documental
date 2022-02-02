@@ -9,7 +9,7 @@
             </div>
         </div>
         <div class="col-auto d-grid" *ngIf="getUrl().includes('?path=')">
-            <button class="btn btn-sm btn-outline-secondary shadow-sm" (click)=goBack()>Volver<i class="bi bi-arrow-left-short ms-1"></i></button>
+            <button class="btn btn-sm btn-outline-danger shadow-sm" (click)=goBack()>Volver<i class="bi bi-arrow-left-short ms-1"></i></button>
         </div>
         <div class="col-auto d-grid">
             <button class="btn btn-sm btn-outline-secondary shadow-sm" (click)="getContent(getUrl())">Actualizar<i class="bi bi-arrow-clockwise ms-1"></i></button>
@@ -53,120 +53,129 @@
             <div *ngIf="selected.isFile; then isFile; else isFolder"></div>
         </div>
     </div>
+</div>
     
-    <div class="modal fade bg-opacity-75 bg-light" id="uploadNameChange" tabindex="-1" aria-labelledby="uploadNameChangeLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header bg-danger border-0">
-                    <h5 class="modal-title text-light">Subida de archivo</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div *ngIf="fileInfo.exists" class="d-flex gap-1 mb-2">
-                            <span class="badge bg-danger">{{fileInfo.name}}</span>
-                            <span class="badge bg-danger">{{fileInfo.size}}</span>
-                        </div>
-                        <p class="text-danger my-0"><i class="bi bi-info-square-fill me-2"></i>Puedes cambiar el nombre del archivo y añadirle una versión.</p>
-                        <p class="text-danger my-0"><i class="bi bi-info-square-fill me-2"></i>No hace falta añadir la extensión</p>
-                        <div class="d-grid mx-1 mt-2">
-                            <div class="form-check form-switch">
-                                <input #editNewNameCheckBox (change)="togglecheckBoxBoolean()" class="form-check-input" type="checkbox" role="switch">
-                                <label class="form-check-label" for="editNewNameCheckBox">Editar nombre</label>
-                            </div>
-                        </div>
-                        <div class="d-grid mt-2 mx-1">
-                            <div *ngIf="checkBoxBoolean; then checkBoxBooleanIsTrue; else checkBoxBooleanIsFalse"></div>
-                        </div>
-                        <div *ngIf="content.files" class="d-grid mt-2 mx-1">
-                            <label for="fileRelated" class="form-label">Archivo al que relacionar la versión.</label>
-                            <select class="form-control"  #fileRelated>
-                                <option value=",._#falseº@">Ninguno</option>
-                                <option *ngFor="let file of content.files">{{file}}</option>
-                            </select>
+<div class="modal fade bg-opacity-75 bg-light" id="uploadNameChange" tabindex="-1" aria-labelledby="uploadNameChangeLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger border-0">
+                <h5 class="modal-title text-light">Subida de archivo</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div *ngIf="fileInfo.exists" class="d-flex gap-1 mb-2">
+                        <span class="badge bg-danger">{{fileInfo.name}}</span>
+                        <span class="badge bg-danger">{{fileInfo.size}}</span>
+                    </div>
+                    <p class="text-danger my-0"><i class="bi bi-info-square-fill me-2"></i>Puedes cambiar el nombre del archivo y añadirle una versión.</p>
+                    <p class="text-danger my-0"><i class="bi bi-info-square-fill me-2"></i>No hace falta añadir la extensión</p>
+                    <div class="d-grid mx-1 mt-2">
+                        <div class="form-check form-switch">
+                            <input (change)="togglecheckBoxBoolean()" class="form-check-input" type="checkbox" role="switch">
+                            <label class="form-check-label">Editar nombre</label>
                         </div>
                     </div>
-                    <div class="row gap-2 mt-3 mx-1">
-                        <button type="button" class="col d-grid btn btn-sm btn-danger" (click)="uploadFile()">Subir</button>
-                        <button type="button" class="col d-grid btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <div class="d-grid mt-2 mx-1">
+                        <div *ngIf="checkBoxBoolean; then checkBoxBooleanIsTrue; else checkBoxBooleanIsFalse"></div>
+                    </div>
+                    <div class="d-grid mx-1 mt-2">
+                        <div class="form-check form-switch">
+                            <input (change)="togglecheckReasonBoolean()" class="form-check-input" type="checkbox" role="switch">
+                            <label class="form-check-label">Motivo</label>
+                        </div>
+                    </div>
+                    <div class="d-grid mt-2 mx-1">
+                        <div *ngIf="checkReasonBoolean; then checkReasonBooleanIsTrue; else checkReasonBooleanIsFalse"></div>
+                    </div>
+                    <div *ngIf="content.files" class="d-grid mt-2 mx-1">
+                        <label for="fileRelated" class="form-label">Archivo al que relacionar la versión.</label>
+                        <select class="form-control" #fileRelated>
+                            <option value=",._#falseº@">Ninguno</option>
+                            <option *ngFor="let file of content.files">{{file}}</option>
+                        </select>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade bg-opacity-75 bg-light" id="makeDirectoryModal" tabindex="-1" aria-labelledby="makeDirectoryModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header bg-danger border-0">
-                    <h5 class="modal-title text-light" id="makeDirectoryModalLabel">Crear una carpeta</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form class="row p-0 m-0" [formGroup]="makeDirectoryForm">
-                        <p class="text-danger mx-0 my-1"><i class="bi bi-info-square-fill me-2"></i>No puedes crear carpetas con nombres iguales.</p>
-                        <p class="text-danger mx-0 my-1"><i class="bi bi-info-square-fill me-2"></i>Mínimo 4 caracteres, sin números ni símbolos.</p>
-                        <div class="mt-3">
-                            <span class="p-0 mt-1">Nombre de la carpeta</span>
-                            <input class="form-control" type="text" formControlName="directory" id="directoryName" placeholder="Introduce el nombre de la carpeta" autocomplete="off">
-                        </div>
-                        <div *ngIf="makeDirectoryForm.controls['directory']?.errors && makeDirectoryForm.controls['directory'].invalid; then invalid; else valid;"></div>
-                    </form>
+                <div class="row gap-2 mt-3 mx-1">
+                    <button type="button" class="col d-grid btn btn-sm btn-danger" (click)="uploadFile()">Subir</button>
+                    <button type="button" class="col d-grid btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="modal fade bg-opacity-75 bg-light" id="editFileName" tabindex="-1" aria-labelledby="editFileNameLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header bg-danger border-0">
-                    <h5 class="modal-title text-light">Cambio de nombre para archivo</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form class="row p-0 m-0" [formGroup]="editFileName">
-                        <p class="text-danger mx-0 my-1"><i class="bi bi-info-square-fill me-2"></i>No puedes poner nombres iguales a otros archivos.</p>
-                        <p class="text-danger mx-0 my-1"><i class="bi bi-info-square-fill me-2"></i>No hace falta añadir la extensión.</p>
-                        <div class="mt-3">
-                            <span class="p-0 mt-1">Nombre original</span>
-                            <input class="form-control" type="text" placeholder="{{selected.element}}" readonly>
-                        </div>
-                        <div class="mt-3">
-                            <span class="p-0 mt-1">Nombre de la carpeta</span>
-                            <input class="form-control" type="text" formControlName="fileName" id="fileName" placeholder="Introduce el nombre de la carpeta" autocomplete="off">
-                        </div>
-                        <div *ngIf="editFileName.controls['fileName']?.errors && editFileName.controls['fileName'].invalid; then invalid; else validEditFile;"></div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade bg-opacity-75 bg-light" id="editFolderName" tabindex="-1" aria-labelledby="editFolderNameLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header bg-danger border-0">
-                    <h5 class="modal-title text-light" id="editFolderNameLabel">Cambio de nombre para carpeta</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form class="row p-0 m-0" [formGroup]="editDirectoryName">
-                        <p class="text-danger mx-0 my-1"><i class="bi bi-info-square-fill me-2"></i>No puedes cambiar a carpetas con nombres iguales.</p>
-                        <div class="mt-3">
-                            <span class="p-0 mt-1">Nombre de la carpeta</span>
-                            <input class="form-control" type="text" formControlName="folderName" id="folderName" placeholder="Introduce el nombre de la carpeta" autocomplete="off">
-                        </div>
-                        <div *ngIf="editDirectoryName.controls['folderName']?.errors && editDirectoryName.controls['folderName'].invalid; then invalid; else validEditFolder;"></div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    <notifier-container></notifier-container>
 </div>
 
-<notifier-container></notifier-container>
+<div class="modal fade bg-opacity-75 bg-light" id="makeDirectoryModal" tabindex="-1" aria-labelledby="makeDirectoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger border-0">
+                <h5 class="modal-title text-light" id="makeDirectoryModalLabel">Crear una carpeta</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="row p-0 m-0" [formGroup]="makeDirectoryForm">
+                    <p class="text-danger mx-0 my-1"><i class="bi bi-info-square-fill me-2"></i>No puedes crear carpetas con nombres iguales.</p>
+                    <p class="text-danger mx-0 my-1"><i class="bi bi-info-square-fill me-2"></i>Mínimo 4 caracteres, sin números ni símbolos.</p>
+                    <div class="mt-3">
+                        <span class="p-0 mt-1">Nombre de la carpeta</span>
+                        <input class="form-control" type="text" formControlName="directory" id="directoryName" placeholder="Introduce el nombre de la carpeta" autocomplete="off">
+                    </div>
+                    <div *ngIf="makeDirectoryForm.controls['directory']?.errors && makeDirectoryForm.controls['directory'].invalid; then invalid; else valid;"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bg-opacity-75 bg-light" id="editFileName" tabindex="-1" aria-labelledby="editFileNameLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger border-0">
+                <h5 class="modal-title text-light">Cambio de nombre para archivo</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="row p-0 m-0" [formGroup]="editFileName">
+                    <p class="text-danger mx-0 my-1"><i class="bi bi-info-square-fill me-2"></i>No puedes poner nombres iguales a otros archivos.</p>
+                    <p class="text-danger mx-0 my-1"><i class="bi bi-info-square-fill me-2"></i>No hace falta añadir la extensión.</p>
+                    <div class="mt-3">
+                        <span class="p-0 mt-1">Nombre original</span>
+                        <input class="form-control" type="text" placeholder="{{selected.element}}" readonly>
+                    </div>
+                    <div class="mt-3">
+                        <span class="p-0 mt-1">Nombre de la carpeta</span>
+                        <input class="form-control" type="text" formControlName="fileName" id="fileName" placeholder="Introduce el nombre de la carpeta" autocomplete="off">
+                    </div>
+                    <div *ngIf="editFileName.controls['fileName']?.errors && editFileName.controls['fileName'].invalid; then invalid; else validEditFile;"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bg-opacity-75 bg-light" id="editFolderName" tabindex="-1" aria-labelledby="editFolderNameLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger border-0">
+                <h5 class="modal-title text-light" id="editFolderNameLabel">Cambio de nombre para carpeta</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="row p-0 m-0" [formGroup]="editDirectoryName">
+                    <p class="text-danger mx-0 my-1"><i class="bi bi-info-square-fill me-2"></i>No puedes cambiar a carpetas con nombres iguales.</p>
+                    <div class="mt-3">
+                        <span class="p-0 mt-1">Nombre de la carpeta</span>
+                        <input class="form-control" type="text" formControlName="folderName" id="folderName" placeholder="Introduce el nombre de la carpeta" autocomplete="off">
+                    </div>
+                    <div *ngIf="editDirectoryName.controls['folderName']?.errors && editDirectoryName.controls['folderName'].invalid; then invalid; else validEditFolder;"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <ng-template #isFile>
     <div class="modal-content">
@@ -250,4 +259,12 @@
 
 <ng-template #checkBoxBooleanIsFalse>
     <input type="text" class="form-control" #fileNewName placeholder="{{fileInfo.name || 'Introduce el nombre'}}" disabled>
+</ng-template>
+
+<ng-template #checkReasonBooleanIsTrue>
+    <textarea type="text" class="form-control" #fileReason placeholder="Introduce el motivo del cambio de archivo de {{ fileInfo.name }}"></textarea>
+</ng-template>
+
+<ng-template #checkReasonBooleanIsFalse>
+    <textarea type="text" class="form-control" #fileReason placeholder="Si quieres introducir un motivo, pulsa el switch" disabled></textarea>
 </ng-template>
