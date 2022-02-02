@@ -80,6 +80,7 @@ export class WorkspaceComponent implements OnInit {
   @ViewChild('fileRelated') fileRelated: ElementRef;
   @ViewChild('fileVersion') fileVersion: ElementRef;
   @ViewChild('fileNewName') fileNewName: ElementRef;
+  @ViewChild('fileReason') fileReason: ElementRef;
 
   /* Methods */
   async ngOnInit(): Promise <void> {
