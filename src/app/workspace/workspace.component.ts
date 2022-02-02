@@ -22,6 +22,7 @@ export class WorkspaceComponent implements OnInit {
   public selected: any;
   public fileInfo: FileInfo;
   public checkBoxBoolean: boolean;
+  public checkReasonBoolean: boolean;
   public makeDirectoryForm: FormGroup;
   public editDirectoryName: FormGroup;
   public editFileName: FormGroup;
@@ -34,6 +35,7 @@ export class WorkspaceComponent implements OnInit {
     this.newResourceName = new FormControl('', [Validators.required])
     this.fileInfo = new FileInfo(false);
     this.checkBoxBoolean = false;
+    this.checkReasonBoolean = false;
     this.selected = true;
     this.tooltip = {
       arrow: false,
@@ -121,6 +123,10 @@ export class WorkspaceComponent implements OnInit {
     this.checkBoxBoolean = !this.checkBoxBoolean;
   }
 
+  togglecheckReasonBoolean() {
+    this.checkReasonBoolean = !this.checkReasonBoolean;
+  }
+
   setSelected(element: string, isFile: boolean): void {
     this.selected = {
       element: element,
@@ -132,10 +138,6 @@ export class WorkspaceComponent implements OnInit {
     $('#' + id).modal(state);
   }
 
-  modalEditFolder(state: string): void {
-    $('#editFolderName').modal(state);
-  }
-
   folderEvent(event) {
     this.setSelected(event.folder, false);
     switch (event.type) {
@@ -143,7 +145,7 @@ export class WorkspaceComponent implements OnInit {
           this.modal('editFolderName', 'show');
       break;
       case 'goinside':
-        this.selectedFolder(event.folder);
+        this.goForward(event.folder);
       break;
       case 'delete':
         this.modal('confirmationDelete', 'show');
@@ -178,6 +180,26 @@ export class WorkspaceComponent implements OnInit {
     }
   }
 
+  goForward(foldername: string): void {
+    if (this.getUrl().includes('?path')) {
+      this.setPath(this.getUrl() + '/' + foldername);
+    } else {
+      this.setPath(this.getUrl() + '?path=' + foldername);
+    }
+    this.getContent(this.getUrl());
+  };
+
+  goBack(): void {
+    if (this.getUrl().includes('?path=')) {
+      if (this.getUrl().substring(0, this.getUrl().lastIndexOf('/')) === 'http://localhost:3001') {
+        this.setPath(this.getUrl().substring(0, this.getUrl().lastIndexOf('/')) + '/');
+      } else {
+        this.setPath(this.getUrl().substring(0, this.getUrl().lastIndexOf('/')));
+      };
+      this.getContent(this.getUrl());
+    };
+  };
+
   async uploadFile(): Promise <void> {
     const fileList: FileList = this.fileInputField.nativeElement.files;
     const fileRelated = this.fileRelated.nativeElement;
@@ -192,17 +214,6 @@ export class WorkspaceComponent implements OnInit {
     await this.request.uploadFile(formData, options, this.getUrl(), this.fileNewName.nativeElement.value, fileRelated.value);
     this.modal('uploadNameChange', 'hide');
     this.getContent(this.getUrl());
-  };
-
-  goBack(): void {
-    if (this.getUrl().includes('?path=')) {
-      if (this.getUrl().substring(0, this.getUrl().lastIndexOf('/')) === 'http://localhost:3001') {
-        this.setPath(this.getUrl().substring(0, this.getUrl().lastIndexOf('/')) + '/');
-      } else {
-        this.setPath(this.getUrl().substring(0, this.getUrl().lastIndexOf('/')));
-      };
-      this.getContent(this.getUrl());
-    };
   };
 
   async makeDirectory(): Promise <void> {
@@ -237,15 +248,6 @@ export class WorkspaceComponent implements OnInit {
     this.modal('editFolderName', 'hide');
     this.getContent(this.getUrl());
   }
-
-  selectedFolder(foldername: string): void {
-    if (this.getUrl().includes('?path')) {
-      this.setPath(this.getUrl() + '/' + foldername);
-    } else {
-      this.setPath(this.getUrl() + '?path=' + foldername);
-    }
-    this.getContent(this.getUrl());
-  };
 
   async getContent(path: string): Promise <void> {
     this.content = [];
