@@ -128,20 +128,8 @@ export class WorkspaceComponent implements OnInit {
     }
   }
 
-  modalDelete(state: string): void {
-    $('#confirmationDelete').modal(state);
-  }
-
-  modalUpload(state: string): void {
-    $('#uploadNameChange').modal(state);
-  }
-
-  modalmakeDirectory(state: string): void {
-    $('#makeDirectoryModal').modal(state);
-  }
-
-  modalEditFile(state: string): void {
-    $('#editFileName').modal(state);
+  modal(id: string, state: string): void {
+    $('#' + id).modal(state);
   }
 
   modalEditFolder(state: string): void {
@@ -152,13 +140,13 @@ export class WorkspaceComponent implements OnInit {
     this.setSelected(event.folder, false);
     switch (event.type) {
       case 'edit':
-          this.modalEditFolder('show');
+          this.modal('editFolderName', 'show');
       break;
       case 'goinside':
         this.selectedFolder(event.folder);
       break;
       case 'delete':
-        this.modalDelete('show');
+        this.modal('confirmationDelete', 'show');
       break;
     }
   }
@@ -167,10 +155,10 @@ export class WorkspaceComponent implements OnInit {
     this.setSelected(event.file, true);
     switch (event.type) {
       case 'edit':
-        this.modalEditFile('show');
+        this.modal('editFileName', 'show');
       break;
       case 'delete': 
-        this.modalDelete('show');
+        this.modal('confirmationDelete', 'show');
       break;
     }
   }
@@ -202,7 +190,7 @@ export class WorkspaceComponent implements OnInit {
       headers: headers 
     };
     await this.request.uploadFile(formData, options, this.getUrl(), this.fileNewName.nativeElement.value, fileRelated.value);
-    this.modalUpload('hide');
+    this.modal('uploadNameChange', 'hide');
     this.getContent(this.getUrl());
   };
 
@@ -223,30 +211,30 @@ export class WorkspaceComponent implements OnInit {
       await this.request.makeDirectory(this.getUrl(), directoryName);
     };
     this.getContent(this.getUrl());
-    this.modalmakeDirectory('hide');
+    this.modal('makeDirectoryModal', 'hide');
   };
 
   async deleteFile(file: string): Promise <void> {
     await this.request.deleteFile(this.getUrl(), file);
+    this.modal('confirmationDelete', 'hide');
     this.getContent(this.getUrl());
-    this.modalDelete('hide');
   };
 
   async deleteFolder(folder: string): Promise <void> {
     await this.request.deleteDirectory(this.getUrl(), folder);
-    this.modalDelete('hide');
+    this.modal('confirmationDelete', 'hide');
     this.getContent(this.getUrl());
   };
 
   async editFileNameSubmit() {
     await this.request.editElementName(this.getUrl(), this.editFileName.value.fileName + '.' + this.selected.element.split('.')[this.selected.element.split('.').length - 1], this.selected.element);
-    this.modalEditFile('hide');
+    this.modal('editFileName', 'hide');
     this.getContent(this.getUrl());
   }
 
   async editFolderNameSubmit() {
     await this.request.editElementName(this.getUrl(), this.editDirectoryName.value.folderName, this.selected.element);
-    this.modalEditFolder('hide');
+    this.modal('editFolderName', 'hide');
     this.getContent(this.getUrl());
   }
 
