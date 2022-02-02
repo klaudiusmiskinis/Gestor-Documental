@@ -41,7 +41,7 @@
                 <button type="button" ngxTippy data-tippy-content="¡Subir!" [tippyProps]="tooltip" class="btn btn-sm btn-outline-danger px-4" data-bs-toggle="modal" data-bs-target="#uploadNameChange"><i class="bi bi-cloud-arrow-up-fill"></i></button>
             </div>
         </div>
-        <div *ngIf="fileInfo.exists" [@slideInLeft]="fileInfo.exists" class="d-flex g-0 gap-1 px-2">
+        <div *ngIf="fileInfo.exists" [@slideInLeft]="fileInfo.exists" class="d-flex g-0 gap-1 px-2 mb-2">
             <span class="badge bg-danger" ngxTippy data-tippy-content="Nombre del archivo" [tippyProps]="tooltip">{{fileInfo.name}}</span>
             <span class="badge bg-danger" ngxTippy data-tippy-content="Tamaño del archivo" [tippyProps]="tooltip">{{fileInfo.size}}</span>
             <span class="badge bg-danger" ngxTippy data-tippy-content="Extensión del archivo" [tippyProps]="tooltip">{{fileInfo.extension}}</span>
