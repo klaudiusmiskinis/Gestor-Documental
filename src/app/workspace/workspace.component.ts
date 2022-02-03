@@ -87,39 +87,6 @@ export class WorkspaceComponent implements OnInit {
     await this.getContent(this.url.url);
   };
 
-  validateFoldername(control: AbstractControl): {[key: string]: any} | null  {
-    const name = control.value.toLowerCase()
-    if (name) {
-      let response = this.content.folders.filter(folder => {
-        folder = folder.toLowerCase();
-        if(folder === name) {
-          return folder;
-        }
-      });
-      if (response.length > 0) {
-        return {'nameExists': true}
-      }
-    }
-    return null;
-  }
-
-  validateFilename(control: AbstractControl): {[key: string]: any} | null  {
-    const name = control.value.toLowerCase()
-    if (control.value) {
-      let response = this.content.files.filter(file => {
-        const nameCompare = file.toLowerCase();
-        const fileWithoutDot = file.split('.')[0];
-        if(nameCompare === name || fileWithoutDot === name) {
-          return file;
-        }
-      });
-      if (response.length > 0) {
-        return {'nameExists': true}
-      }
-    }
-    return null;
-  }
-
   togglecheckBoxBoolean() {
     this.checkBoxBoolean = !this.checkBoxBoolean;
   }
@@ -137,33 +104,6 @@ export class WorkspaceComponent implements OnInit {
 
   modal(id: string, state: string): void {
     $('#' + id).modal(state);
-  }
-
-  folderEvent(event) {
-    this.setSelected(event.folder, false);
-    switch (event.type) {
-      case 'edit':
-          this.modal('editFolderName', 'show');
-      break;
-      case 'goinside':
-        this.goForward(event.folder);
-      break;
-      case 'delete':
-        this.modal('confirmationDelete', 'show');
-      break;
-    }
-  }
-
-  fileEvent(event) {
-    this.setSelected(event.file, true);
-    switch (event.type) {
-      case 'edit':
-        this.modal('editFileName', 'show');
-      break;
-      case 'delete': 
-        this.modal('confirmationDelete', 'show');
-      break;
-    }
   }
 
   getUrl(): string {
@@ -201,9 +141,70 @@ export class WorkspaceComponent implements OnInit {
     };
   };
 
+  folderEvent(event) {
+    this.setSelected(event.folder, false);
+    switch (event.type) {
+      case 'edit':
+          this.modal('editFolderName', 'show');
+      break;
+      case 'goinside':
+        this.goForward(event.folder);
+      break;
+      case 'delete':
+        this.modal('confirmationDelete', 'show');
+      break;
+    }
+  }
+
+  fileEvent(event) {
+    this.setSelected(event.file, true);
+    switch (event.type) {
+      case 'edit':
+        this.modal('editFileName', 'show');
+      break;
+      case 'delete': 
+        this.modal('confirmationDelete', 'show');
+      break;
+    }
+  }
+  
+  validateFoldername(control: AbstractControl): {[key: string]: any} | null  {
+    const name = control.value.toLowerCase()
+    if (name) {
+      let response = this.content.folders.filter(folder => {
+        folder = folder.toLowerCase();
+        if(folder === name) {
+          return folder;
+        }
+      });
+      if (response.length > 0) {
+        return {'nameExists': true}
+      }
+    }
+    return null;
+  }
+
+  validateFilename(control: AbstractControl): {[key: string]: any} | null  {
+    const name = control.value.toLowerCase()
+    if (control.value) {
+      let response = this.content.files.filter(file => {
+        const nameCompare = file.toLowerCase();
+        const fileWithoutDot = file.split('.')[0];
+        if(nameCompare === name || fileWithoutDot === name) {
+          return file;
+        }
+      });
+      if (response.length > 0) {
+        return {'nameExists': true}
+      }
+    }
+    return null;
+  }
+
   async uploadFile(): Promise <void> {
     const fileList: FileList = this.fileInputField.nativeElement.files;
     const fileRelated = this.fileRelated.nativeElement;
+    const fileReason = this.fileReason.nativeElement;
     const formData: FormData = new FormData();
     const headers = new Headers();
     formData.append('file', fileList[0], fileList[0].name);
@@ -212,7 +213,7 @@ export class WorkspaceComponent implements OnInit {
     const options = {
       headers: headers 
     };
-    await this.request.uploadFile(formData, options, this.getUrl(), this.fileNewName.nativeElement.value, fileRelated.value);
+    await this.request.uploadFile(formData, options, this.getUrl(), this.fileNewName.nativeElement.value, fileRelated.value, fileReason.value);
     this.modal('uploadNameChange', 'hide');
     this.getContent(this.getUrl());
   };
@@ -222,8 +223,8 @@ export class WorkspaceComponent implements OnInit {
     if (directoryName) {
       await this.request.makeDirectory(this.getUrl(), directoryName);
     };
-    this.getContent(this.getUrl());
     this.modal('makeDirectoryModal', 'hide');
+    this.getContent(this.getUrl());
   };
 
   async deleteFile(file: string): Promise <void> {
