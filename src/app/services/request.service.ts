@@ -61,12 +61,14 @@ export class RequestService {
     }
   };
 
-  async uploadFile(formData: FormData, options: Object, path: string, name: string, fileRelated: string): Promise <void> {
+  async uploadFile(formData: FormData, options: Object, path: string, name: string, fileRelated: string, fileReason: string): Promise <void> {
     try{
       if (name) {
         path = path + this.setParameterChar(path) + 'updateName=' + name;
       } if (fileRelated !== ',._#falseº@') {
         path = path + this.setParameterChar(path) + 'fileRelated=' + fileRelated;
+      } if (fileReason.length > 5) {
+        path = path + this.setParameterChar(path) + 'reason=' + fileReason;
       }
       const status = this.parse(await this.http.post<any>(path, formData, options).toPromise());
       if (status.success) {
