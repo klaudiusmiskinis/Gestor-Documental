@@ -62,7 +62,7 @@
                 <h5 class="modal-title text-light">Subida de archivo</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <form [formGroup]="uploadFileForm" class="modal-body">
                 <div class="row">
                     <div *ngIf="fileInfo.exists" class="d-flex gap-1 mb-2">
                         <span class="badge bg-danger">{{fileInfo.name}}</span>
@@ -100,12 +100,12 @@
                     <button type="button" class="col d-grid btn btn-sm btn-danger" (click)="uploadFile()">Subir</button>
                     <button type="button" class="col d-grid btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
-
-    <notifier-container></notifier-container>
 </div>
+
+<notifier-container></notifier-container>
 
 <div class="modal fade bg-opacity-75 bg-light" id="makeDirectoryModal" tabindex="-1" aria-labelledby="makeDirectoryModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -175,7 +175,6 @@
         </div>
     </div>
 </div>
-
 
 <ng-template #isFile>
     <div class="modal-content">

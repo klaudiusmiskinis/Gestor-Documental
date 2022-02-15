@@ -24,6 +24,7 @@ export class WorkspaceComponent implements OnInit {
   public checkBoxBoolean: boolean;
   public checkReasonBoolean: boolean;
   public makeDirectoryForm: FormGroup;
+  public uploadFileForm: FormGroup;
   public editDirectoryName: FormGroup;
   public editFileName: FormGroup;
   public newResourceName: FormControl;
