@@ -54,6 +54,7 @@ export class RequestService {
       let char = this.setParameterChar(path);
       const status = this.parse(await this.http.post<any>(path +  char + 'folder=' + directoryName, []).toPromise());
       if (status.success) {
+        this.notificate('¡Directorio creado!');
         this.setContent(status);
       };
     } catch (e) {
