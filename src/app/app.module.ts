@@ -41,7 +41,10 @@ import { AdminComponent } from './admin/admin.component';
     MatSidenavModule,
     NgxTippyModule
   ],
-  providers: [{provide: APP_BASE_HREF, useValue: '/' }],
+  providers: [
+    {provide: APP_BASE_HREF, useValue: '/' }, 
+    HttpClientModule
+],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
