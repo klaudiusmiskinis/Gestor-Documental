@@ -46,17 +46,32 @@ trigger('slideInRight', [
   ]),
 ]
 
-export const fadeIn = [
-  /* FadeIn */
-  trigger('fadeIn', [
-    transition('void => *', [
-      style({
-        opacity: '0',
-      }),
-      animate('1000ms ease')
-    ]),
+export const fadeIn = trigger("fadeIn", [
+  transition(":enter", [
+    style({ opacity: 0 }),
+    animate(
+      "750ms ease-in-out",
+      style({ opacity: 1 })
+    )
   ]),
-]
+  transition(":leave", [
+    style({ opacity: 1 }),
+    animate(
+      "600ms ease-in-out",
+      style({ opacity: 0 })
+    )
+  ])
+]);
+
+export const fadeInError = trigger("fadeInError", [
+  transition(":enter", [
+    style({ opacity: 0 }),
+    animate(
+      "750ms ease-in-out",
+      style({ opacity: 1 })
+    )
+  ])
+])
 
 export const fadeOut = [
   /* FadeIn */
