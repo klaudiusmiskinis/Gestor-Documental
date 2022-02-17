@@ -2,9 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { NotifierService } from 'angular-notifier';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({providedIn: 'root'})
 
 export class RequestService {
   private content: any;
@@ -12,6 +10,16 @@ export class RequestService {
   constructor(private http: HttpClient, notifier: NotifierService) {
     this.notifier = notifier;
   }
+
+  async login(path: string, user: object): Promise <Object> {
+    try {
+      this.setContent(this.parse(await this.http.post<any>(path, user).toPromise()));
+      return this.getContent();
+    } catch (e) {
+      this.notificate('Error con el login.');
+      return 'Error';
+    }
+  };
 
   async getWorkspace(path: string): Promise <Object> {
     try {
@@ -45,7 +53,7 @@ export class RequestService {
         this.setContent(status);
       }
     } catch (e) {
-      this.notificate('Ha habido un error eliminando el archivo.');
+      this.notificate('Ha habido un error eliminando el directorio.');
     }
   };
 
