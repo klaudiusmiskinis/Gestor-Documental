@@ -3,7 +3,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { RequestService } from '../services/request.service';
 import { MatAccordion } from '@angular/material/expansion';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
-import { slideIn, fadeIn, fadeOut } from '../config/animations.config';
+import { slideIn, fadeIn, fadeOut, fadeInError } from '../config/animations.config';
 import { FileInfo } from '../models/file.model';
 import { AppUrl } from '../models/appurl.model';
 declare var $: any;
@@ -11,7 +11,7 @@ declare var $: any;
 @Component({
   selector: 'workspace',
   templateUrl: './workspace.component.html',
-  animations: [slideIn, fadeIn, fadeOut]
+  animations: [slideIn, fadeIn, fadeOut, fadeInError]
 })
 
 export class WorkspaceComponent implements OnInit {
@@ -41,7 +41,14 @@ export class WorkspaceComponent implements OnInit {
     this.tooltip = {
       arrow: false,
       placement: 'bottom'
-    }
+    };
+
+    this.uploadFileForm = new FormGroup({
+      nameSwitch: new FormControl(false, Validators.required),
+      reasonSwitch: new FormControl(false, Validators.required),
+      relatedFile: new FormControl('Ninguno', Validators.required),
+      fileReason: new FormControl('', Validators.required )
+    });
 
     this.makeDirectoryForm = new FormGroup({
       directory: new FormControl('', [
@@ -52,7 +59,7 @@ export class WorkspaceComponent implements OnInit {
         this.validateFoldername.bind(this),
         this.validateFilename.bind(this)
       ])
-    })
+    });
 
     this.editDirectoryName = new FormGroup({
       folderName: new FormControl('', [
@@ -63,7 +70,7 @@ export class WorkspaceComponent implements OnInit {
         this.validateFoldername.bind(this),
         this.validateFilename.bind(this)
       ])
-    })
+    });
 
     this.editFileName = new FormGroup({
       fileName: new FormControl('', [
@@ -73,7 +80,8 @@ export class WorkspaceComponent implements OnInit {
         Validators.pattern('^[A-Za-z0-9-\\s]+$'),
         this.validateFilename.bind(this)
       ])
-    })
+    });
+
   };
 
   @ViewChild(MatAccordion) accordion: MatAccordion;
@@ -203,20 +211,24 @@ export class WorkspaceComponent implements OnInit {
   }
 
   async uploadFile(): Promise <void> {
-    const fileList: FileList = this.fileInputField.nativeElement.files;
-    const fileRelated = this.fileRelated.nativeElement;
-    const fileReason = this.fileReason.nativeElement;
-    const formData: FormData = new FormData();
-    const headers = new Headers();
-    formData.append('file', fileList[0], fileList[0].name);
-    headers.append('Content-Type', 'multipart/form-data');
-    headers.append('Accept', 'application/json');
-    const options = {
-      headers: headers 
-    };
-    await this.request.uploadFile(formData, options, this.getUrl(), this.fileNewName.nativeElement.value, fileRelated.value, fileReason.value);
-    this.modal('uploadNameChange', 'hide');
-    this.getContent(this.getUrl());
+    console.log(this.uploadFileForm.controls['nameSwitch'].value);
+    console.log(this.uploadFileForm.controls['reasonSwitch'].value);
+    console.log(this.uploadFileForm.controls['relatedFile'].value);
+    console.log(this.uploadFileForm.controls['fileReason'].value);
+    // const fileList: FileList = this.fileInputField.nativeElement.files;
+    // const fileRelated = this.fileRelated.nativeElement;
+    // const fileReason = this.fileReason.nativeElement;
+    // const formData: FormData = new FormData();
+    // const headers = new Headers();
+    // formData.append('file', fileList[0], fileList[0].name);
+    // headers.append('Content-Type', 'multipart/form-data');
+    // headers.append('Accept', 'application/json');
+    // const options = {
+    //   headers: headers 
+    // };
+    // await this.request.uploadFile(formData, options, this.getUrl(), this.fileNewName.nativeElement.value, fileRelated.value, fileReason.value);
+    // this.modal('uploadNameChange', 'hide');
+    // this.getContent(this.getUrl());
   };
 
   async makeDirectory(): Promise <void> {
