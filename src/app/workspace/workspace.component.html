@@ -27,7 +27,7 @@
             <folders [folders]="content.folders" (folderEvent)="folderEvent($event)"></folders>
         </div>
         <div *ngIf="content.files && content.files.length > 0">
-            <files [files]="content.files" [path]="getUrl()" (fileEvent)="fileEvent($event)"></files>
+            <files [files]="content.files" (fileEvent)="fileEvent($event)" [path]="getUrl()"></files>
         </div>
     </div>
 
@@ -72,7 +72,7 @@
                     <p class="text-danger my-0"><i class="bi bi-info-square-fill me-2"></i>No hace falta añadir la extensión</p>
                     <div class="d-grid mx-1 mt-2">
                         <div class="form-check form-switch">
-                            <input (change)="togglecheckBoxBoolean()" class="form-check-input" type="checkbox" role="switch">
+                            <input (change)="togglecheckBoxBoolean()" formControlName="nameSwitch" class="form-check-input" type="checkbox" role="switch">
                             <label class="form-check-label">Editar nombre</label>
                         </div>
                     </div>
@@ -81,17 +81,17 @@
                     </div>
                     <div class="d-grid mx-1 mt-2">
                         <div class="form-check form-switch">
-                            <input (change)="togglecheckReasonBoolean()" class="form-check-input" type="checkbox" role="switch">
+                            <input (change)="togglecheckReasonBoolean()" formControlName="reasonSwitch" class="form-check-input" type="checkbox" role="switch">
                             <label class="form-check-label">Motivo</label>
                         </div>
                     </div>
                     <div class="d-grid mt-2 mx-1">
-                        <div *ngIf="checkReasonBoolean; then checkReasonBooleanIsTrue; else checkReasonBooleanIsFalse"></div>
+                        <textarea type="text" class="form-control" maxlength="300" formControlName="fileReason" placeholder="Introduce el motivo del cambio de archivo de {{ fileInfo.name }}"></textarea>
                     </div>
                     <div *ngIf="content.files" class="d-grid mt-2 mx-1">
                         <label for="fileRelated" class="form-label">Archivo al que relacionar la versión.</label>
-                        <select class="form-control" #fileRelated>
-                            <option value=",._#falseº@">Ninguno</option>
+                        <select formControlName="relatedFile" class="form-control" #fileRelated>
+                            <option selected="selected"  value="">Ninguno</option>
                             <option *ngFor="let file of content.files">{{file}}</option>
                         </select>
                     </div>
@@ -212,7 +212,7 @@
 
 
 <ng-template #invalid>
-    <label [@fadeIn] class="p-0 mt-1 text-danger mx-2"><i class="bi bi-x me-1"></i>Esta nombre no es válido.</label>
+    <label [@fadeInError] class="p-0 mt-1 text-danger mx-2"><i class="bi bi-x me-1"></i>Esta nombre no es válido.</label>
     <div class="row g-0 gap-2 mt-3">
         <button type="button" class="col d-grid btn btn-sm btn-danger" (click)="editFileNameSubmit()" disabled>Crear</button>
         <button type="button" class="col d-grid btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -220,7 +220,7 @@
 </ng-template>
 
 <ng-template #valid>
-    <label [@fadeIn] class="p-0 mt-2 text-success mx-2"><i class="bi bi-check-lg me-1"></i>Puedes crear la carpeta</label>
+    <label [@fadeInError] class="p-0 mt-2 text-success mx-2"><i class="bi bi-check-lg me-1"></i>Puedes crear la carpeta</label>
     <div class="row g-0 gap-2 mt-3">
         <button type="submit" class="col d-grid btn btn-sm btn-danger" (click)="makeDirectory()">Crear</button>
         <button type="button" class="col d-grid btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -228,7 +228,7 @@
 </ng-template>
 
 <ng-template #validEdit>
-    <label [@fadeIn] class="p-0 mt-2 text-success mx-2"><i class="bi bi-check-lg me-1"></i>Puedes editar la carpeta</label>
+    <label [@fadeInError] class="p-0 mt-2 text-success mx-2"><i class="bi bi-check-lg me-1"></i>Puedes editar la carpeta</label>
     <div class="row g-0 gap-2 mt-3">
         <button type="button" class="col d-grid btn btn-sm btn-danger" (click)="makeDirectory()">Crear</button>
         <button type="button" class="col d-grid btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -236,7 +236,7 @@
 </ng-template>
 
 <ng-template #validEditFile>
-    <label [@fadeIn] class="p-0 mt-2 text-success mx-2"><i class="bi bi-check-lg me-1"></i>Puedes cambiar el nombre del archivo</label>
+    <label [@fadeInError] class="p-0 mt-2 text-success mx-2"><i class="bi bi-check-lg me-1"></i>Puedes cambiar el nombre del archivo</label>
     <div class="row g-0 gap-2 mt-3">
         <button type="button" class="col d-grid btn btn-sm btn-danger" (click)="editFileNameSubmit()">Cambiar</button>
         <button type="button" class="col d-grid btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -244,7 +244,7 @@
 </ng-template>
 
 <ng-template #validEditFolder>
-    <label [@fadeIn] class="p-0 mt-2 text-success mx-2"><i class="bi bi-check-lg me-1"></i>Puedes cambiar el nombre del directorio</label>
+    <label [@fadeInError] class="p-0 mt-2 text-success mx-2"><i class="bi bi-check-lg me-1"></i>Puedes cambiar el nombre del directorio</label>
     <div class="row g-0 gap-2 mt-3">
         <button type="button" class="col d-grid btn btn-sm btn-danger" (click)="editFolderNameSubmit()">Cambiar</button>
         <button type="button" class="col d-grid btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -261,7 +261,6 @@
 </ng-template>
 
 <ng-template #checkReasonBooleanIsTrue>
-    <textarea type="text" class="form-control" maxlength="300" #fileReason placeholder="Introduce el motivo del cambio de archivo de {{ fileInfo.name }}"></textarea>
 </ng-template>
 
 <ng-template #checkReasonBooleanIsFalse>
