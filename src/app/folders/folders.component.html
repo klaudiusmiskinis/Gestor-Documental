@@ -5,8 +5,7 @@
         </mat-expansion-panel-header>
         <div *ngFor="let folder of folders; let i = index">
             <div *ngIf="i % 3 == 0" class="d-grid d-xl-flex justify-content-xl-end">
-
-                <div class="d-grid col text-truncate m-1" id="folder{{i}}">
+                <div class="d-grid col text-truncate m-1" (contextmenu)="onRightClick($event, folder)" id="folder{{i}}">
                     <accordion [isAnimated]="true" class="text-truncate">
                         <accordion-group>
                             <div class="badge bg-secondary pull-left float-left mb-2"><i class="bi bi-gear-fill me-2"></i>Opciones de {{folder}}</div>
@@ -32,7 +31,7 @@
                     </accordion>
                 </div>
 
-                <div class="d-grid col text-truncate m-1" *ngIf="i + 1 < folders.length">
+                <div class="d-grid col text-truncate m-1" (contextmenu)="onRightClick($event, folders[i + 1])" *ngIf="i + 1 < folders.length">
                     <accordion [isAnimated]="true" class="text-truncate">
                         <accordion-group>
                             <div class="badge bg-secondary pull-left float-left mb-2"><i class="bi bi-gear-fill me-2"></i>Opciones de {{folders[i + 1]}}</div>
@@ -58,7 +57,7 @@
                     </accordion>
                 </div>
 
-                <div class="d-grid col text-truncate m-1" *ngIf="i + 2 < folders.length">
+                <div class="d-grid col text-truncate m-1" (contextmenu)="onRightClick($event, folders[i + 2])" *ngIf="i + 2 < folders.length">
                     <accordion [isAnimated]="true" class="text-truncate">
                         <accordion-group>
                             <div class="badge bg-secondary pull-left float-left mb-2"><i class="bi bi-gear-fill me-2"></i>Opciones de {{folders[i + 2]}}</div>
@@ -87,3 +86,9 @@
         </div>
     </mat-expansion-panel>
 </mat-accordion>
+
+<div class="dropdown-menu dropdown-menu-sm" #menuOptions>
+    <a class="dropdown-item" href="#">Action</a>
+    <a class="dropdown-item" href="#">Another action</a>
+    <a class="dropdown-item" href="#">Something else here</a>
+</div>
