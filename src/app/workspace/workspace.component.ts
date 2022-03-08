@@ -45,10 +45,14 @@ export class WorkspaceComponent implements OnInit {
 
     this.uploadFileForm = new FormGroup({
       nameSwitch: new FormControl(false, Validators.required),
-      reasonSwitch: new FormControl(false, Validators.required),
-      relatedFile: new FormControl('Ninguno', Validators.required),
-      fileReason: new FormControl('', Validators.required )
+      reasonSwitch: new FormControl(false),
+      fileNewName: new FormControl(),
+      relatedFile: new FormControl('none', Validators.required),
+      fileReason: new FormControl()
     });
+
+    this.uploadFileForm.controls['nameSwitch'].valueChanges.subscribe(() => this.setRequired(this.uploadFileForm.controls['nameSwitch'].value, 'fileNewName', true, 10));
+    this.uploadFileForm.controls['reasonSwitch'].valueChanges.subscribe(() => this.setRequired(this.uploadFileForm.controls['reasonSwitch'].value, 'fileReason', false));
 
     this.makeDirectoryForm = new FormGroup({
       directory: new FormControl('', [
@@ -84,6 +88,19 @@ export class WorkspaceComponent implements OnInit {
 
   };
 
+
+  setRequired(value: any, field: string, minLength: boolean, minLengthChars?: number | any) {
+    console.log('marked', value, 'on', field)
+    if (value) {
+      this.uploadFileForm.controls[field].setValidators([Validators.required]);
+      if (minLength) {
+        this.uploadFileForm.controls[field].setValidators([Validators.minLength(minLengthChars)]);
+      }
+    } 
+    
+    this.uploadFileForm.updateValueAndValidity();
+  }
+
   @ViewChild(MatAccordion) accordion: MatAccordion;
   @ViewChild('fileInputField') fileInputField: ElementRef;
   @ViewChild('fileRelated') fileRelated: ElementRef;
@@ -95,6 +112,8 @@ export class WorkspaceComponent implements OnInit {
   async ngOnInit(): Promise <void> {
     await this.getContent(this.url.url);
   };
+
+  
 
   togglecheckBoxBoolean() {
     this.checkBoxBoolean = !this.checkBoxBoolean;
@@ -210,6 +229,7 @@ export class WorkspaceComponent implements OnInit {
     return null;
   }
 
+  
   async uploadFile(): Promise <void> {
     const fileList: FileList = this.fileInputField.nativeElement.files;
     const fileRelated = this.fileRelated.nativeElement;
