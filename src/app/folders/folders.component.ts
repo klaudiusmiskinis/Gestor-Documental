@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Host, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { right } from '@popperjs/core';
 import { slideIn, fadeIn } from '../config/animations.config';
 
@@ -11,18 +11,17 @@ import { slideIn, fadeIn } from '../config/animations.config';
 export class FoldersComponent implements OnInit {
   public expanded: Boolean;
   public tooltip: object;
+  public menuStatus: boolean;
 
   constructor() {
+    this.menuStatus = false;
     this.tooltip = {
       arrow: false,
       placement: 'top'
     }
   }
+
   @ViewChild('menuOptions') menu: ElementRef;
-  @HostListener('contextmenu', ['$event'])
-  right(event) {
-    event.preventDefault();
-  }
   @Input() folders: any;
   @Output() folderEvent = new EventEmitter<Object>();
 
@@ -30,12 +29,18 @@ export class FoldersComponent implements OnInit {
     this.expanded = true
   }
 
+  clickout() {
+    this.menuStatus = false;
+    this.menu.nativeElement.style.display = 'none';
+  }
+
   onRightClick(event: any, folder: string) {
-    this.menu.nativeElement.style.position = 'fixed';
+    event.preventDefault();
+    this.menuStatus = true;
     this.menu.nativeElement.style.display = 'block';
+    this.menu.nativeElement.style.position = 'fixed';
     this.menu.nativeElement.style.top = event.clientY - 0 + 'px';
     this.menu.nativeElement.style.left = event.clientX - 10 + 'px';
-    console.log('right', folder, event.clientX, event.clientY);
   }
 
   folderEmitter (type: string, folder: string) {
@@ -43,5 +48,4 @@ export class FoldersComponent implements OnInit {
       type: type, folder: folder
     });
   }
-
 }
