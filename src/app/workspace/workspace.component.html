@@ -8,16 +8,16 @@
                 <div class="badge bg-secondary">Opciones</div>
             </div>
         </div>
-        <div class="col-auto d-grid" *ngIf="getUrl().includes('?path=')">
+        <div class="col-auto col-sm d-grid" *ngIf="getUrl().includes('?path=')">
             <button class="btn btn-sm btn-outline-danger shadow-sm" (click)=goBack()>Volver<i class="bi bi-arrow-left-short ms-1"></i></button>
         </div>
-        <div class="col-auto d-grid">
+        <div class="col-auto col-sm d-grid">
             <button class="btn btn-sm btn-outline-secondary shadow-sm" (click)="getContent(getUrl())">Actualizar<i class="bi bi-arrow-clockwise ms-1"></i></button>
         </div>
-        <div class="col-auto d-grid">
+        <div class="col-auto col-sm d-grid">
             <button class="btn btn-sm btn-outline-secondary shadow-sm" data-bs-toggle="modal" data-bs-target="#makeDirectoryModal">Crear una carpeta<i class="bi bi-folder-plus ms-1"></i></button>
         </div>
-        <div class="col-auto d-grid">
+        <div class="col-auto col-sm d-grid">
             <button class="btn btn-sm btn-outline-secondary shadow-sm" disabled>Ver ultimas versiones<i class="bi bi-eye-fill ms-1"></i></button>
         </div>
     </div>
