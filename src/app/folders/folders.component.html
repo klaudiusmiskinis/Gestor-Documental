@@ -1,4 +1,4 @@
-<mat-accordion [@fadeIn] class="card border-0 bg-transparent m-1">
+<mat-accordion (click)="clickout()" [@fadeIn] class="card border-0 bg-transparent m-1">
     <mat-expansion-panel class="m-0 p-0" hideToggle [expanded]="expanded">
         <mat-expansion-panel-header class="m-0 p-1">
             <div class="p-2 card bg-light header-expansion">{{folders.length}} Directorios</div>
@@ -87,7 +87,7 @@
     </mat-expansion-panel>
 </mat-accordion>
 
-<div class="dropdown-menu dropdown-menu-sm" #menuOptions>
+<div *ngIf="menu" class="dropdown-menu dropdown-menu-sm" #menuOptions>
     <a class="dropdown-item" href="#">Action</a>
     <a class="dropdown-item" href="#">Another action</a>
     <a class="dropdown-item" href="#">Something else here</a>
