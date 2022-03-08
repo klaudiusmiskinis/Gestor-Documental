@@ -211,24 +211,20 @@ export class WorkspaceComponent implements OnInit {
   }
 
   async uploadFile(): Promise <void> {
-    console.log(this.uploadFileForm.controls['nameSwitch'].value);
-    console.log(this.uploadFileForm.controls['reasonSwitch'].value);
-    console.log(this.uploadFileForm.controls['relatedFile'].value);
-    console.log(this.uploadFileForm.controls['fileReason'].value);
-    // const fileList: FileList = this.fileInputField.nativeElement.files;
-    // const fileRelated = this.fileRelated.nativeElement;
-    // const fileReason = this.fileReason.nativeElement;
-    // const formData: FormData = new FormData();
-    // const headers = new Headers();
-    // formData.append('file', fileList[0], fileList[0].name);
-    // headers.append('Content-Type', 'multipart/form-data');
-    // headers.append('Accept', 'application/json');
-    // const options = {
-    //   headers: headers 
-    // };
-    // await this.request.uploadFile(formData, options, this.getUrl(), this.fileNewName.nativeElement.value, fileRelated.value, fileReason.value);
-    // this.modal('uploadNameChange', 'hide');
-    // this.getContent(this.getUrl());
+    const fileList: FileList = this.fileInputField.nativeElement.files;
+    const fileRelated = this.fileRelated.nativeElement;
+    const fileReason = this.fileRelated.nativeElement;
+    const formData: FormData = new FormData();
+    const headers = new Headers();
+    formData.append('file', fileList[0], fileList[0].name);
+    headers.append('Content-Type', 'multipart/form-data');
+    headers.append('Accept', 'application/json');
+    const options = {
+      headers: headers 
+    };
+    await this.request.uploadFile(formData, options, this.getUrl(), this.fileNewName.nativeElement.value, fileRelated.value, fileReason.value);
+    this.modal('uploadNameChange', 'hide');
+    this.getContent(this.getUrl());
   };
 
   async makeDirectory(): Promise <void> {
