@@ -47,7 +47,7 @@ export class WorkspaceComponent implements OnInit {
       nameSwitch: new FormControl(false, Validators.required),
       reasonSwitch: new FormControl(false),
       fileNewName: new FormControl(),
-      fileRelated: new FormControl('none', Validators.required),
+      fileRelated: new FormControl(Validators.required),
       fileReason: new FormControl()
     });
 
@@ -241,9 +241,9 @@ export class WorkspaceComponent implements OnInit {
 
   async uploadFile(): Promise <void> {
     const fileList: FileList = this.fileInputField.nativeElement.files;
-    const fileNewName = this.uploadFileForm.controls['reasonSwitch'].value || undefined;
-    const fileRelated = this.uploadFileForm.controls['fileRelated'].value || undefined;
-    const fileReason = this.uploadFileForm.controls['fileReason'].value || undefined;
+    const fileNewName = this.uploadFileForm.controls['reasonSwitch'].value ?? undefined;
+    const fileRelated = this.uploadFileForm.controls['fileRelated'].value ?? undefined;
+    const fileReason = this.uploadFileForm.controls['fileReason'].value ?? undefined;
     const formData: FormData = new FormData();
     const headers = new Headers();
     console.log(fileList, fileNewName, fileRelated, fileReason)
