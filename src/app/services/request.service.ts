@@ -76,7 +76,7 @@ export class RequestService {
         path = path + this.setParameterChar(path) + 'updateName=' + name;
       } if (fileRelated !== ',._#falseº@') {
         path = path + this.setParameterChar(path) + 'fileRelated=' + fileRelated;
-      } if (fileReason.length > 5) {
+      } if (fileReason && fileReason.length > 5) {
         path = path + this.setParameterChar(path) + 'reason=' + fileReason;
       }
       const status = this.parse(await this.http.post<any>(path, formData, options).toPromise());
@@ -85,6 +85,7 @@ export class RequestService {
         this.setContent(status);
       };
     } catch (e) {
+      console.log(e);
       this.notificate('Error con la subida del archivo.');
     }
   };
