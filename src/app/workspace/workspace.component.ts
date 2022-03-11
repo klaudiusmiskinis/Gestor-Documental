@@ -2,7 +2,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { RequestService } from '../services/request.service';
 import { MatAccordion } from '@angular/material/expansion';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { slideIn, fadeIn, fadeOut, fadeInError } from '../config/animations.config';
 import { FileInfo } from '../models/file.model';
 import { AppUrl } from '../models/appurl.model';
@@ -47,12 +47,12 @@ export class WorkspaceComponent implements OnInit {
       nameSwitch: new FormControl(false, Validators.required),
       reasonSwitch: new FormControl(false),
       fileNewName: new FormControl(),
-      relatedFile: new FormControl('none', Validators.required),
+      fileRelated: new FormControl('none', Validators.required),
       fileReason: new FormControl()
     });
 
-    this.uploadFileForm.controls['nameSwitch'].valueChanges.subscribe(() => this.setRequired(this.uploadFileForm.controls['nameSwitch'].value, 'fileNewName', true, 10));
-    this.uploadFileForm.controls['reasonSwitch'].valueChanges.subscribe(() => this.setRequired(this.uploadFileForm.controls['reasonSwitch'].value, 'fileReason', false));
+    this.uploadFileForm.controls['nameSwitch'].valueChanges.subscribe(() => this.setRequired(this.uploadFileForm.controls['nameSwitch'].value, 'fileNewName', true, false, 3));
+    this.uploadFileForm.controls['reasonSwitch'].valueChanges.subscribe(() => this.setRequired(this.uploadFileForm.controls['reasonSwitch'].value, 'fileReason', false, false));
 
     this.makeDirectoryForm = new FormGroup({
       directory: new FormControl('', [
@@ -88,22 +88,34 @@ export class WorkspaceComponent implements OnInit {
 
   };
 
-
-  setRequired(value: any, field: string, minLength: boolean, minLengthChars?: number | any) {
+  setRequired(value: any, field: string, minLength: boolean, maxLength: boolean, minLengthChars?: number | any, maxLengthChars?: number | any) {
     console.log('marked', value, 'on', field)
+    const validators: ValidatorFn | ValidatorFn[] | null = [];
     if (value) {
-      this.uploadFileForm.controls[field].setValidators([Validators.required]);
-      if (minLength) {
-        this.uploadFileForm.controls[field].setValidators([Validators.minLength(minLengthChars)]);
-      }
-    } 
-    
+      console.log('Required')
+      validators.push(Validators.required);
+    } else {
+      console.log('Clearing')
+      this.uploadFileForm.clearValidators();
+    }
+    if (minLength && value) {
+      console.log('MinLeng', minLengthChars)
+      validators.push(Validators.minLength(minLengthChars));
+    }
+    if (maxLength && value) {
+      console.log('MaxLe', maxLengthChars)
+      validators.push(Validators.minLength(maxLengthChars));
+    }
+    if (value && minLength || maxLength) {
+      console.log('Setting')
+      this.uploadFileForm.controls[field].setValidators(validators);
+    }
+    console.log('Updating')
     this.uploadFileForm.updateValueAndValidity();
   }
 
   @ViewChild(MatAccordion) accordion: MatAccordion;
   @ViewChild('fileInputField') fileInputField: ElementRef;
-  @ViewChild('fileRelated') fileRelated: ElementRef;
   @ViewChild('fileVersion') fileVersion: ElementRef;
   @ViewChild('fileNewName') fileNewName: ElementRef;
   @ViewChild('fileReason') fileReason: ElementRef;
@@ -112,8 +124,6 @@ export class WorkspaceComponent implements OnInit {
   async ngOnInit(): Promise <void> {
     await this.getContent(this.url.url);
   };
-
-  
 
   togglecheckBoxBoolean() {
     this.checkBoxBoolean = !this.checkBoxBoolean;
@@ -229,20 +239,21 @@ export class WorkspaceComponent implements OnInit {
     return null;
   }
 
-  
   async uploadFile(): Promise <void> {
     const fileList: FileList = this.fileInputField.nativeElement.files;
-    const fileRelated = this.fileRelated.nativeElement;
-    const fileReason = this.fileRelated.nativeElement;
+    const fileNewName = this.uploadFileForm.controls['reasonSwitch'].value || undefined;
+    const fileRelated = this.uploadFileForm.controls['fileRelated'].value || undefined;
+    const fileReason = this.uploadFileForm.controls['fileReason'].value || undefined;
     const formData: FormData = new FormData();
     const headers = new Headers();
+    console.log(fileList, fileNewName, fileRelated, fileReason)
     formData.append('file', fileList[0], fileList[0].name);
     headers.append('Content-Type', 'multipart/form-data');
     headers.append('Accept', 'application/json');
     const options = {
       headers: headers 
     };
-    await this.request.uploadFile(formData, options, this.getUrl(), this.fileNewName.nativeElement.value, fileRelated.value, fileReason.value);
+    await this.request.uploadFile(formData, options, this.getUrl(), fileNewName, fileRelated, fileReason);
     this.modal('uploadNameChange', 'hide');
     this.getContent(this.getUrl());
   };
