@@ -79,11 +79,11 @@
                     <div *ngIf="uploadFileForm.controls['nameSwitch'].value" class="d-grid mt-2 mx-1">
                         <input type="text" class="form-control" formControlName="fileNewName" #fileNewName placeholder="{{fileInfo.name || 'Introduce el nombre'}}">
                         <div *ngIf="uploadFileForm.controls['fileNewName'].errors">
-                            <small [@fadeIn] class="text-danger" *ngIf ="uploadFileForm.controls['fileNewName'].touched && uploadFileForm.controls['fileNewName'].errors['minlength']"><i class="bi bi-x me-2"></i>La longitud debe ser de 8 caracteres.</small>
-                            <small [@fadeIn] class="text-danger" *ngIf ="uploadFileForm.controls['fileNewName'].touched && uploadFileForm.controls['fileNewName'].errors['required']"><i class="bi bi-x me-2"></i>Este campo es obligatorio.</small>
+                            <small [@fadeInError] class="text-danger" *ngIf ="uploadFileForm.controls['fileNewName'].touched && uploadFileForm.controls['fileNewName'].errors['minlength']"><i class="bi bi-x me-2"></i>La longitud mínima debe ser de 3 caracteres.</small>
+                            <small [@fadeInError] class="text-danger" *ngIf ="uploadFileForm.controls['fileNewName'].touched && uploadFileForm.controls['fileNewName'].errors['required']"><i class="bi bi-x me-2"></i>Este campo es obligatorio.</small>
                         </div>
                         <div *ngIf="!uploadFileForm.controls['fileNewName'].errors">
-                            <small [@fadeIn] class="text-success"><i class="bi bi-check-lg me-2"></i>Este nombre es válido.</small>
+                            <small [@fadeInError] class="text-success"><i class="bi bi-check-lg me-2"></i>Este nombre es válido.</small>
                         </div>
                     </div>
                     <div class="d-grid mx-1 mt-2">
@@ -95,16 +95,17 @@
                     <div *ngIf="uploadFileForm.controls['reasonSwitch'].value" class="d-grid mt-2 mx-1" >
                         <textarea type="text" class="form-control" maxlength="300" formControlName="fileReason" placeholder="Introduce el motivo del cambio de archivo de {{ fileInfo.name }}"></textarea>
                     </div>
+                    <div *ngIf="uploadFileForm.controls">{{uploadFileForm.controls['errors']}}</div>
                     <div *ngIf="content.files" class="d-grid mt-2 mx-1">
                         <label for="fileRelated" class="form-label">Archivo al que remplaza.</label>
-                        <select formControlName="relatedFile" class="form-control" #fileRelated>
+                        <select formControlName="fileRelated" class="form-control">
                             <option selected="selected"  value="">Ninguno</option>
                             <option *ngFor="let file of content.files">{{file}}</option>
                         </select>
                     </div>
                 </div>
                 <div class="row gap-2 mt-3 mx-1">
-                    <button type="button" class="col d-grid btn btn-sm btn-danger" (click)="uploadFile()">Subir</button>
+                    <button type="button" class="col d-grid btn btn-sm btn-danger" [disabled]="!uploadFileForm.valid" (click)="uploadFile()">Subir</button>
                     <button type="button" class="col d-grid btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                 </div>
             </form>
