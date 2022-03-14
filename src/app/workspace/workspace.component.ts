@@ -1,5 +1,5 @@
 
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewChecked, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { RequestService } from '../services/request.service';
 import { MatAccordion } from '@angular/material/expansion';
 import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
@@ -14,8 +14,8 @@ declare var $: any;
   animations: [slideIn, fadeIn, fadeOut, fadeInError]
 })
 
-export class WorkspaceComponent implements OnInit {
-  
+export class WorkspaceComponent implements OnInit, AfterViewChecked {
+
   /* Atributes */
   public url: AppUrl;
   public content: any;
@@ -31,7 +31,7 @@ export class WorkspaceComponent implements OnInit {
   public tooltip: object;
 
   /* Constructor */
-  constructor(private request: RequestService) {
+  constructor(private request: RequestService, private cdRef:ChangeDetectorRef) {
     this.url = new AppUrl('http://localhost:3001/');
     this.newResourceName = new FormControl('', [Validators.required])
     this.fileInfo = new FileInfo(false);
@@ -51,14 +51,14 @@ export class WorkspaceComponent implements OnInit {
       fileReason: new FormControl()
     });
 
-    this.uploadFileForm.controls['nameSwitch'].valueChanges.subscribe(() => this.setRequired(this.uploadFileForm.controls['nameSwitch'].value, 'fileNewName', true, false, 3));
-    this.uploadFileForm.controls['reasonSwitch'].valueChanges.subscribe(() => this.setRequired(this.uploadFileForm.controls['reasonSwitch'].value, 'fileReason', false, false));
+    this.uploadFileForm.controls['nameSwitch'].valueChanges.subscribe(() => this.setConditionalValidators(this.uploadFileForm.controls['nameSwitch'].value, 'fileNewName', true, true, 3, 30));
+    this.uploadFileForm.controls['reasonSwitch'].valueChanges.subscribe(() => this.setConditionalValidators(this.uploadFileForm.controls['reasonSwitch'].value, 'fileReason', false, false));
 
     this.makeDirectoryForm = new FormGroup({
       directory: new FormControl('', [
-        Validators.required, 
-        Validators.minLength(4), 
-        Validators.maxLength(50), 
+        Validators.required,
+        Validators.minLength(4),
+        Validators.maxLength(50),
         Validators.pattern('^[a-zA-Z\\s]+$'),
         this.validateFoldername.bind(this),
         this.validateFilename.bind(this)
@@ -67,9 +67,9 @@ export class WorkspaceComponent implements OnInit {
 
     this.editDirectoryName = new FormGroup({
       folderName: new FormControl('', [
-        Validators.required, 
-        Validators.minLength(4), 
-        Validators.maxLength(50), 
+        Validators.required,
+        Validators.minLength(4),
+        Validators.maxLength(50),
         Validators.pattern('^[a-zA-Z\\s]+$'),
         this.validateFoldername.bind(this),
         this.validateFilename.bind(this)
@@ -78,21 +78,21 @@ export class WorkspaceComponent implements OnInit {
 
     this.editFileName = new FormGroup({
       fileName: new FormControl('', [
-        Validators.required, 
-        Validators.minLength(4), 
-        Validators.maxLength(50), 
+        Validators.required,
+        Validators.minLength(4),
+        Validators.maxLength(50),
         Validators.pattern('^[A-Za-z0-9-\\s]+$'),
         this.validateFilename.bind(this)
       ])
     });
-
   };
 
-  setRequired(value: any, field: string, minLength: boolean, maxLength: boolean, minLengthChars?: number | any, maxLengthChars?: number | any) {
-    console.log('marked', value, 'on', field)
+  setConditionalValidators(value: any, field: string, minLength: boolean, maxLength: boolean, minLengthChars?: number | any, maxLengthChars?: number | any) {
+    console.log('marked', value, 'on', field);
     const validators: ValidatorFn | ValidatorFn[] | null = [];
     if (value) {
       console.log('Required')
+      validators.push(this.validateFilename.bind(this), this.validateFoldername.bind(this))
       validators.push(Validators.required);
     } else {
       console.log('Clearing')
@@ -121,9 +121,13 @@ export class WorkspaceComponent implements OnInit {
   @ViewChild('fileReason') fileReason: ElementRef;
 
   /* Methods */
-  async ngOnInit(): Promise <void> {
+  async ngOnInit(): Promise<void> {
     await this.getContent(this.url.url);
   };
+
+  ngAfterViewChecked(): void {
+    this.cdRef.detectChanges();
+  }
 
   togglecheckBoxBoolean() {
     this.checkBoxBoolean = !this.checkBoxBoolean;
@@ -183,14 +187,14 @@ export class WorkspaceComponent implements OnInit {
     this.setSelected(event.folder, false);
     switch (event.type) {
       case 'edit':
-          this.modal('editFolderName', 'show');
-      break;
+        this.modal('editFolderName', 'show');
+        break;
       case 'goinside':
         this.goForward(event.folder);
-      break;
+        break;
       case 'delete':
         this.modal('confirmationDelete', 'show');
-      break;
+        break;
     }
   }
 
@@ -199,66 +203,70 @@ export class WorkspaceComponent implements OnInit {
     switch (event.type) {
       case 'edit':
         this.modal('editFileName', 'show');
-      break;
-      case 'delete': 
+        break;
+      case 'delete':
         this.modal('confirmationDelete', 'show');
-      break;
+        break;
     }
   }
-  
-  validateFoldername(control: AbstractControl): {[key: string]: any} | null  {
-    const name = control.value.toLowerCase()
-    if (name) {
-      let response = this.content.folders.filter(folder => {
+
+  validateFoldername(control: AbstractControl): { [key: string]: any } | null {
+    if (control.value) {
+      const name = control.value.toLowerCase()
+      const response = this.content.folders.filter(folder => {
         folder = folder.toLowerCase();
-        if(folder === name) {
+        if (folder === name) {
           return folder;
         }
       });
       if (response.length > 0) {
-        return {'nameExists': true}
+        return { 'nameExists': true }
       }
     }
     return null;
   }
 
-  validateFilename(control: AbstractControl): {[key: string]: any} | null  {
-    const name = control.value.toLowerCase()
+  validateFilename(control: AbstractControl): { [key: string]: any } | null {
     if (control.value) {
-      let response = this.content.files.filter(file => {
+      const name = control.value.toLowerCase();
+      const response = this.content.files.filter(file => {
         const nameCompare = file.toLowerCase();
         const fileWithoutDot = file.split('.')[0];
-        if(nameCompare === name || fileWithoutDot === name) {
+        if (nameCompare === name || fileWithoutDot === name) {
           return file;
         }
       });
       if (response.length > 0) {
-        return {'nameExists': true}
+        return { 'nameExists': true }
       }
     }
     return null;
   }
 
-  async uploadFile(): Promise <void> {
+  async uploadFile(): Promise<void> {
     const fileList: FileList = this.fileInputField.nativeElement.files;
-    const fileNewName = this.uploadFileForm.controls['reasonSwitch'].value ?? undefined;
+    const nameSwitch = this.uploadFileForm.controls['nameSwitch'].value ?? undefined;
+    let fileNewName = this.uploadFileForm.controls['fileNewName'].value ?? undefined;
+    const reasonSwitch = this.uploadFileForm.controls['reasonSwitch'].value ?? undefined;
+    let fileReason = this.uploadFileForm.controls['fileReason'].value ?? undefined;
     const fileRelated = this.uploadFileForm.controls['fileRelated'].value ?? undefined;
-    const fileReason = this.uploadFileForm.controls['fileReason'].value ?? undefined;
     const formData: FormData = new FormData();
     const headers = new Headers();
-    console.log(fileList, fileNewName, fileRelated, fileReason)
     formData.append('file', fileList[0], fileList[0].name);
     headers.append('Content-Type', 'multipart/form-data');
     headers.append('Accept', 'application/json');
     const options = {
-      headers: headers 
+      headers: headers
     };
+    if (!nameSwitch) fileNewName = undefined;
+    if (!reasonSwitch) fileReason = undefined;
+    console.log(fileList, nameSwitch, fileNewName, reasonSwitch, fileReason, fileRelated);
     await this.request.uploadFile(formData, options, this.getUrl(), fileNewName, fileRelated, fileReason);
     this.modal('uploadNameChange', 'hide');
     this.getContent(this.getUrl());
   };
 
-  async makeDirectory(): Promise <void> {
+  async makeDirectory(): Promise<void> {
     const directoryName = this.makeDirectoryForm.value.directory;
     if (directoryName) {
       await this.request.makeDirectory(this.getUrl(), directoryName);
@@ -267,13 +275,13 @@ export class WorkspaceComponent implements OnInit {
     this.getContent(this.getUrl());
   };
 
-  async deleteFile(file: string): Promise <void> {
+  async deleteFile(file: string): Promise<void> {
     await this.request.deleteFile(this.getUrl(), file);
     this.modal('confirmationDelete', 'hide');
     this.getContent(this.getUrl());
   };
 
-  async deleteFolder(folder: string): Promise <void> {
+  async deleteFolder(folder: string): Promise<void> {
     await this.request.deleteDirectory(this.getUrl(), folder);
     this.modal('confirmationDelete', 'hide');
     this.getContent(this.getUrl());
@@ -291,7 +299,7 @@ export class WorkspaceComponent implements OnInit {
     this.getContent(this.getUrl());
   }
 
-  async getContent(path: string): Promise <void> {
+  async getContent(path: string): Promise<void> {
     this.content = [];
     this.content = await this.request.getWorkspace(path);
   };
