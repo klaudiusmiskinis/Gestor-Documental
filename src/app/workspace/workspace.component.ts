@@ -31,7 +31,7 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
   public tooltip: object;
 
   /* Constructor */
-  constructor(private request: RequestService, private cdRef:ChangeDetectorRef) {
+  constructor(private request: RequestService, private cdRef: ChangeDetectorRef) {
     this.url = new AppUrl('http://localhost:3001/');
     this.newResourceName = new FormControl('', [Validators.required])
     this.fileInfo = new FileInfo(false);
@@ -104,7 +104,7 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
     }
     if (maxLength && value) {
       console.log('MaxLe', maxLengthChars)
-      validators.push(Validators.minLength(maxLengthChars));
+      validators.push(Validators.maxLength(maxLengthChars));
     }
     if (value && minLength || maxLength) {
       console.log('Setting')

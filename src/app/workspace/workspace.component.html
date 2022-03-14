@@ -82,8 +82,8 @@
                             <small [@fadeInError] class="text-danger" *ngIf ="uploadFileForm.controls['fileNewName'].touched && uploadFileForm.controls['fileNewName'].errors['maxLength']"><i class="bi bi-x me-2"></i>La longitud máxima debe ser de 30 caracteres.</small>
                             <small [@fadeInError] class="text-danger" *ngIf ="uploadFileForm.controls['fileNewName'].touched && uploadFileForm.controls['fileNewName'].errors['minlength']"><i class="bi bi-x me-2"></i>La longitud mínima debe ser de 3 caracteres.</small>
                             <small [@fadeInError] class="text-danger" *ngIf ="uploadFileForm.controls['fileNewName'].touched && uploadFileForm.controls['fileNewName'].errors['required']"><i class="bi bi-x me-2"></i>Este campo es obligatorio.</small>
-                            <small [@fadeInError] class="text-danger" *ngIf ="uploadFileForm.controls['fileNewName'].touched && uploadFileForm.controls['fileNewName'].errors['validateFilename']"><i class="bi bi-x me-2"></i>El nombre coincide con un archivo que ya existe.</small>
-                            <small [@fadeInError] class="text-danger" *ngIf ="uploadFileForm.controls['fileNewName'].touched && uploadFileForm.controls['fileNewName'].errors['validateFoldername']"><i class="bi bi-x me-2"></i>El nombre coincide con un carpeta que ya existe.</small>
+                            <small [@fadeInError] class="text-danger" *ngIf ="uploadFileForm.controls['fileNewName'].touched && uploadFileForm.controls['fileNewName'].errors['validateFilename']"><i class="bi bi-x me-2"></i>El nombre coincide.</small>
+                            <small [@fadeInError] class="text-danger" *ngIf ="uploadFileForm.controls['fileNewName'].touched && uploadFileForm.controls['fileNewName'].errors['validateFoldername']"><i class="bi bi-x me-2"></i>El nombre coincide.</small>
                         </div>
                         <div *ngIf="!uploadFileForm.controls['fileNewName'].errors">
                             <small [@fadeInError] class="text-success"><i class="bi bi-check-lg me-2"></i>Este nombre es válido.</small>
