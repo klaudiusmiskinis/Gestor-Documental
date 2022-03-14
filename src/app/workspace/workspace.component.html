@@ -77,7 +77,7 @@
                         </div>
                     </div>
                     <div *ngIf="uploadFileForm.controls['nameSwitch'].value" class="d-grid mt-2 mx-1">
-                        <input type="text" class="form-control" formControlName="fileNewName" #fileNewName placeholder="{{fileInfo.name || 'Introduce el nombre'}}">
+                        <input type="text" class="form-control" formControlName="fileNewName" placeholder="{{fileInfo.name || 'Introduce el nombre'}}">
                         <div *ngIf="uploadFileForm.controls['fileNewName'].errors">
                             <small [@fadeInError] class="text-danger" *ngIf ="uploadFileForm.controls['fileNewName'].touched && uploadFileForm.controls['fileNewName'].errors['minlength']"><i class="bi bi-x me-2"></i>La longitud mínima debe ser de 3 caracteres.</small>
                             <small [@fadeInError] class="text-danger" *ngIf ="uploadFileForm.controls['fileNewName'].touched && uploadFileForm.controls['fileNewName'].errors['required']"><i class="bi bi-x me-2"></i>Este campo es obligatorio.</small>
