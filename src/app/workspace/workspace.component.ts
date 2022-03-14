@@ -116,9 +116,6 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
 
   @ViewChild(MatAccordion) accordion: MatAccordion;
   @ViewChild('fileInputField') fileInputField: ElementRef;
-  @ViewChild('fileVersion') fileVersion: ElementRef;
-  @ViewChild('fileNewName') fileNewName: ElementRef;
-  @ViewChild('fileReason') fileReason: ElementRef;
 
   /* Methods */
   async ngOnInit(): Promise<void> {

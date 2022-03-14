@@ -260,12 +260,3 @@
         <button type="button" class="col d-grid btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancelar</button>
     </div>
 </ng-template>
-
-<ng-template #checkBoxBooleanIsTrue>
-    <input type="text" class="form-control" #fileNewName placeholder="{{fileInfo.name || 'Introduce el nombre'}}">
-    <p [@fadeIn] class="text-danger my-0 mt-1"><i class="bi bi-exclamation-triangle-fill me-2"></i>Si el nombre del archivo coincide con otro, se sobreescribira.</p>
-</ng-template>
-
-<ng-template #checkBoxBooleanIsFalse>
-    <input type="text" class="form-control" #fileNewName placeholder="{{fileInfo.name || 'Introduce el nombre'}}" disabled>
-</ng-template>
