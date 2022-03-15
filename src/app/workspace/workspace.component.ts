@@ -92,8 +92,7 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
     const validators: ValidatorFn | ValidatorFn[] | null = [];
     if (value) {
       console.log('Required')
-      validators.push(this.validateFilename.bind(this), this.validateFoldername.bind(this))
-      validators.push(Validators.required);
+      validators.push(Validators.required, Validators.pattern('^[a-zA-Z \-\']+'), this.validateFilename.bind(this), this.validateFoldername.bind(this))
     } else {
       console.log('Clearing')
       this.uploadFileForm.clearValidators();
@@ -106,7 +105,7 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
       console.log('MaxLe', maxLengthChars)
       validators.push(Validators.maxLength(maxLengthChars));
     }
-    if (value && minLength || maxLength) {
+    if (validators.length > 0) {
       console.log('Setting')
       this.uploadFileForm.controls[field].setValidators(validators);
     }
