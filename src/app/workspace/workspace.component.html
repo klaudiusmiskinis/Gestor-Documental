@@ -1,262 +1,637 @@
 <div class="container-fluid g-0" [@fadeIn]>
+  <navbar [path]="getUrl()"></navbar>
 
-    <navbar [path]="getUrl()"></navbar>
-
-    <div class="row p-2 g-0 gap-1">
-        <div class="row g-0 gap-1">
-            <div class="col-auto">
-                <div class="badge bg-secondary">Opciones</div>
-            </div>
-        </div>
-        <div class="col-auto col-sm d-grid" *ngIf="getUrl().includes('?path=')">
-            <button class="btn btn-sm btn-outline-danger shadow-sm" (click)=goBack()>Volver<i class="bi bi-arrow-left-short ms-1"></i></button>
-        </div>
-        <div class="col-auto col-sm d-grid">
-            <button class="btn btn-sm btn-outline-secondary shadow-sm" (click)="getContent(getUrl())">Actualizar<i class="bi bi-arrow-clockwise ms-1"></i></button>
-        </div>
-        <div class="col-auto col-sm d-grid">
-            <button class="btn btn-sm btn-outline-secondary shadow-sm" data-bs-toggle="modal" data-bs-target="#makeDirectoryModal">Crear una carpeta<i class="bi bi-folder-plus ms-1"></i></button>
-        </div>
-        <div class="col-auto col-sm d-grid">
-            <button class="btn btn-sm btn-outline-secondary shadow-sm" disabled>Ver ultimas versiones<i class="bi bi-eye-fill ms-1"></i></button>
-        </div>
+  <div class="row p-2 g-0 gap-1">
+    <div class="row g-0 gap-1">
+      <div class="col-auto">
+        <div class="badge bg-secondary">Opciones</div>
+      </div>
     </div>
-
-    <div *ngIf="content" class="container-fluid">
-        <div *ngIf="content.folders && content.folders.length > 0">
-            <folders [folders]="content.folders" (folderEvent)="folderEvent($event)"></folders>
-        </div>
-        <div *ngIf="content.files && content.files.length > 0">
-            <files [files]="content.files" (fileEvent)="fileEvent($event)" [path]="getUrl()"></files>
-        </div>
+    <div class="col-auto col-sm d-grid" *ngIf="getUrl().includes('?path=')">
+      <button
+        class="btn btn-sm btn-outline-danger shadow-sm"
+        (click)="goBack()"
+      >
+        Volver<i class="bi bi-arrow-left-short ms-1"></i>
+      </button>
     </div>
-
-    <div class="container-fluid">
-        <div class="row g-0 gap-1 p-2">
-            <label class="col d-grid" for="file">
-                <div class="btn btn-sm btn-danger" ngxTippy data-tippy-content="Selecciona un archivo" [tippyProps]="tooltip"><i class="bi bi-cloud-plus-fill me-2"></i>Subir un archivo</div>
-                <input #fileInputField type="file" name="file" id="file" class="visually-hidden" (change)="checkExistence()">
-            </label>
-            <div *ngIf="fileInfo.exists" [@fadeIn]="fileInfo.exists" class="col-auto">
-                <button type="button" ngxTippy data-tippy-content="¡Subir!" [tippyProps]="tooltip" class="btn btn-sm btn-outline-danger px-4" data-bs-toggle="modal" data-bs-target="#uploadNameChange"><i class="bi bi-cloud-arrow-up-fill"></i></button>
-            </div>
-        </div>
-        <div *ngIf="fileInfo.exists" [@slideInLeft]="fileInfo.exists" class="d-flex g-0 gap-1 px-2 mb-2">
-            <span class="badge bg-danger" ngxTippy data-tippy-content="Nombre del archivo" [tippyProps]="tooltip">{{fileInfo.name}}</span>
-            <span class="badge bg-danger" ngxTippy data-tippy-content="Tamaño del archivo" [tippyProps]="tooltip">{{fileInfo.size}}</span>
-            <span class="badge bg-danger" ngxTippy data-tippy-content="Extensión del archivo" [tippyProps]="tooltip">{{fileInfo.extension}}</span>
-        </div>
+    <div class="col-auto col-sm d-grid">
+      <button
+        class="btn btn-sm btn-outline-secondary shadow-sm"
+        (click)="getContent(getUrl())"
+      >
+        Actualizar<i class="bi bi-arrow-clockwise ms-1"></i>
+      </button>
     </div>
-
-    <div *ngIf="selected" class="modal fade bg-opacity-75 bg-light" id="confirmationDelete" tabindex="-1" aria-labelledby="confirmationDeleteLabel" aria-hidden="true">
-        <div class="modal-dialog mt-5">
-            <div *ngIf="selected.isFile; then isFile; else isFolder"></div>
-        </div>
+    <div class="col-auto col-sm d-grid">
+      <button
+        class="btn btn-sm btn-outline-secondary shadow-sm"
+        data-bs-toggle="modal"
+        data-bs-target="#makeDirectoryModal"
+      >
+        Crear una carpeta<i class="bi bi-folder-plus ms-1"></i>
+      </button>
     </div>
+    <div class="col-auto col-sm d-grid">
+      <button class="btn btn-sm btn-outline-secondary shadow-sm" disabled>
+        Ver ultimas versiones<i class="bi bi-eye-fill ms-1"></i>
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="content" class="container-fluid">
+    <div *ngIf="content.folders && content.folders.length > 0">
+      <folders
+        [folders]="content.folders"
+        (folderEvent)="folderEvent($event)"
+      ></folders>
+    </div>
+    <div *ngIf="content.files && content.files.length > 0">
+      <files
+        [files]="content.files"
+        (fileEvent)="fileEvent($event)"
+        [path]="getUrl()"
+      ></files>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <div class="row g-0 gap-1 p-2">
+      <label class="col d-grid" for="file">
+        <div
+          class="btn btn-sm btn-danger"
+          ngxTippy
+          data-tippy-content="Selecciona un archivo"
+          [tippyProps]="tooltip"
+        >
+          <i class="bi bi-cloud-plus-fill me-2"></i>Subir un archivo
+        </div>
+        <input
+          #fileInputField
+          type="file"
+          name="file"
+          id="file"
+          class="visually-hidden"
+          (change)="checkExistence()"
+        />
+      </label>
+      <div *ngIf="fileInfo.exists" [@fadeIn]="fileInfo.exists" class="col-auto">
+        <button
+          type="button"
+          ngxTippy
+          data-tippy-content="¡Subir!"
+          [tippyProps]="tooltip"
+          class="btn btn-sm btn-outline-danger px-4"
+          data-bs-toggle="modal"
+          data-bs-target="#uploadNameChange"
+        >
+          <i class="bi bi-cloud-arrow-up-fill"></i>
+        </button>
+      </div>
+    </div>
+    <div
+      *ngIf="fileInfo.exists"
+      [@slideInLeft]="fileInfo.exists"
+      class="d-flex g-0 gap-1 px-2 mb-2"
+    >
+      <span
+        class="badge bg-danger"
+        ngxTippy
+        data-tippy-content="Nombre del archivo"
+        [tippyProps]="tooltip"
+        >{{ fileInfo.name }}</span
+      >
+      <span
+        class="badge bg-danger"
+        ngxTippy
+        data-tippy-content="Tamaño del archivo"
+        [tippyProps]="tooltip"
+        >{{ fileInfo.size }}</span
+      >
+      <span
+        class="badge bg-danger"
+        ngxTippy
+        data-tippy-content="Extensión del archivo"
+        [tippyProps]="tooltip"
+        >{{ fileInfo.extension }}</span
+      >
+    </div>
+  </div>
+
+  <div
+    *ngIf="selected"
+    class="modal fade bg-opacity-75 bg-light"
+    id="confirmationDelete"
+    tabindex="-1"
+    aria-labelledby="confirmationDeleteLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog mt-5">
+      <div *ngIf="selected.isFile; then isFile; else isFolder"></div>
+    </div>
+  </div>
 </div>
-    
-<div class="modal fade bg-opacity-75 bg-light" id="uploadNameChange" tabindex="-1" aria-labelledby="uploadNameChangeLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header bg-danger border-0">
-                <h5 class="modal-title text-light">Subida de archivo</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+
+<div
+  class="modal fade bg-opacity-75 bg-light"
+  id="uploadNameChange"
+  tabindex="-1"
+  aria-labelledby="uploadNameChangeLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-danger border-0">
+        <h5 class="modal-title text-light">Subida de archivo</h5>
+        <button
+          type="button"
+          class="btn-close btn-close-white"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <form
+        [formGroup]="uploadFileForm"
+        (ngSubmit)="uploadFile()"
+        class="modal-body"
+      >
+        <div class="row">
+          <div *ngIf="fileInfo.exists" class="d-flex gap-1 mb-2">
+            <span class="badge bg-danger">{{ fileInfo.name }}</span>
+            <span class="badge bg-danger">{{ fileInfo.size }}</span>
+          </div>
+          <div class="d-grid mx-1 mt-2">
+            <div class="form-check form-switch">
+              <input
+                formControlName="nameSwitch"
+                class="form-check-input"
+                type="checkbox"
+                role="switch"
+              />
+              <label class="form-check-label">Editar nombre</label>
             </div>
-            <form [formGroup]="uploadFileForm" (ngSubmit)="uploadFile()" class="modal-body">
-                <div class="row">
-                    <div *ngIf="fileInfo.exists" class="d-flex gap-1 mb-2">
-                        <span class="badge bg-danger">{{fileInfo.name}}</span>
-                        <span class="badge bg-danger">{{fileInfo.size}}</span>
-                    </div>
-                    <p class="text-danger my-0"><i class="bi bi-info-square-fill me-2"></i>Puedes cambiar el nombre del archivo y añadirle una versión.</p>
-                    <p class="text-danger my-0"><i class="bi bi-info-square-fill me-2"></i>No hace falta añadir la extensión</p>
-                    <div class="d-grid mx-1 mt-2">
-                        <div class="form-check form-switch">
-                            <input formControlName="nameSwitch" class="form-check-input" type="checkbox" role="switch">
-                            <label class="form-check-label">Editar nombre</label>
-                        </div>
-                    </div>
-                    <div *ngIf="uploadFileForm.controls['nameSwitch'].value" class="d-grid mt-2 mx-1">
-                        <input type="text" class="form-control" formControlName="fileNewName" placeholder="{{fileInfo.name || 'Introduce el nombre'}}">
-                        <div *ngIf="uploadFileForm.controls['fileNewName'].errors">
-                            <small [@fadeInError] class="text-danger" *ngIf ="uploadFileForm.controls['fileNewName'].touched && uploadFileForm.controls['fileNewName'].errors['maxLength']"><i class="bi bi-x me-2"></i>La longitud máxima debe ser de 30 caracteres.</small>
-                            <small [@fadeInError] class="text-danger" *ngIf ="uploadFileForm.controls['fileNewName'].touched && uploadFileForm.controls['fileNewName'].errors['minlength']"><i class="bi bi-x me-2"></i>La longitud mínima debe ser de 3 caracteres.</small>
-                            <small [@fadeInError] class="text-danger" *ngIf ="uploadFileForm.controls['fileNewName'].touched && uploadFileForm.controls['fileNewName'].errors['required']"><i class="bi bi-x me-2"></i>Este campo es obligatorio.</small>
-                            <small [@fadeInError] class="text-danger" *ngIf ="uploadFileForm.controls['fileNewName'].touched && uploadFileForm.controls['fileNewName'].errors['validateFilename']"><i class="bi bi-x me-2"></i>El nombre coincide.</small>
-                            <small [@fadeInError] class="text-danger" *ngIf ="uploadFileForm.controls['fileNewName'].touched && uploadFileForm.controls['fileNewName'].errors['validateFoldername']"><i class="bi bi-x me-2"></i>El nombre coincide.</small>
-                        </div>
-                        <div *ngIf="!uploadFileForm.controls['fileNewName'].errors">
-                            <small [@fadeInError] class="text-success"><i class="bi bi-check-lg me-2"></i>Este nombre es válido.</small>
-                        </div>
-                    </div>
-                    <div class="d-grid mx-1 mt-2">
-                        <div class="form-check form-switch">
-                            <input (change)="togglecheckReasonBoolean()" formControlName="reasonSwitch" class="form-check-input" type="checkbox" role="switch">
-                            <label class="form-check-label">Motivo</label>
-                        </div>
-                    </div>
-                    <div *ngIf="uploadFileForm.controls['reasonSwitch'].value" class="d-grid mt-2 mx-1" >
-                        <textarea type="text" class="form-control" maxlength="300" formControlName="fileReason" placeholder="Introduce el motivo del cambio de archivo de {{ fileInfo.name }}"></textarea>
-                    </div>
-                    <div *ngIf="uploadFileForm.controls">{{uploadFileForm.controls['errors']}}</div>
-                    <div *ngIf="content.files" class="d-grid mt-2 mx-1">
-                        <label for="fileRelated" class="form-label">Archivo al que remplaza.</label>
-                        <select formControlName="fileRelated" class="form-control">
-                            <option selected="selected"  value="">Ninguno</option>
-                            <option *ngFor="let file of content.files">{{file}}</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row gap-2 mt-3 mx-1">
-                    <button type="submit" class="col d-grid btn btn-sm btn-danger" [disabled]="!uploadFileForm.valid">Subir</button>
-                    <button type="button" class="col d-grid btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                </div>
-            </form>
+          </div>
+          <div
+            *ngIf="uploadFileForm.controls['nameSwitch'].value"
+            class="d-grid mt-2 mx-1"
+          >
+            <input
+              type="text"
+              class="form-control"
+              formControlName="fileNewName"
+              placeholder="{{ fileInfo.name || 'Introduce el nombre' }}"
+            />
+            <div *ngIf="uploadFileForm.controls['fileNewName'].errors">
+              <small
+                [@fadeInError]
+                class="text-danger"
+                *ngIf="
+                  uploadFileForm.controls['fileNewName'].errors['maxlength']
+                "
+                ><i class="bi bi-x me-1"></i>La longitud máxima debe ser de 30
+                caracteres.</small
+              >
+              <small
+                [@fadeInError]
+                class="text-danger"
+                *ngIf="
+                  uploadFileForm.controls['fileNewName'].errors['minlength']
+                "
+                ><i class="bi bi-x me-1"></i>La longitud mínima debe ser de 3
+                caracteres.</small
+              >
+              <small
+                [@fadeInError]
+                class="text-danger"
+                *ngIf="
+                  uploadFileForm.controls['fileNewName'].errors['required']
+                "
+                ><i class="bi bi-x me-1"></i>Este campo es obligatorio.</small
+              >
+              <small
+                [@fadeInError]
+                class="text-danger"
+                *ngIf="
+                  uploadFileForm.controls['fileNewName'].errors['nameExists']
+                "
+                ><i class="bi bi-x me-1"></i>Este nombre ya esta en uso en esta
+                carpeta.</small
+              >
+              <div
+                *ngIf="uploadFileForm.controls['fileNewName'].errors['pattern']"
+              >
+                <small [@fadeInError] class="text-danger"
+                  ><i class="bi bi-x me-1"></i>No puede contener caracteres
+                  especiales.</small
+                >
+              </div>
+            </div>
+            <div>
+              <small
+                [@fadeInError]
+                class="text-success"
+                *ngIf="!uploadFileForm.controls['fileNewName'].errors"
+                ><i class="bi bi-check-lg me-1"></i>Puedes crear la
+                carpeta</small
+              >
+            </div>
+          </div>
+          <div class="d-grid mx-1 mt-2">
+            <div class="form-check form-switch">
+              <input
+                (change)="togglecheckReasonBoolean()"
+                formControlName="reasonSwitch"
+                class="form-check-input"
+                type="checkbox"
+                role="switch"
+              />
+              <label class="form-check-label">Motivo</label>
+            </div>
+          </div>
+          <div
+            *ngIf="uploadFileForm.controls['reasonSwitch'].value"
+            class="d-grid mt-2 mx-1"
+          >
+            <textarea
+              type="text"
+              class="form-control"
+              maxlength="300"
+              formControlName="fileReason"
+              placeholder="Introduce el motivo del cambio de archivo de {{
+                fileInfo.name
+              }}"
+            ></textarea>
+          </div>
+          <div *ngIf="content.files" class="d-grid mt-2 mx-1">
+            <label for="fileRelated" class="form-label"
+              >Archivo al que remplaza.</label
+            >
+            <select formControlName="fileRelated" class="form-control">
+              <option selected="selected" value="">Ninguno</option>
+              <option *ngFor="let file of content.files">{{ file }}</option>
+            </select>
+          </div>
         </div>
+        <div class="row gap-2 mt-3 mx-1">
+          <button
+            type="submit"
+            class="col d-grid btn btn-sm btn-danger"
+            [disabled]="!uploadFileForm.valid"
+          >
+            Subir
+          </button>
+          <button
+            type="button"
+            class="col d-grid btn btn-sm btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Cancelar
+          </button>
+        </div>
+      </form>
     </div>
+  </div>
 </div>
 
 <notifier-container></notifier-container>
 
-<div class="modal fade bg-opacity-75 bg-light" id="makeDirectoryModal" tabindex="-1" aria-labelledby="makeDirectoryModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header bg-danger border-0">
-                <h5 class="modal-title text-light" id="makeDirectoryModalLabel">Crear una carpeta</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form class="row p-0 m-0" [formGroup]="makeDirectoryForm">
-                    <p class="text-danger mx-0 my-1"><i class="bi bi-info-square-fill me-2"></i>No puedes crear carpetas con nombres iguales.</p>
-                    <p class="text-danger mx-0 my-1"><i class="bi bi-info-square-fill me-2"></i>Mínimo 4 caracteres, sin números ni símbolos.</p>
-                    <div class="mt-3">
-                        <span class="p-0 mt-1">Nombre de la carpeta</span>
-                        <input class="form-control" type="text" formControlName="directory" id="directoryName" placeholder="Introduce el nombre de la carpeta" autocomplete="off">
-                    </div>
-                    <div *ngIf="makeDirectoryForm.controls['directory']?.errors && makeDirectoryForm.controls['directory'].invalid; then invalid; else valid;"></div>
-                </form>
-            </div>
-        </div>
+<div
+  class="modal fade bg-opacity-75 bg-light"
+  id="makeDirectoryModal"
+  tabindex="-1"
+  aria-labelledby="makeDirectoryModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-danger border-0">
+        <h5 class="modal-title text-light" id="makeDirectoryModalLabel">
+          Crear una carpeta
+        </h5>
+        <button
+          type="button"
+          class="btn-close btn-close-white"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form class="row p-0 m-0" [formGroup]="makeDirectoryForm">
+          <div class="mt-3">
+            <span class="p-0 mt-1">Nombre de la carpeta</span>
+            <input
+              class="form-control"
+              type="text"
+              formControlName="directory"
+              id="directoryName"
+              placeholder="Introduce el nombre de la carpeta"
+              autocomplete="off"
+            />
+          </div>
+          <div
+            *ngIf="
+              makeDirectoryForm.controls['directory']?.errors &&
+                makeDirectoryForm.controls['directory'].invalid;
+              then invalid;
+              else valid
+            "
+          ></div>
+        </form>
+      </div>
     </div>
+  </div>
 </div>
 
-<div class="modal fade bg-opacity-75 bg-light" id="editFileName" tabindex="-1" aria-labelledby="editFileNameLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header bg-danger border-0">
-                <h5 class="modal-title text-light">Cambio de nombre para archivo</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form class="row p-0 m-0" [formGroup]="editFileName">
-                    <p class="text-danger mx-0 my-1"><i class="bi bi-info-square-fill me-2"></i>No puedes poner nombres iguales a otros archivos.</p>
-                    <p class="text-danger mx-0 my-1"><i class="bi bi-info-square-fill me-2"></i>No hace falta añadir la extensión.</p>
-                    <div class="mt-3">
-                        <span class="p-0 mt-1">Nombre original</span>
-                        <input class="form-control" type="text" placeholder="{{selected.element}}" readonly>
-                    </div>
-                    <div class="mt-3">
-                        <span class="p-0 mt-1">Nombre del archivo</span>
-                        <input class="form-control" type="text" formControlName="fileName" id="fileName" placeholder="Introduce el nombre de la carpeta" autocomplete="off">
-                    </div>
-                    <div *ngIf="editFileName.controls['fileName']?.errors && editFileName.controls['fileName'].invalid; then invalid; else validEditFile;"></div>
-                </form>
-            </div>
-        </div>
+<div
+  class="modal fade bg-opacity-75 bg-light"
+  id="editFileName"
+  tabindex="-1"
+  aria-labelledby="editFileNameLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-danger border-0">
+        <h5 class="modal-title text-light">Cambio de nombre para archivo</h5>
+        <button
+          type="button"
+          class="btn-close btn-close-white"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form class="row p-0 m-0" [formGroup]="editFileName">
+          <div class="mt-3">
+            <span class="p-0 mt-1">Nombre original</span>
+            <input
+              class="form-control"
+              type="text"
+              placeholder="{{ selected.element }}"
+              readonly
+            />
+          </div>
+          <div class="mt-3">
+            <span class="p-0 mt-1">Nombre del archivo</span>
+            <input
+              class="form-control"
+              type="text"
+              formControlName="fileName"
+              id="fileName"
+              placeholder="Introduce el nombre de la carpeta"
+              autocomplete="off"
+            />
+          </div>
+          <div
+            *ngIf="
+              editFileName.controls['fileName']?.errors &&
+                editFileName.controls['fileName'].invalid;
+              then invalid;
+              else validEditFile
+            "
+          ></div>
+        </form>
+      </div>
     </div>
+  </div>
 </div>
 
-<div class="modal fade bg-opacity-75 bg-light" id="editFolderName" tabindex="-1" aria-labelledby="editFolderNameLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header bg-danger border-0">
-                <h5 class="modal-title text-light" id="editFolderNameLabel">Cambio de nombre para carpeta</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form class="row p-0 m-0" [formGroup]="editDirectoryName">
-                    <p class="text-danger mx-0 my-1"><i class="bi bi-info-square-fill me-2"></i>No puedes cambiar a carpetas con nombres iguales.</p>
-                    <div class="mt-3">
-                        <span class="p-0 mt-1">Nombre de la carpeta</span>
-                        <input class="form-control" type="text" formControlName="folderName" id="folderName" placeholder="Introduce el nombre de la carpeta" autocomplete="off">
-                    </div>
-                    <div *ngIf="editDirectoryName.controls['folderName']?.errors && editDirectoryName.controls['folderName'].invalid; then invalid; else validEditFolder;"></div>
-                </form>
-            </div>
-        </div>
+<div
+  class="modal fade bg-opacity-75 bg-light"
+  id="editFolderName"
+  tabindex="-1"
+  aria-labelledby="editFolderNameLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-danger border-0">
+        <h5 class="modal-title text-light" id="editFolderNameLabel">
+          Cambio de nombre para carpeta
+        </h5>
+        <button
+          type="button"
+          class="btn-close btn-close-white"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form class="row p-0 m-0" [formGroup]="editDirectoryName">
+          <p class="text-danger mx-0 my-1">
+            <i class="bi bi-info-square-fill me-2"></i>No puedes cambiar a
+            carpetas con nombres iguales.
+          </p>
+          <div class="mt-3">
+            <span class="p-0 mt-1">Nombre de la carpeta</span>
+            <input
+              class="form-control"
+              type="text"
+              formControlName="folderName"
+              id="folderName"
+              placeholder="Introduce el nombre de la carpeta"
+              autocomplete="off"
+            />
+          </div>
+          <div
+            *ngIf="
+              editDirectoryName.controls['folderName']?.errors &&
+                editDirectoryName.controls['folderName'].invalid;
+              then invalid;
+              else validEditFolder
+            "
+          ></div>
+        </form>
+      </div>
     </div>
+  </div>
 </div>
 
 <ng-template #isFile>
-    <div class="modal-content">
-        <div class="modal-header bg-danger border-0">
-            <h5 class="modal-title text-light" id="confirmationDeleteLabel">¿Deseas eliminar este archivo?</h5>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body text-center">
-            <p class="m-0">Vas a eliminar el archivo:</p>
-            <span *ngIf="selected.element" class="badge bg-light text-danger">{{ selected.element }}</span>
-            <div class="row gap-2 mt-3 mx-2">
-                <button type="button" class="col d-grid btn btn-sm btn-danger" (click)="deleteFile(selected.element)">Eliminar</button>
-                <button type="button" class="col d-grid btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-            </div>
-        </div>
+  <div class="modal-content">
+    <div class="modal-header bg-danger border-0">
+      <h5 class="modal-title text-light" id="confirmationDeleteLabel">
+        ¿Deseas eliminar este archivo?
+      </h5>
+      <button
+        type="button"
+        class="btn-close btn-close-white"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+      ></button>
     </div>
+    <div class="modal-body text-center">
+      <p class="m-0">Vas a eliminar el archivo:</p>
+      <span *ngIf="selected.element" class="badge bg-light text-danger">{{
+        selected.element
+      }}</span>
+      <div class="row gap-2 mt-3 mx-2">
+        <button
+          type="button"
+          class="col d-grid btn btn-sm btn-danger"
+          (click)="deleteFile(selected.element)"
+        >
+          Eliminar
+        </button>
+        <button
+          type="button"
+          class="col d-grid btn btn-sm btn-secondary"
+          data-bs-dismiss="modal"
+        >
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
 </ng-template>
 
 <ng-template #isFolder>
-    <div class="modal-content">
-        <div class="modal-header bg-danger border-0">
-            <h5 class="modal-title text-light" id="confirmationDeleteLabel">¿Deseas eliminar esta carpeta?</h5>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body text-center">
-            <p class="m-0">Vas a eliminar la carpeta:</p>
-            <span *ngIf="selected.element" class="badge bg-light text-danger">{{ selected.element }}</span>
-            <div class="row gap-2 mt-3 mx-2">
-                <button type="button" class="col d-grid btn btn-sm btn-danger" (click)="deleteFolder(selected.element)">Eliminar</button>
-                <button type="button" class="col d-grid btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-            </div>
-        </div>
+  <div class="modal-content">
+    <div class="modal-header bg-danger border-0">
+      <h5 class="modal-title text-light" id="confirmationDeleteLabel">
+        ¿Deseas eliminar esta carpeta?
+      </h5>
+      <button
+        type="button"
+        class="btn-close btn-close-white"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+      ></button>
     </div>
+    <div class="modal-body text-center">
+      <p class="m-0">Vas a eliminar la carpeta:</p>
+      <span *ngIf="selected.element" class="badge bg-light text-danger">{{
+        selected.element
+      }}</span>
+      <div class="row gap-2 mt-3 mx-2">
+        <button
+          type="button"
+          class="col d-grid btn btn-sm btn-danger"
+          (click)="deleteFolder(selected.element)"
+        >
+          Eliminar
+        </button>
+        <button
+          type="button"
+          class="col d-grid btn btn-sm btn-secondary"
+          data-bs-dismiss="modal"
+        >
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
 </ng-template>
 
 <ng-template #invalid>
-    <label [@fadeInError] class="p-0 mt-1 text-danger mx-2"><i class="bi bi-x me-1"></i>Esta nombre no es válido.</label>
-    <div class="row g-0 gap-2 mt-3">
-        <button type="button" class="col d-grid btn btn-sm btn-danger" (click)="editFileNameSubmit()" disabled>Crear</button>
-        <button type="button" class="col d-grid btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-    </div>
+  <label [@fadeInError] class="p-0 mt-1 text-danger mx-2"
+    ><i class="bi bi-x me-1"></i>Esta nombre no es válido.</label
+  >
+  <div class="row g-0 gap-2 mt-3">
+    <button
+      type="button"
+      class="col d-grid btn btn-sm btn-danger"
+      (click)="editFileNameSubmit()"
+      disabled
+    >
+      Crear
+    </button>
+    <button
+      type="button"
+      class="col d-grid btn btn-sm btn-secondary"
+      data-bs-dismiss="modal"
+    >
+      Cancelar
+    </button>
+  </div>
 </ng-template>
 
 <ng-template #valid>
-    <label [@fadeInError] class="p-0 mt-2 text-success mx-2"><i class="bi bi-check-lg me-1"></i>Puedes crear la carpeta</label>
-    <div class="row g-0 gap-2 mt-3">
-        <button type="submit" class="col d-grid btn btn-sm btn-danger" (click)="makeDirectory()">Crear</button>
-        <button type="button" class="col d-grid btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-    </div>
+  <label [@fadeInError] class="p-0 mt-2 text-success mx-2"
+    ><i class="bi bi-check-lg me-1"></i>Puedes crear la carpeta</label
+  >
+  <div class="row g-0 gap-2 mt-3">
+    <button
+      type="submit"
+      class="col d-grid btn btn-sm btn-danger"
+      (click)="makeDirectory()"
+    >
+      Crear
+    </button>
+    <button
+      type="button"
+      class="col d-grid btn btn-sm btn-secondary"
+      data-bs-dismiss="modal"
+    >
+      Cancelar
+    </button>
+  </div>
 </ng-template>
 
 <ng-template #validEdit>
-    <label [@fadeInError] class="p-0 mt-2 text-success mx-2"><i class="bi bi-check-lg me-1"></i>Puedes editar la carpeta</label>
-    <div class="row g-0 gap-2 mt-3">
-        <button type="button" class="col d-grid btn btn-sm btn-danger" (click)="makeDirectory()">Crear</button>
-        <button type="button" class="col d-grid btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-    </div>
+  <label [@fadeInError] class="p-0 mt-2 text-success mx-2"
+    ><i class="bi bi-check-lg me-1"></i>Puedes editar la carpeta</label
+  >
+  <div class="row g-0 gap-2 mt-3">
+    <button
+      type="button"
+      class="col d-grid btn btn-sm btn-danger"
+      (click)="makeDirectory()"
+    >
+      Crear
+    </button>
+    <button
+      type="button"
+      class="col d-grid btn btn-sm btn-secondary"
+      data-bs-dismiss="modal"
+    >
+      Cancelar
+    </button>
+  </div>
 </ng-template>
 
 <ng-template #validEditFile>
-    <label [@fadeInError] class="p-0 mt-2 text-success mx-2"><i class="bi bi-check-lg me-1"></i>Puedes cambiar el nombre del archivo</label>
-    <div class="row g-0 gap-2 mt-3">
-        <button type="button" class="col d-grid btn btn-sm btn-danger" (click)="editFileNameSubmit()">Cambiar</button>
-        <button type="button" class="col d-grid btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-    </div>
+  <label [@fadeInError] class="p-0 mt-2 text-success mx-2"
+    ><i class="bi bi-check-lg me-1"></i>Puedes cambiar el nombre del
+    archivo</label
+  >
+  <div class="row g-0 gap-2 mt-3">
+    <button
+      type="button"
+      class="col d-grid btn btn-sm btn-danger"
+      (click)="editFileNameSubmit()"
+    >
+      Cambiar
+    </button>
+    <button
+      type="button"
+      class="col d-grid btn btn-sm btn-secondary"
+      data-bs-dismiss="modal"
+    >
+      Cancelar
+    </button>
+  </div>
 </ng-template>
 
 <ng-template #validEditFolder>
-    <label [@fadeInError] class="p-0 mt-2 text-success mx-2"><i class="bi bi-check-lg me-1"></i>Puedes cambiar el nombre del directorio</label>
-    <div class="row g-0 gap-2 mt-3">
-        <button type="button" class="col d-grid btn btn-sm btn-danger" (click)="editFolderNameSubmit()">Cambiar</button>
-        <button type="button" class="col d-grid btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-    </div>
+  <label [@fadeInError] class="p-0 mt-2 text-success mx-2"
+    ><i class="bi bi-check-lg me-1"></i>Puedes cambiar el nombre del
+    directorio</label
+  >
+  <div class="row g-0 gap-2 mt-3">
+    <button
+      type="button"
+      class="col d-grid btn btn-sm btn-danger"
+      (click)="editFolderNameSubmit()"
+    >
+      Cambiar
+    </button>
+    <button
+      type="button"
+      class="col d-grid btn btn-sm btn-secondary"
+      data-bs-dismiss="modal"
+    >
+      Cancelar
+    </button>
+  </div>
 </ng-template>
