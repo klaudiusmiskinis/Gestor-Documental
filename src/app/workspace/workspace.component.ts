@@ -88,28 +88,20 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
   };
 
   setConditionalValidators(value: any, field: string, minLength: boolean, maxLength: boolean, minLengthChars?: number | any, maxLengthChars?: number | any) {
-    console.log('marked', value, 'on', field);
     const validators: ValidatorFn | ValidatorFn[] | null = [];
     if (value) {
-      console.log('Required')
       validators.push(Validators.required, Validators.pattern('^[a-zA-Z \-\']+'), this.validateFilename.bind(this), this.validateFoldername.bind(this))
-    } else {
-      console.log('Clearing')
-      this.uploadFileForm.clearValidators();
     }
     if (minLength && value) {
-      console.log('MinLeng', minLengthChars)
       validators.push(Validators.minLength(minLengthChars));
     }
     if (maxLength && value) {
-      console.log('MaxLe', maxLengthChars)
       validators.push(Validators.maxLength(maxLengthChars));
     }
     if (validators.length > 0) {
-      console.log('Setting')
       this.uploadFileForm.controls[field].setValidators(validators);
     }
-    console.log('Updating')
+    this.uploadFileForm.clearValidators();
     this.uploadFileForm.updateValueAndValidity();
   }
 
