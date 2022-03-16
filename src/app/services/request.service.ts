@@ -74,7 +74,7 @@ export class RequestService {
     try{
       if (name) {
         path = path + this.setParameterChar(path) + 'updateName=' + name;
-      } if (fileRelated !== ',._#falseº@') {
+      } if (fileRelated !== undefined) {
         path = path + this.setParameterChar(path) + 'fileRelated=' + fileRelated;
       } if (fileReason && fileReason.length > 5) {
         path = path + this.setParameterChar(path) + 'reason=' + fileReason;

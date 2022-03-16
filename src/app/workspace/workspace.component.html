@@ -222,7 +222,7 @@
               >
                 <small [@fadeInError] class="text-danger"
                   ><i class="bi bi-x me-1"></i>No puede contener caracteres
-                  especiales.</small
+                  especiales ni números.</small
                 >
               </div>
             </div>
@@ -231,8 +231,8 @@
                 [@fadeInError]
                 class="text-success"
                 *ngIf="!uploadFileForm.controls['fileNewName'].errors"
-                ><i class="bi bi-check-lg me-1"></i>Puedes crear la
-                carpeta</small
+                ><i class="bi bi-check-lg me-1"></i>Este nombre es
+                válido.</small
               >
             </div>
           </div>
@@ -261,6 +261,58 @@
                 fileInfo.name
               }}"
             ></textarea>
+            <div *ngIf="uploadFileForm.controls['fileReason'].errors">
+              <small
+                [@fadeInError]
+                class="text-danger"
+                *ngIf="
+                  uploadFileForm.controls['fileReason'].errors['maxlength']
+                "
+                ><i class="bi bi-x me-1"></i>La longitud máxima debe ser de 30
+                caracteres.</small
+              >
+              <small
+                [@fadeInError]
+                class="text-danger"
+                *ngIf="
+                  uploadFileForm.controls['fileReason'].errors['minlength']
+                "
+                ><i class="bi bi-x me-1"></i>La longitud mínima debe ser de 3
+                caracteres.</small
+              >
+              <small
+                [@fadeInError]
+                class="text-danger"
+                *ngIf="uploadFileForm.controls['fileReason'].errors['required']"
+                ><i class="bi bi-x me-1"></i>Este campo es obligatorio.</small
+              >
+              <small
+                [@fadeInError]
+                class="text-danger"
+                *ngIf="
+                  uploadFileForm.controls['fileReason'].errors['nameExists']
+                "
+                ><i class="bi bi-x me-1"></i>Este nombre ya esta en uso en esta
+                carpeta.</small
+              >
+              <div
+                *ngIf="uploadFileForm.controls['fileReason'].errors['pattern']"
+              >
+                <small [@fadeInError] class="text-danger"
+                  ><i class="bi bi-x me-1"></i>No puede contener caracteres
+                  especiales ni números.</small
+                >
+              </div>
+            </div>
+            <div>
+              <small
+                [@fadeInError]
+                class="text-success"
+                *ngIf="!uploadFileForm.controls['fileReason'].errors"
+                ><i class="bi bi-check-lg me-1"></i>Este nombre es
+                válido.</small
+              >
+            </div>
           </div>
           <div *ngIf="content.files" class="d-grid mt-2 mx-1">
             <label for="fileRelated" class="form-label"
@@ -328,14 +380,9 @@
               autocomplete="off"
             />
           </div>
-          <div
-            *ngIf="
-              makeDirectoryForm.controls['directory']?.errors &&
-                makeDirectoryForm.controls['directory'].invalid;
-              then invalid;
-              else valid
-            "
-          ></div>
+          <div>
+            boton para cambiar el nombre
+          </div>
         </form>
       </div>
     </div>
@@ -352,7 +399,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header bg-danger border-0">
-        <h5 class="modal-title text-light">Cambio de nombre para archivo</h5>
+        <h5 class="modal-title text-light">Cambio de nombre</h5>
         <button
           type="button"
           class="btn-close btn-close-white"
@@ -361,7 +408,7 @@
         ></button>
       </div>
       <div class="modal-body">
-        <form class="row p-0 m-0" [formGroup]="editFileName">
+        <form class="row p-0 m-0" [formGroup]="editFileName" (ngSubmit)="editFileNameSubmit()">
           <div class="mt-3">
             <span class="p-0 mt-1">Nombre original</span>
             <input
@@ -382,14 +429,16 @@
               autocomplete="off"
             />
           </div>
-          <div
-            *ngIf="
-              editFileName.controls['fileName']?.errors &&
-                editFileName.controls['fileName'].invalid;
-              then invalid;
-              else validEditFile
-            "
-          ></div>
+          <div>
+            <button
+              type="submit"
+              class="col d-grid btn btn-sm btn-danger"
+              
+              [disabled]="editFileName.invalid"
+            >
+              Editar nombre
+            </button>
+          </div>
         </form>
       </div>
     </div>
@@ -433,14 +482,9 @@
               autocomplete="off"
             />
           </div>
-          <div
-            *ngIf="
-              editDirectoryName.controls['folderName']?.errors &&
-                editDirectoryName.controls['folderName'].invalid;
-              then invalid;
-              else validEditFolder
-            "
-          ></div>
+          <div>
+            boton para accionar el cambio de nombre
+          </div>
         </form>
       </div>
     </div>
@@ -520,118 +564,5 @@
         </button>
       </div>
     </div>
-  </div>
-</ng-template>
-
-<ng-template #invalid>
-  <label [@fadeInError] class="p-0 mt-1 text-danger mx-2"
-    ><i class="bi bi-x me-1"></i>Esta nombre no es válido.</label
-  >
-  <div class="row g-0 gap-2 mt-3">
-    <button
-      type="button"
-      class="col d-grid btn btn-sm btn-danger"
-      (click)="editFileNameSubmit()"
-      disabled
-    >
-      Crear
-    </button>
-    <button
-      type="button"
-      class="col d-grid btn btn-sm btn-secondary"
-      data-bs-dismiss="modal"
-    >
-      Cancelar
-    </button>
-  </div>
-</ng-template>
-
-<ng-template #valid>
-  <label [@fadeInError] class="p-0 mt-2 text-success mx-2"
-    ><i class="bi bi-check-lg me-1"></i>Puedes crear la carpeta</label
-  >
-  <div class="row g-0 gap-2 mt-3">
-    <button
-      type="submit"
-      class="col d-grid btn btn-sm btn-danger"
-      (click)="makeDirectory()"
-    >
-      Crear
-    </button>
-    <button
-      type="button"
-      class="col d-grid btn btn-sm btn-secondary"
-      data-bs-dismiss="modal"
-    >
-      Cancelar
-    </button>
-  </div>
-</ng-template>
-
-<ng-template #validEdit>
-  <label [@fadeInError] class="p-0 mt-2 text-success mx-2"
-    ><i class="bi bi-check-lg me-1"></i>Puedes editar la carpeta</label
-  >
-  <div class="row g-0 gap-2 mt-3">
-    <button
-      type="button"
-      class="col d-grid btn btn-sm btn-danger"
-      (click)="makeDirectory()"
-    >
-      Crear
-    </button>
-    <button
-      type="button"
-      class="col d-grid btn btn-sm btn-secondary"
-      data-bs-dismiss="modal"
-    >
-      Cancelar
-    </button>
-  </div>
-</ng-template>
-
-<ng-template #validEditFile>
-  <label [@fadeInError] class="p-0 mt-2 text-success mx-2"
-    ><i class="bi bi-check-lg me-1"></i>Puedes cambiar el nombre del
-    archivo</label
-  >
-  <div class="row g-0 gap-2 mt-3">
-    <button
-      type="button"
-      class="col d-grid btn btn-sm btn-danger"
-      (click)="editFileNameSubmit()"
-    >
-      Cambiar
-    </button>
-    <button
-      type="button"
-      class="col d-grid btn btn-sm btn-secondary"
-      data-bs-dismiss="modal"
-    >
-      Cancelar
-    </button>
-  </div>
-</ng-template>
-
-<ng-template #validEditFolder>
-  <label [@fadeInError] class="p-0 mt-2 text-success mx-2"
-    ><i class="bi bi-check-lg me-1"></i>Puedes cambiar el nombre del
-    directorio</label
-  >
-  <div class="row g-0 gap-2 mt-3">
-    <button
-      type="button"
-      class="col d-grid btn btn-sm btn-danger"
-      (click)="editFolderNameSubmit()"
-    >
-      Cambiar
-    </button>
-    <button
-      type="button"
-      class="col d-grid btn btn-sm btn-secondary"
-      data-bs-dismiss="modal"
-    >
-      Cancelar
-    </button>
   </div>
 </ng-template>
