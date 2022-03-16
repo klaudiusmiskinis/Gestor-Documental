@@ -52,7 +52,7 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
     });
 
     this.uploadFileForm.controls['nameSwitch'].valueChanges.subscribe(() => this.setConditionalValidators(this.uploadFileForm.controls['nameSwitch'].value, 'fileNewName', true, true, 3, 30));
-    this.uploadFileForm.controls['reasonSwitch'].valueChanges.subscribe(() => this.setConditionalValidators(this.uploadFileForm.controls['reasonSwitch'].value, 'fileReason', false, false));
+    this.uploadFileForm.controls['reasonSwitch'].valueChanges.subscribe(() => this.setConditionalValidators(this.uploadFileForm.controls['reasonSwitch'].value, 'fileReason', true, true, 3, 300));
 
     this.makeDirectoryForm = new FormGroup({
       directory: new FormControl('', [
@@ -98,10 +98,11 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
     if (maxLength && value) {
       validators.push(Validators.maxLength(maxLengthChars));
     }
-    if (validators.length > 0) {
+    if (value) {
       this.uploadFileForm.controls[field].setValidators(validators);
+    } else {
+      this.uploadFileForm.controls[field].setErrors(null)
     }
-    this.uploadFileForm.clearValidators();
     this.uploadFileForm.updateValueAndValidity();
   }
 
