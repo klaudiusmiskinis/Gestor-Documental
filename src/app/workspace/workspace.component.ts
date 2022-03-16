@@ -44,10 +44,10 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
     };
 
     this.uploadFileForm = new FormGroup({
-      nameSwitch: new FormControl(false, Validators.required),
+      nameSwitch: new FormControl(false, [Validators.required]),
       reasonSwitch: new FormControl(false),
       fileNewName: new FormControl(),
-      fileRelated: new FormControl(Validators.required),
+      fileRelated: new FormControl(false, [Validators.required]),
       fileReason: new FormControl()
     });
 
@@ -233,12 +233,13 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
   }
 
   async uploadFile(): Promise<void> {
-    const fileList: FileList = this.fileInputField.nativeElement.files;
-    const nameSwitch = this.uploadFileForm.controls['nameSwitch'].value ?? undefined;
+    console.log(this.uploadFileForm.controls['fileRelated'].value)
+    let fileList: FileList = this.fileInputField.nativeElement.files;
+    let nameSwitch = this.uploadFileForm.controls['nameSwitch'].value ?? undefined;
     let fileNewName = this.uploadFileForm.controls['fileNewName'].value ?? undefined;
-    const reasonSwitch = this.uploadFileForm.controls['reasonSwitch'].value ?? undefined;
+    let reasonSwitch = this.uploadFileForm.controls['reasonSwitch'].value ?? undefined;
     let fileReason = this.uploadFileForm.controls['fileReason'].value ?? undefined;
-    const fileRelated = this.uploadFileForm.controls['fileRelated'].value ?? undefined;
+    let fileRelated = this.uploadFileForm.controls['fileRelated'].value ?? undefined;
     const formData: FormData = new FormData();
     const headers = new Headers();
     formData.append('file', fileList[0], fileList[0].name);
@@ -249,7 +250,7 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
     };
     if (!nameSwitch) fileNewName = undefined;
     if (!reasonSwitch) fileReason = undefined;
-    console.log(fileList, nameSwitch, fileNewName, reasonSwitch, fileReason, fileRelated);
+    if (!fileRelated) fileRelated = undefined;
     await this.request.uploadFile(formData, options, this.getUrl(), fileNewName, fileRelated, fileReason);
     this.modal('uploadNameChange', 'hide');
     this.getContent(this.getUrl());
@@ -277,6 +278,7 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
   };
 
   async editFileNameSubmit() {
+    console.log('asd')
     await this.request.editElementName(this.getUrl(), this.editFileName.value.fileName + '.' + this.selected.element.split('.')[this.selected.element.split('.').length - 1], this.selected.element);
     this.modal('editFileName', 'hide');
     this.getContent(this.getUrl());
