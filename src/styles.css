@@ -1,5 +1,7 @@
+@import url(roboto.css);
+
 * {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important;
+  font-family: 'Roboto', sans-serif !important;
 }
 
 :root {
