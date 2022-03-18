@@ -380,9 +380,7 @@
               autocomplete="off"
             />
           </div>
-          <div>
-            boton para cambiar el nombre
-          </div>
+          <div>boton para cambiar el nombre</div>
         </form>
       </div>
     </div>
@@ -408,7 +406,11 @@
         ></button>
       </div>
       <div class="modal-body">
-        <form class="row p-0 m-0" [formGroup]="editFileName" (ngSubmit)="editFileNameSubmit()">
+        <form
+          class="row p-0 m-0"
+          [formGroup]="editFileName"
+          (ngSubmit)="editFileNameSubmit()"
+        >
           <div class="mt-3">
             <span class="p-0 mt-1">Nombre original</span>
             <input
@@ -433,7 +435,6 @@
             <button
               type="submit"
               class="col d-grid btn btn-sm btn-danger"
-              
               [disabled]="editFileName.invalid"
             >
               Editar nombre
@@ -482,9 +483,7 @@
               autocomplete="off"
             />
           </div>
-          <div>
-            boton para accionar el cambio de nombre
-          </div>
+          <div>boton para accionar el cambio de nombre</div>
         </form>
       </div>
     </div>
