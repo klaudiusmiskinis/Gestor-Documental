@@ -87,7 +87,7 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
     });
   };
 
-  setConditionalValidators(value: any, field: string, minLength: boolean, maxLength: boolean, names: boolean minLengthChars?: number | any, maxLengthChars?: number | any) {
+  setConditionalValidators(value: any, field: string, minLength: boolean, maxLength: boolean, names: boolean, minLengthChars?: number | any, maxLengthChars?: number | any) {
     const validators: ValidatorFn | ValidatorFn[] | null = [];
     if (value) {
       validators.push(Validators.required, Validators.pattern('^[a-zA-Z \-\']+'))
