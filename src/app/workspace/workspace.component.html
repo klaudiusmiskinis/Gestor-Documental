@@ -40,13 +40,13 @@
   </div>
 
   <div *ngIf="content" class="container-fluid">
-    <div *ngIf="content.folders && content.folders.length > 0">
-      <folders
+    <div *ngIf="content.folders && content.folders.length > 0" [@fadeIn]>
+      <folders 
         [folders]="content.folders"
         (folderEvent)="folderEvent($event)"
       ></folders>
     </div>
-    <div *ngIf="content.files && content.files.length > 0">
+    <div *ngIf="content.files && content.files.length > 0" [@fadeIn]>
       <files
         [files]="content.files"
         (fileEvent)="fileEvent($event)"
@@ -75,7 +75,7 @@
           (change)="checkExistence()"
         />
       </label>
-      <div *ngIf="fileInfo.exists" [@fadeIn]="fileInfo.exists" class="col-auto">
+      <div *ngIf="fileInfo.exists" class="col-auto">
         <button
           type="button"
           ngxTippy
@@ -286,15 +286,6 @@
                 *ngIf="uploadFileForm.controls['fileReason'].errors['required']"
                 ><i class="bi bi-x me-1"></i>Este campo es obligatorio.</small
               >
-              <small
-                [@fadeInError]
-                class="text-danger"
-                *ngIf="
-                  uploadFileForm.controls['fileReason'].errors['nameExists']
-                "
-                ><i class="bi bi-x me-1"></i>Este nombre ya esta en uso en esta
-                carpeta.</small
-              >
               <div
                 *ngIf="uploadFileForm.controls['fileReason'].errors['pattern']"
               >
@@ -309,8 +300,7 @@
                 [@fadeInError]
                 class="text-success"
                 *ngIf="!uploadFileForm.controls['fileReason'].errors"
-                ><i class="bi bi-check-lg me-1"></i>Este nombre es
-                válido.</small
+                ><i class="bi bi-check-lg me-1"></i>La descripción es válida.</small
               >
             </div>
           </div>

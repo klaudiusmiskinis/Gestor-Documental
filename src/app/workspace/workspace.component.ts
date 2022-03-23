@@ -51,8 +51,8 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
       fileReason: new FormControl()
     });
 
-    this.uploadFileForm.controls['nameSwitch'].valueChanges.subscribe(() => this.setConditionalValidators(this.uploadFileForm.controls['nameSwitch'].value, 'fileNewName', true, true, 3, 30));
-    this.uploadFileForm.controls['reasonSwitch'].valueChanges.subscribe(() => this.setConditionalValidators(this.uploadFileForm.controls['reasonSwitch'].value, 'fileReason', true, true, 3, 300));
+    this.uploadFileForm.controls['nameSwitch'].valueChanges.subscribe(() => this.setConditionalValidators(this.uploadFileForm.controls['nameSwitch'].value, 'fileNewName', true, true, true, 3, 30));
+    this.uploadFileForm.controls['reasonSwitch'].valueChanges.subscribe(() => this.setConditionalValidators(this.uploadFileForm.controls['reasonSwitch'].value, 'fileReason', true, true, false, 3, 300));
 
     this.makeDirectoryForm = new FormGroup({
       directory: new FormControl('', [
@@ -87,10 +87,13 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
     });
   };
 
-  setConditionalValidators(value: any, field: string, minLength: boolean, maxLength: boolean, minLengthChars?: number | any, maxLengthChars?: number | any) {
+  setConditionalValidators(value: any, field: string, minLength: boolean, maxLength: boolean, names: boolean minLengthChars?: number | any, maxLengthChars?: number | any) {
     const validators: ValidatorFn | ValidatorFn[] | null = [];
     if (value) {
-      validators.push(Validators.required, Validators.pattern('^[a-zA-Z \-\']+'), this.validateFilename.bind(this), this.validateFoldername.bind(this))
+      validators.push(Validators.required, Validators.pattern('^[a-zA-Z \-\']+'))
+    } 
+    if (names) {
+      validators.push(this.validateFilename.bind(this), this.validateFoldername.bind(this))
     }
     if (minLength && value) {
       validators.push(Validators.minLength(minLengthChars));
