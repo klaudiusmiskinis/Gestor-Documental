@@ -18,6 +18,7 @@ import { NotifierConfiguration } from './config/notifier.config';
 import { NotifierModule } from 'angular-notifier';
 import { NgxTippyModule } from 'ngx-tippy-wrapper';
 import { AdminComponent } from './admin/admin.component';
+import { ItemBoxComponent } from './components/item-box/item-box.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { AdminComponent } from './admin/admin.component';
     FilesComponent,
     NavbarComponent,
     AdminComponent,
+    ItemBoxComponent,
   ],
   imports: [
     BrowserAnimationsModule,
