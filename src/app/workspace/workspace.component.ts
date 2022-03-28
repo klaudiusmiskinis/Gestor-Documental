@@ -57,7 +57,7 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
     this.makeDirectoryForm = new FormGroup({
       directory: new FormControl('', [
         Validators.required,
-        Validators.minLength(4),
+        Validators.minLength(3),
         Validators.maxLength(50),
         Validators.pattern('^[a-zA-Z\\s]+$'),
         this.validateFoldername.bind(this),
