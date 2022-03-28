@@ -41,7 +41,7 @@
 
   <div *ngIf="content" class="container-fluid">
     <div *ngIf="content.folders && content.folders.length > 0" [@fadeIn]>
-      <folders 
+      <folders
         [folders]="content.folders"
         (folderEvent)="folderEvent($event)"
       ></folders>
@@ -300,7 +300,8 @@
                 [@fadeInError]
                 class="text-success"
                 *ngIf="!uploadFileForm.controls['fileReason'].errors"
-                ><i class="bi bi-check-lg me-1"></i>La descripción es válida.</small
+                ><i class="bi bi-check-lg me-1"></i>La descripción es
+                válida.</small
               >
             </div>
           </div>
@@ -309,12 +310,7 @@
               >Archivo al que remplaza.</label
             >
             <select formControlName="fileRelated" class="form-control">
-              <option
-                selected="selected"
-                value="null"
-              >
-                Ninguno
-              </option>
+              <option selected="selected" value="null">Ninguno</option>
               <option *ngFor="let file of content.files">{{ file }}</option>
             </select>
           </div>
@@ -363,19 +359,88 @@
         ></button>
       </div>
       <div class="modal-body">
-        <form class="row p-0 m-0" [formGroup]="makeDirectoryForm">
+        <form
+          class="row p-0 m-0"
+          [formGroup]="makeDirectoryForm"
+          (ngSubmit)="makeDirectory()"
+        >
           <div class="mt-3">
             <span class="p-0 mt-1">Nombre de la carpeta</span>
             <input
               class="form-control"
               type="text"
               formControlName="directory"
-              id="directoryName"
               placeholder="Introduce el nombre de la carpeta"
               autocomplete="off"
             />
           </div>
-          <div>boton para cambiar el nombre</div>
+          <div *ngIf="makeDirectoryForm.controls['directory'].errors">
+            <small
+              [@fadeInError]
+              class="text-danger"
+              *ngIf="
+                makeDirectoryForm.controls['directory'].errors['maxlength']
+              "
+              ><i class="bi bi-x me-1"></i>La longitud máxima debe ser de 30
+              caracteres.<br
+            /></small>
+            <small
+              [@fadeInError]
+              class="text-danger"
+              *ngIf="
+                makeDirectoryForm.controls['directory'].errors['minlength']
+              "
+              ><i class="bi bi-x me-1"></i>La longitud mínima debe ser de 3
+              caracteres.<br
+            /></small>
+            <small
+              [@fadeInError]
+              class="text-danger"
+              *ngIf="makeDirectoryForm.controls['directory'].errors['required']"
+              ><i class="bi bi-x me-1"></i>El campo es obligatorio.<br
+            /></small>
+            <small
+              *ngIf="makeDirectoryForm.controls['directory'].errors['pattern']"
+              [@fadeInError]
+              class="text-danger"
+              ><i class="bi bi-x me-1"></i>No puede contener caracteres
+              especiales ni números.<br
+            /></small>
+            <small
+              [@fadeInError]
+              class="text-danger"
+              *ngIf="
+                makeDirectoryForm.controls['directory'].errors['nameExists']
+              "
+              ><i class="bi bi-x me-1"></i>Este nombre ya esta en uso en esta
+              carpeta.</small
+            >
+          </div>
+          <div>
+            <small
+              [@fadeInError]
+              *ngIf="!makeDirectoryForm.controls['directory'].errors"
+              class="text-success"
+              ><i class="bi bi-check-lg me-1"></i>Este nombre es válido.<br
+            /></small>
+          </div>
+          <div class="row gap-2 mt-3 mx-2">
+            <button
+              type="button"
+              class="col d-grid btn btn-sm btn-danger"
+              (click)="deleteFile(selected.element)"
+              [disabled]="makeDirectoryForm.invalid"
+            >
+              Crear carpeta
+            </button>
+            <button
+              type="button"
+              class="col d-grid btn btn-sm btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancelar
+            </button>
+          </div>
         </form>
       </div>
     </div>
@@ -430,37 +495,37 @@
               [@fadeInError]
               class="text-danger"
               *ngIf="editFileName.controls['fileName'].errors['required']"
-              ><i class="bi bi-x me-1"></i>Este campo es obligatorio.</small
-            >
+              ><i class="bi bi-x me-1"></i>Este campo es obligatorio.<br
+            /></small>
             <small
               [@fadeInError]
               class="text-danger"
               *ngIf="editFileName.controls['fileName'].errors['nameExists']"
               ><i class="bi bi-x me-1"></i>Este nombre ya esta en uso en esta
-              carpeta.</small
-            >
+              carpeta.<br
+            /></small>
             <small
               [@fadeInError]
               class="text-danger"
               *ngIf="editFileName.controls['fileName'].errors['minlength']"
               ><i class="bi bi-x me-1"></i>La longitud mínima debe ser de 3
-              caracteres.</small
-            >
+              caracteres.<br
+            /></small>
             <small
               [@fadeInError]
               class="text-danger"
               *ngIf="editFileName.controls['fileName'].errors['maxlength']"
               ><i class="bi bi-x me-1"></i>La longitud máxima debe ser de 30
-              caracteres.</small
-            >
+              caracteres.<br
+            /></small>
           </div>
           <div>
             <small
               [@fadeInError]
               class="text-success"
               *ngIf="!editFileName.controls['fileName'].errors"
-              ><i class="bi bi-check-lg me-1"></i>Este nombre es válido.</small
-            >
+              ><i class="bi bi-check-lg me-1"></i>Este nombre es válido.<br
+            /></small>
           </div>
           <div class="row gap-2 mt-3 mx-1">
             <button
