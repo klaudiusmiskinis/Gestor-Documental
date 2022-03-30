@@ -1,17 +1,18 @@
-import { Component, ElementRef, EventEmitter, Host, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { right } from '@popperjs/core';
-import { slideIn, fadeIn } from '../config/animations.config';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { fadeIn, slideDownHideUp, slideIn } from '../config/animations.config';
 
 @Component({
   selector: 'folders',
   templateUrl: './folders.component.html',
-  animations: [slideIn, fadeIn]
+  animations: [fadeIn, slideDownHideUp, slideIn]
 })
 
 export class FoldersComponent implements OnInit {
-  public expanded: Boolean;
   public tooltip: object;
   public menuStatus: boolean;
+  @Input() expanded: boolean;
+  @Input() folders: any;
+  @Output() folderEvent = new EventEmitter<Object>();
 
   constructor() {
     this.menuStatus = false;
@@ -21,14 +22,11 @@ export class FoldersComponent implements OnInit {
     }
   }
 
-  @Input() folders: any;
-  @Output() folderEvent = new EventEmitter<Object>();
-
   ngOnInit(): void {
     this.expanded = true
   }
 
-  folderEmitter (type: string, folder: string) {
+  folderEmitter(type: string, folder: string) {
     this.folderEvent.emit({
       type: type, folder: folder
     });
