@@ -85,8 +85,27 @@ export const fadeOut = [
   ]),
 ]
 
+export const slideDownHideUp = trigger("slideDownHideUp", [
+  transition(":enter", [
+    style({ opacity: 0, transform: "translateY(-100%)" }), //apply default styles before animation starts
+    animate(
+      "250ms ease-in",
+      style({ opacity: 1, transform: "translateX(0)" })
+    )
+  ]),
+  transition(":leave", [
+    style({ opacity: 1, transform: "translateX(0)" }), //apply default styles before animation starts
+    animate(
+      "250ms ease-out",
+      style({ opacity: 0, transform: "translateY(-100%)" })
+    )
+  ])
+])
+
+
 export const allCustomAnimations = [
   slideIn, 
-  fadeIn
+  fadeIn,
+  slideDownHideUp
 ]
     
