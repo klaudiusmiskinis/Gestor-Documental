@@ -29,6 +29,10 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
   public editFileName: FormGroup;
   public newResourceName: FormControl;
   public tooltip: object;
+  public expandedFolders: boolean;
+  public expandedFiles: boolean;
+  @ViewChild('btnExtendFolders') btnExtendFolders: ElementRef;
+  @ViewChild('btnExtendFiles') btnExtendFiles: ElementRef;
 
   /* Constructor */
   constructor(private request: RequestService, private cdRef: ChangeDetectorRef) {
@@ -42,6 +46,8 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
       arrow: false,
       placement: 'bottom'
     };
+    this.expandedFolders = true;
+    this.expandedFiles = true;
 
     this.uploadFileForm = new FormGroup({
       nameSwitch: new FormControl(false, [Validators.required]),
@@ -91,7 +97,7 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
     const validators: ValidatorFn | ValidatorFn[] | null = [];
     if (value) {
       validators.push(Validators.required, Validators.pattern('^[a-zA-Z \-\']+'))
-    } 
+    }
     if (names) {
       validators.push(this.validateFilename.bind(this), this.validateFoldername.bind(this))
     }
@@ -107,6 +113,26 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
       this.uploadFileForm.controls[field].setErrors(null)
     }
     this.uploadFileForm.updateValueAndValidity();
+  }
+
+  toggleExpandedFolders(): void {
+    this.expandedFolders = !this.expandedFolders;
+    const btnExtendFolders = this.btnExtendFolders.nativeElement;
+    if (this.expandedFolders) {
+      btnExtendFolders.innerHTML = 'Minimizar directorios <i class="bi bi-arrows-angle-contract ms-1"></i>'
+    } else {
+      btnExtendFolders.innerHTML = 'Desplegar directorios <i class="bi bi-arrows-angle-expand ms-1"></i>'
+    }
+  }
+
+  toggleExpandedFiles(): void {
+    this.expandedFiles = !this.expandedFiles;
+    const btnExtendFiles = this.btnExtendFiles.nativeElement;
+    if (this.expandedFiles) {
+      btnExtendFiles.innerHTML = 'Minimizar archivos <i class="bi bi-arrows-angle-contract ms-1"></i>'
+    } else {
+      btnExtendFiles.innerHTML = 'Desplegar archivos <i class="bi bi-arrows-angle-expand ms-1"></i>'
+    }
   }
 
   @ViewChild(MatAccordion) accordion: MatAccordion;
