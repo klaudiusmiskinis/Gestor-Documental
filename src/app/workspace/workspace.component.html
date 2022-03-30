@@ -1,13 +1,9 @@
 <div class="container-fluid g-0" [@fadeIn]>
   <navbar [path]="getUrl()"></navbar>
 
+  <!-- OPCIONES -->
   <div class="row p-2 g-0 gap-1">
-    <div class="row g-0 gap-1">
-      <div class="col-auto">
-        <div class="badge bg-secondary">Opciones</div>
-      </div>
-    </div>
-    <div class="col-auto col-sm d-grid" *ngIf="getUrl().includes('?path=')">
+    <div class="col-auto" *ngIf="getUrl().includes('?path=')">
       <button
         class="btn btn-sm btn-outline-danger shadow-sm"
         (click)="goBack()"
@@ -15,41 +11,59 @@
         Volver<i class="bi bi-arrow-left-short ms-1"></i>
       </button>
     </div>
-    <div class="col-auto col-sm d-grid">
+    <div class="col-auto">
       <button
-        class="btn btn-sm btn-outline-secondary shadow-sm"
-        (click)="getContent(getUrl())"
+        class="btn btn-sm btn-danger"
+        (click)="toggleExpandedFolders()"
+        #btnExtendFolders
       >
-        Actualizar<i class="bi bi-arrow-clockwise ms-1"></i>
+        Minimizar directorios<i class="bi bi-arrows-angle-contract ms-1"></i>
       </button>
     </div>
-    <div class="col-auto col-sm d-grid">
+    <div class="col-auto">
+      <button class="btn btn-sm btn-danger" (click)="toggleExpandedFiles()" #btnExtendFiles>
+        Minimizar archivos<i class="bi bi-arrows-angle-contract ms-1"></i>
+      </button>
+    </div>
+    <div class="col-auto">
       <button
-        class="btn btn-sm btn-outline-secondary shadow-sm"
+        class="btn btn-sm btn-danger shadow-sm"
         data-bs-toggle="modal"
         data-bs-target="#makeDirectoryModal"
       >
         Crear una carpeta<i class="bi bi-folder-plus ms-1"></i>
       </button>
     </div>
-    <div class="col-auto col-sm d-grid">
-      <button class="btn btn-sm btn-outline-secondary shadow-sm" disabled>
+    <div class="col-auto">
+      <button
+        class="btn btn-sm btn-danger shadow-sm"
+        (click)="getContent(getUrl())"
+      >
+        Actualizar<i class="bi bi-arrow-clockwise ms-1"></i>
+      </button>
+    </div>
+    <div class="col-auto">
+      <button class="btn btn-sm btn-danger shadow-sm" disabled>
         Ver ultimas versiones<i class="bi bi-eye-fill ms-1"></i>
       </button>
     </div>
   </div>
 
-  <div *ngIf="content" class="container-fluid">
-    <div *ngIf="content.folders && content.folders.length > 0" [@fadeIn]>
+  <!-- FOLDERS -->
+  <div *ngIf="content">
+    <div *ngIf="content.folders && content.folders.length > 0">
       <folders
         [folders]="content.folders"
+        [expanded]="expandedFolders"
         (folderEvent)="folderEvent($event)"
       ></folders>
     </div>
-    <div *ngIf="content.files && content.files.length > 0" [@fadeIn]>
+    <!-- FILES -->
+    <div *ngIf="content.files && content.files.length > 0">
       <files
         [files]="content.files"
         (fileEvent)="fileEvent($event)"
+        [expanded]="expandedFiles"
         [path]="getUrl()"
       ></files>
     </div>
@@ -157,7 +171,9 @@
       >
         <div class="row">
           <div *ngIf="fileInfo.exists" class="d-flex gap-1 mb-2">
-            <span class="badge bg-danger text-truncate" style="width: 400px;">{{ fileInfo.name }}</span>
+            <span class="badge bg-danger text-truncate" style="width: 400px">{{
+              fileInfo.name
+            }}</span>
             <span class="badge bg-danger">{{ fileInfo.size }}</span>
           </div>
           <div class="d-grid mx-1 mt-2">
