@@ -8,20 +8,24 @@ import { RequestService } from '../services/request.service';
   animations: [slideIn, fadeIn]
 })
 
-export class FilesComponent {
+export class FilesComponent implements OnInit {
 
   constructor(private request: RequestService) { }
 
   @Input() files: any;
   @Input() path: string;
+  @Input() expanded: boolean;
   @Output() fileEvent = new EventEmitter<Object>();
 
+  ngOnInit(): void {
+    this.expanded = true;
+  }
 
   getFile(file: string): string {
     return this.request.getFile(this.path, file);
   };
 
-  fileEmitter (type: string,file: string) {
-    this.fileEvent.emit({type: type, file:file});
+  fileEmitter(type: string, file: string) {
+    this.fileEvent.emit({ type: type, file: file });
   }
 }
