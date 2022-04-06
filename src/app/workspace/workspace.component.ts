@@ -6,6 +6,7 @@ import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from
 import { slideIn, fadeIn, fadeOut, fadeInError } from '../config/animations.config';
 import { FileInfo } from '../models/file.model';
 import { AppUrl } from '../models/appurl.model';
+import { Observable, Subscription, timer } from 'rxjs';
 declare var $: any;
 
 @Component({
@@ -31,6 +32,9 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
   public tooltip: object;
   public expandedFolders: boolean;
   public expandedFiles: boolean;
+  public showloader: boolean = false;      
+  private subscription: Subscription;
+  private timer: Observable<any>;
   @ViewChild('btnExtendFolders') btnExtendFolders: ElementRef;
   @ViewChild('btnExtendFiles') btnExtendFiles: ElementRef;
 
@@ -142,6 +146,12 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
   async ngOnInit(): Promise<void> {
     await this.getContent(this.url.url);
   };
+
+  public ngOnDestroy() {
+    if ( this.subscription && this.subscription instanceof Subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
 
   ngAfterViewChecked(): void {
     this.cdRef.detectChanges();
@@ -323,5 +333,13 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
     this.content = [];
     this.content = await this.request.getWorkspace(path);
   };
+
+  public setTimer() {
+    this.showloader = true;
+    this.timer = timer(5000);
+    this.subscription = this.timer.subscribe(() => {
+      this.showloader = false;
+    });
+  }
 
 }
