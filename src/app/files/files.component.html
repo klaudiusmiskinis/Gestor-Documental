@@ -9,7 +9,7 @@
           <accordion [isAnimated]="true" class="text-truncate">
             <accordion-group>
               <div class="badge bg-secondary pull-left float-left mb-2">
-                <i class="bi bi-gear-fill me-2"></i>Opciones de {{ file }}
+                <i class="bi bi-gear-fill me-2"></i>Opciones de {{ file.name }}
               </div>
               <button
                 class="btn justify-content-between d-flex w-100 shadow-none"
@@ -17,16 +17,16 @@
                 type="button"
               >
                 <div class="text-danger text-truncate pull-left float-left">
-                  {{ file }}
+                  {{ file.name }}
                 </div>
-                <a class="text-danger icon-size" href="{{ getFile(file) }}"
+                <a class="text-danger icon-size" href="{{ getFile(file.name) }}"
                   ><i class="bi bi-cloud-arrow-down-fill"></i
                 ></a>
               </button>
               <div class="row">
                 <div class="col d-grid">
                   <a
-                    href="{{ getFile(file) }}"
+                    href="{{ getFile(file.name) }}"
                     class="btn btn-sm btn-outline-primary"
                     ><i class="bi bi-cloud-arrow-down-fill"></i
                   ></a>
@@ -35,7 +35,7 @@
                 <div class="col d-grid">
                   <button
                     class="btn btn-sm btn-outline-success"
-                    (click)="fileEmitter('edit', file)"
+                    (click)="fileEmitter('edit', file.name)"
                   >
                     <i class="bi bi-pencil-fill"></i>
                   </button>
@@ -44,7 +44,7 @@
                 <div class="col d-grid">
                   <button
                     class="btn btn-sm btn-outline-danger"
-                    (click)="fileEmitter('delete', file)"
+                    (click)="fileEmitter('delete', file.name)"
                   >
                     <i class="bi bi-trash-fill"></i>
                   </button>
@@ -59,7 +59,7 @@
           <accordion [isAnimated]="true" class="text-truncate">
             <accordion-group>
               <div class="badge bg-secondary pull-left float-left mb-2">
-                <i class="bi bi-gear-fill me-2"></i>Opciones {{ files[i + 1] }}
+                <i class="bi bi-gear-fill me-2"></i>Opciones {{ files[i + 1].name }}
               </div>
               <button
                 class="btn justify-content-between d-flex w-100 shadow-none"
@@ -67,18 +67,18 @@
                 type="button"
               >
                 <div class="text-danger text-truncate pull-left float-left">
-                  {{ files[i + 1] }}
+                  {{ files[i + 1].name }}
                 </div>
                 <a
                   class="text-danger icon-size"
-                  href="{{ getFile(files[i + 1]) }}"
+                  href="{{ getFile(files[i + 1].name) }}"
                   ><i class="bi bi-cloud-arrow-down-fill"></i
                 ></a>
               </button>
               <div class="row">
                 <div class="col d-grid">
                   <a
-                    href="{{ getFile(files[i + 1]) }}"
+                    href="{{ getFile(files[i + 1].name) }}"
                     class="btn btn-sm btn-outline-primary"
                     ><i class="bi bi-cloud-arrow-down-fill"></i
                   ></a>
@@ -87,7 +87,7 @@
                 <div class="col d-grid">
                   <button
                     class="btn btn-sm btn-outline-success"
-                    (click)="fileEmitter('edit', files[i + 1])"
+                    (click)="fileEmitter('edit', files[i + 1].name)"
                   >
                     <i class="bi bi-pencil-fill"></i>
                   </button>
@@ -96,7 +96,7 @@
                 <div class="col d-grid">
                   <button
                     class="btn btn-sm btn-outline-danger"
-                    (click)="fileEmitter('delete', files[i + 1])"
+                    (click)="fileEmitter('delete', files[i + 1].name)"
                   >
                     <i class="bi bi-trash-fill"></i>
                   </button>
@@ -111,7 +111,7 @@
           <accordion [isAnimated]="true" class="text-truncate">
             <accordion-group>
               <div class="badge bg-secondary pull-left float-left mb-2">
-                <i class="bi bi-gear-fill me-2"></i>Opciones {{ files[i + 2] }}
+                <i class="bi bi-gear-fill me-2"></i>Opciones {{ files[i + 2].name }}
               </div>
               <button
                 class="btn justify-content-between d-flex w-100 shadow-none"
@@ -119,18 +119,18 @@
                 type="button"
               >
                 <div class="text-danger text-truncate pull-left float-left">
-                  {{ files[i + 2] }}
+                  {{ files[i + 2].name }}
                 </div>
                 <a
                   class="text-danger icon-size"
-                  href="{{ getFile(files[i + 2]) }}"
+                  href="{{ getFile(files[i + 2].name) }}"
                   ><i class="bi bi-cloud-arrow-down-fill"></i
                 ></a>
               </button>
               <div class="row">
                 <div class="col d-grid">
                   <a
-                    href="{{ getFile(files[i + 2]) }}"
+                    href="{{ getFile(files[i + 2].name) }}"
                     class="btn btn-sm btn-outline-primary"
                     ><i class="bi bi-cloud-arrow-down-fill"></i
                   ></a>
@@ -139,7 +139,7 @@
                 <div class="col d-grid">
                   <button
                     class="btn btn-sm btn-outline-success"
-                    (click)="fileEmitter('edit', files[i + 2])"
+                    (click)="fileEmitter('edit', files[i + 2].name)"
                   >
                     <i class="bi bi-pencil-fill"></i>
                   </button>
@@ -148,7 +148,7 @@
                 <div class="col d-grid">
                   <button
                     class="btn btn-sm btn-outline-danger"
-                    (click)="fileEmitter('delete', files[i + 2])"
+                    (click)="fileEmitter('delete', files[i + 2].name)"
                   >
                     <i class="bi bi-trash-fill"></i>
                   </button>
