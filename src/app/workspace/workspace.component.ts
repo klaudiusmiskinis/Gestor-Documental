@@ -32,7 +32,7 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
   public tooltip: object;
   public expandedFolders: boolean;
   public expandedFiles: boolean;
-  public showloader: boolean = false;      
+  public showloader: boolean = false;
   private subscription: Subscription;
   private timer: Observable<any>;
   @ViewChild('btnExtendFolders') btnExtendFolders: ElementRef;
@@ -148,7 +148,7 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
   };
 
   public ngOnDestroy() {
-    if ( this.subscription && this.subscription instanceof Subscription) {
+    if (this.subscription && this.subscription instanceof Subscription) {
       this.subscription.unsubscribe();
     }
   }
@@ -258,8 +258,8 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
     if (control.value) {
       const name = control.value.toLowerCase();
       const response = this.content.files.filter(file => {
-        const nameCompare = file.toLowerCase();
-        const fileWithoutDot = file.split('.')[0];
+        const nameCompare = file.name.toLowerCase();
+        const fileWithoutDot = file.name.split('.')[0];
         if (nameCompare === name || fileWithoutDot === name) {
           return file;
         }
