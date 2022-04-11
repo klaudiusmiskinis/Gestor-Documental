@@ -331,7 +331,7 @@
             >
             <select formControlName="fileRelated" class="form-control">
               <option selected="selected" value="null">Ninguno</option>
-              <option *ngFor="let file of content.files">{{ file }}</option>
+              <option *ngFor="let file of content.files">{{ file.name }}</option>
             </select>
           </div>
         </div>
