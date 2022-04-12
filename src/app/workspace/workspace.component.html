@@ -5,7 +5,7 @@
   <div class="row p-2 g-0 gap-1">
     <div class="col-auto" *ngIf="getUrl().includes('?path=')">
       <button
-        class="btn btn-sm btn-outline-danger shadow-sm"
+        class="btn btn-sm btn-outline-color shadow-sm"
         (click)="goBack()"
       >
         Volver<i class="bi bi-arrow-left-short ms-1"></i>
@@ -13,7 +13,7 @@
     </div>
     <div class="col-auto">
       <button
-        class="btn btn-sm btn-danger"
+        class="btn btn-sm btn-color"
         (click)="toggleExpandedFolders()"
         #btnExtendFolders
       >
@@ -22,7 +22,7 @@
     </div>
     <div class="col-auto">
       <button
-        class="btn btn-sm btn-danger"
+        class="btn btn-sm btn-color"
         (click)="toggleExpandedFiles()"
         #btnExtendFiles
       >
@@ -31,7 +31,7 @@
     </div>
     <div class="col-auto">
       <button
-        class="btn btn-sm btn-danger shadow-sm"
+        class="btn btn-sm btn-color shadow-sm"
         data-bs-toggle="modal"
         data-bs-target="#makeDirectoryModal"
       >
@@ -40,14 +40,14 @@
     </div>
     <div class="col-auto">
       <button
-        class="btn btn-sm btn-danger shadow-sm"
+        class="btn btn-sm btn-color shadow-sm"
         (click)="getContent(getUrl())"
       >
         Actualizar<i class="bi bi-arrow-clockwise ms-1"></i>
       </button>
     </div>
     <div class="col-auto">
-      <button class="btn btn-sm btn-danger shadow-sm" disabled>
+      <button class="btn btn-sm btn-color shadow-sm" disabled>
         Ver ultimas versiones<i class="bi bi-eye-fill ms-1"></i>
       </button>
     </div>
@@ -77,7 +77,7 @@
     <div class="row g-0 gap-1 p-2">
       <label class="col d-grid" for="file">
         <div
-          class="btn btn-sm btn-danger"
+          class="btn btn-sm btn-color"
           ngxTippy
           data-tippy-content="Selecciona un archivo"
           [tippyProps]="tooltip"
@@ -99,7 +99,7 @@
           ngxTippy
           data-tippy-content="Subir"
           [tippyProps]="tooltip"
-          class="btn btn-sm btn-outline-danger px-4"
+          class="btn btn-sm btn-outline-color px-4"
           data-bs-toggle="modal"
           data-bs-target="#uploadNameChange"
         >
@@ -113,21 +113,21 @@
       class="d-flex g-0 gap-1 px-2 mb-2"
     >
       <span
-        class="badge bg-danger"
+        class="badge bg-color"
         ngxTippy
         data-tippy-content="Nombre del archivo"
         [tippyProps]="tooltip"
         >{{ fileInfo.name }}</span
       >
       <span
-        class="badge bg-danger"
+        class="badge bg-color"
         ngxTippy
         data-tippy-content="Tamaño del archivo"
         [tippyProps]="tooltip"
         >{{ fileInfo.size }}</span
       >
       <span
-        class="badge bg-danger"
+        class="badge bg-color"
         ngxTippy
         data-tippy-content="Extensión del archivo"
         [tippyProps]="tooltip"
@@ -159,7 +159,7 @@
 >
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header bg-danger border-0">
+      <div class="modal-header bg-color border-0">
         <h5 class="modal-title text-light">Subida de archivo</h5>
         <button
           type="button"
@@ -175,10 +175,10 @@
       >
         <div class="row">
           <div *ngIf="fileInfo.exists" class="d-flex gap-1 mb-2">
-            <span class="badge bg-danger text-truncate" style="width: 400px">{{
+            <span class="badge bg-color text-truncate" style="width: 400px">{{
               fileInfo.name
             }}</span>
-            <span class="badge bg-danger">{{ fileInfo.size }}</span>
+            <span class="badge bg-color">{{ fileInfo.size }}</span>
           </div>
           <div class="d-grid mx-1 mt-2">
             <div class="form-check form-switch">
@@ -204,7 +204,7 @@
             <div *ngIf="uploadFileForm.controls['fileNewName'].errors">
               <small
                 [@fadeInError]
-                class="text-danger"
+                class="text-color"
                 *ngIf="
                   uploadFileForm.controls['fileNewName'].errors['maxlength']
                 "
@@ -213,7 +213,7 @@
               >
               <small
                 [@fadeInError]
-                class="text-danger"
+                class="text-color"
                 *ngIf="
                   uploadFileForm.controls['fileNewName'].errors['minlength']
                 "
@@ -222,7 +222,7 @@
               >
               <small
                 [@fadeInError]
-                class="text-danger"
+                class="text-color"
                 *ngIf="
                   uploadFileForm.controls['fileNewName'].errors['required']
                 "
@@ -230,7 +230,7 @@
               >
               <small
                 [@fadeInError]
-                class="text-danger"
+                class="text-color"
                 *ngIf="
                   uploadFileForm.controls['fileNewName'].errors['nameExists']
                 "
@@ -240,7 +240,7 @@
               <div
                 *ngIf="uploadFileForm.controls['fileNewName'].errors['pattern']"
               >
-                <small [@fadeInError] class="text-danger"
+                <small [@fadeInError] class="text-color"
                   ><i class="bi bi-x me-1"></i>No puede contener caracteres
                   especiales ni números.</small
                 >
@@ -284,7 +284,7 @@
             <div *ngIf="uploadFileForm.controls['fileReason'].errors">
               <small
                 [@fadeInError]
-                class="text-danger"
+                class="text-color"
                 *ngIf="
                   uploadFileForm.controls['fileReason'].errors['maxlength']
                 "
@@ -293,7 +293,7 @@
               >
               <small
                 [@fadeInError]
-                class="text-danger"
+                class="text-color"
                 *ngIf="
                   uploadFileForm.controls['fileReason'].errors['minlength']
                 "
@@ -302,14 +302,14 @@
               >
               <small
                 [@fadeInError]
-                class="text-danger"
+                class="text-color"
                 *ngIf="uploadFileForm.controls['fileReason'].errors['required']"
                 ><i class="bi bi-x me-1"></i>Este campo es obligatorio.</small
               >
               <div
                 *ngIf="uploadFileForm.controls['fileReason'].errors['pattern']"
               >
-                <small [@fadeInError] class="text-danger"
+                <small [@fadeInError] class="text-color"
                   ><i class="bi bi-x me-1"></i>No puede contener caracteres
                   especiales ni números.</small
                 >
@@ -338,7 +338,7 @@
         <div class="row gap-2 mt-3 mx-1">
           <button
             type="submit"
-            class="col d-grid btn btn-sm btn-danger"
+            class="col d-grid btn btn-sm btn-color"
             [disabled]="!uploadFileForm.valid"
           >
             Subir
@@ -367,7 +367,7 @@
 >
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header bg-danger border-0">
+      <div class="modal-header bg-color border-0">
         <h5 class="modal-title text-light" id="makeDirectoryModalLabel">
           Crear una carpeta
         </h5>
@@ -397,7 +397,7 @@
           <div *ngIf="makeDirectoryForm.controls['directory'].errors">
             <small
               [@fadeInError]
-              class="text-danger"
+              class="text-color"
               *ngIf="
                 makeDirectoryForm.controls['directory'].errors['maxlength']
               "
@@ -406,7 +406,7 @@
             /></small>
             <small
               [@fadeInError]
-              class="text-danger"
+              class="text-color"
               *ngIf="
                 makeDirectoryForm.controls['directory'].errors['minlength']
               "
@@ -415,20 +415,20 @@
             /></small>
             <small
               [@fadeInError]
-              class="text-danger"
+              class="text-color"
               *ngIf="makeDirectoryForm.controls['directory'].errors['required']"
               ><i class="bi bi-x me-1"></i>El campo es obligatorio.<br
             /></small>
             <small
               *ngIf="makeDirectoryForm.controls['directory'].errors['pattern']"
               [@fadeInError]
-              class="text-danger"
+              class="text-color"
               ><i class="bi bi-x me-1"></i>No puede contener caracteres
               especiales ni números.<br
             /></small>
             <small
               [@fadeInError]
-              class="text-danger"
+              class="text-color"
               *ngIf="
                 makeDirectoryForm.controls['directory'].errors['nameExists']
               "
@@ -447,7 +447,7 @@
           <div class="row gap-2 mt-3 mx-2">
             <button
               type="button"
-              class="col d-grid btn btn-sm btn-danger"
+              class="col d-grid btn btn-sm btn-color"
               (click)="deleteFile(selected.element)"
               [disabled]="makeDirectoryForm.invalid"
             >
@@ -476,7 +476,7 @@
 >
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header bg-danger border-0">
+      <div class="modal-header bg-color border-0">
         <h5 class="modal-title text-light">Cambio de nombre</h5>
         <button
           type="button"
@@ -513,27 +513,27 @@
           <div *ngIf="editFileName.controls['fileName'].errors">
             <small
               [@fadeInError]
-              class="text-danger"
+              class="text-color"
               *ngIf="editFileName.controls['fileName'].errors['required']"
               ><i class="bi bi-x me-1"></i>Este campo es obligatorio.<br
             /></small>
             <small
               [@fadeInError]
-              class="text-danger"
+              class="text-color"
               *ngIf="editFileName.controls['fileName'].errors['nameExists']"
               ><i class="bi bi-x me-1"></i>Este nombre ya esta en uso en esta
               carpeta.<br
             /></small>
             <small
               [@fadeInError]
-              class="text-danger"
+              class="text-color"
               *ngIf="editFileName.controls['fileName'].errors['minlength']"
               ><i class="bi bi-x me-1"></i>La longitud mínima debe ser de 3
               caracteres.<br
             /></small>
             <small
               [@fadeInError]
-              class="text-danger"
+              class="text-color"
               *ngIf="editFileName.controls['fileName'].errors['maxlength']"
               ><i class="bi bi-x me-1"></i>La longitud máxima debe ser de 30
               caracteres.<br
@@ -550,7 +550,7 @@
           <div class="row gap-2 mt-3 mx-1">
             <button
               type="submit"
-              class="col d-grid btn btn-sm btn-danger"
+              class="col d-grid btn btn-sm btn-color"
               [disabled]="editFileName.invalid"
             >
               Subir
@@ -578,7 +578,7 @@
 >
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header bg-danger border-0">
+      <div class="modal-header bg-color border-0">
         <h5 class="modal-title text-light" id="editFolderNameLabel">
           Cambio de nombre para carpeta
         </h5>
@@ -591,7 +591,7 @@
       </div>
       <div class="modal-body">
         <form class="row p-0 m-0" [formGroup]="editDirectoryName">
-          <p class="text-danger mx-0 my-1">
+          <p class="text-color mx-0 my-1">
             <i class="bi bi-info-square-fill me-2"></i>No puedes cambiar a
             carpetas con nombres iguales.
           </p>
@@ -615,7 +615,7 @@
 
 <ng-template #isFile>
   <div class="modal-content">
-    <div class="modal-header bg-danger border-0">
+    <div class="modal-header bg-color border-0">
       <h5 class="modal-title text-light" id="confirmationDeleteLabel">
         ¿Deseas eliminar este archivo?
       </h5>
@@ -628,13 +628,13 @@
     </div>
     <div class="modal-body text-center">
       <p class="m-0">Vas a eliminar el archivo:</p>
-      <span *ngIf="selected.element" class="badge bg-light text-danger">{{
+      <span *ngIf="selected.element" class="badge bg-light text-color">{{
         selected.element
       }}</span>
       <div class="row gap-2 mt-3 mx-2">
         <button
           type="button"
-          class="col d-grid btn btn-sm btn-danger"
+          class="col d-grid btn btn-sm btn-color"
           (click)="deleteFile(selected.element)"
         >
           Eliminar
@@ -653,7 +653,7 @@
 
 <ng-template #isFolder>
   <div class="modal-content">
-    <div class="modal-header bg-danger border-0">
+    <div class="modal-header bg-color border-0">
       <h5 class="modal-title text-light" id="confirmationDeleteLabel">
         ¿Deseas eliminar esta carpeta?
       </h5>
@@ -666,13 +666,13 @@
     </div>
     <div class="modal-body text-center">
       <p class="m-0">Vas a eliminar la carpeta:</p>
-      <span *ngIf="selected.element" class="badge bg-light text-danger">{{
+      <span *ngIf="selected.element" class="badge bg-light text-color">{{
         selected.element
       }}</span>
       <div class="row gap-2 mt-3 mx-2">
         <button
           type="button"
-          class="col d-grid btn btn-sm btn-danger"
+          class="col d-grid btn btn-sm btn-color"
           (click)="deleteFolder(selected.element)"
         >
           Eliminar
