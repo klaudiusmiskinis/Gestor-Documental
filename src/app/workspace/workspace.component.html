@@ -4,15 +4,17 @@
   <!-- OPCIONES -->
   <div class="row p-2 g-0 gap-1">
     <div class="col-auto" *ngIf="getUrl().includes('?path=')">
-      <button
-        class="btn btn-sm btn-outline-color shadow-sm"
-        (click)="goBack()"
-      >
+      <button class="btn btn-sm btn-outline-color shadow-sm" (click)="goBack()">
         Volver<i class="bi bi-arrow-left-short ms-1"></i>
       </button>
     </div>
     <div class="col-auto">
       <button
+        data-bs-toggle="collapse"
+        href="#foldersCollapse"
+        role="button"
+        aria-expanded="true"
+        aria-controls="foldersCollapse"
         class="btn btn-sm btn-color"
         (click)="toggleExpandedFolders()"
         #btnExtendFolders
@@ -22,6 +24,11 @@
     </div>
     <div class="col-auto">
       <button
+        data-bs-toggle="collapse"
+        href="#filesCollapse"
+        role="button"
+        aria-expanded="true"
+        aria-controls="filesCollapse"
         class="btn btn-sm btn-color"
         (click)="toggleExpandedFiles()"
         #btnExtendFiles
@@ -47,8 +54,18 @@
       </button>
     </div>
     <div class="col-auto">
-      <button class="btn btn-sm btn-color shadow-sm" disabled>
-        Ver ultimas versiones<i class="bi bi-eye-fill ms-1"></i>
+      <button class="btn btn-sm btn-color shadow-sm" (click)="filterLastVersions()">
+        Ver ultimas versiones<i class="bi bi-search ms-1"></i>
+      </button>
+    </div>
+    <div class="col-auto">
+      <button class="btn btn-sm btn-color shadow-sm" (click)="filterRemoved()">
+        Ver archivos eliminados<i class="bi bi-trash-fill ms-1"></i>
+      </button>
+    </div>
+    <div class="col-auto">
+      <button class="btn btn-sm btn-color shadow-sm" (click)="noFilter()">
+        Ver todos los archivos<i class="bi bi-file-earmark ms-1"></i>
       </button>
     </div>
   </div>
@@ -58,16 +75,14 @@
     <div *ngIf="content.folders && content.folders.length > 0">
       <folders
         [folders]="content.folders"
-        [expanded]="expandedFolders"
         (folderEvent)="folderEvent($event)"
       ></folders>
     </div>
     <!-- FILES -->
     <div *ngIf="content.files && content.files.length > 0">
       <files
-        [files]="content.files"
+        [files]="filteredFiles"
         (fileEvent)="fileEvent($event)"
-        [expanded]="expandedFiles"
         [path]="getUrl()"
       ></files>
     </div>
@@ -331,7 +346,9 @@
             >
             <select formControlName="fileRelated" class="form-control">
               <option selected="selected" value="null">Ninguno</option>
-              <option *ngFor="let file of content.files">{{ file.name }}</option>
+              <option *ngFor="let file of content.files">
+                {{ file.name }}
+              </option>
             </select>
           </div>
         </div>
@@ -448,7 +465,7 @@
             <button
               type="button"
               class="col d-grid btn btn-sm btn-color"
-              (click)="deleteFile(selected.element)"
+              (click)="makeDirectory()"
               [disabled]="makeDirectoryForm.invalid"
             >
               Crear carpeta
