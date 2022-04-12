@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <div *ngIf="expanded" class="row p-2 g-0 overflow-hidden">
-    <div class="row text-danger">
+    <div class="row text-color">
       <p>Archivos {{ files.length }}</p>
     </div>
     <div *ngFor="let file of files; let i = index">
@@ -16,10 +16,10 @@
                 accordion-heading
                 type="button"
               >
-                <div class="text-danger text-truncate pull-left float-left">
+                <div class="text-color text-truncate pull-left float-left">
                   {{ file.name }}
                 </div>
-                <a class="text-danger icon-size" href="{{ getFile(file.name) }}"
+                <a class="text-color icon-size" href="{{ getFile(file.name) }}"
                   ><i class="bi bi-cloud-arrow-down-fill"></i
                 ></a>
               </button>
@@ -43,12 +43,12 @@
                 </div>
                 <div class="col d-grid">
                   <button
-                    class="btn btn-sm btn-outline-danger"
+                    class="btn btn-sm btn-outline-color"
                     (click)="fileEmitter('delete', file.name)"
                   >
                     <i class="bi bi-trash-fill"></i>
                   </button>
-                  <span class="badge bg-danger mt-1">Eliminar</span>
+                  <span class="badge bg-color mt-1">Eliminar</span>
                 </div>
               </div>
             </accordion-group>
@@ -66,11 +66,11 @@
                 accordion-heading
                 type="button"
               >
-                <div class="text-danger text-truncate pull-left float-left">
+                <div class="text-color text-truncate pull-left float-left">
                   {{ files[i + 1].name }}
                 </div>
                 <a
-                  class="text-danger icon-size"
+                  class="text-color icon-size"
                   href="{{ getFile(files[i + 1].name) }}"
                   ><i class="bi bi-cloud-arrow-down-fill"></i
                 ></a>
@@ -95,12 +95,12 @@
                 </div>
                 <div class="col d-grid">
                   <button
-                    class="btn btn-sm btn-outline-danger"
+                    class="btn btn-sm btn-outline-color"
                     (click)="fileEmitter('delete', files[i + 1].name)"
                   >
                     <i class="bi bi-trash-fill"></i>
                   </button>
-                  <span class="badge bg-danger mt-1">Eliminar</span>
+                  <span class="badge bg-color mt-1">Eliminar</span>
                 </div>
               </div>
             </accordion-group>
@@ -118,11 +118,11 @@
                 accordion-heading
                 type="button"
               >
-                <div class="text-danger text-truncate pull-left float-left">
+                <div class="text-color text-truncate pull-left float-left">
                   {{ files[i + 2].name }}
                 </div>
                 <a
-                  class="text-danger icon-size"
+                  class="text-color icon-size"
                   href="{{ getFile(files[i + 2].name) }}"
                   ><i class="bi bi-cloud-arrow-down-fill"></i
                 ></a>
@@ -147,12 +147,12 @@
                 </div>
                 <div class="col d-grid">
                   <button
-                    class="btn btn-sm btn-outline-danger"
+                    class="btn btn-sm btn-outline-color"
                     (click)="fileEmitter('delete', files[i + 2].name)"
                   >
                     <i class="bi bi-trash-fill"></i>
                   </button>
-                  <span class="badge bg-danger mt-1">Eliminar</span>
+                  <span class="badge bg-color mt-1">Eliminar</span>
                 </div>
               </div>
             </accordion-group>
