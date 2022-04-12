@@ -15,13 +15,13 @@ export class NavbarComponent implements OnChanges {
     this.setupPath();
   }
 
-  setupPath(): void{
+  setupPath(): void {
     this.renderedPath = this.path;
     if (this.renderedPath.charAt(this.renderedPath.length - 1) === '/') {
-      this.renderedPath = 'Home';
+      this.renderedPath = 'Gestor documental';
     } else {
       this.renderedPath = this.renderedPath.split('/?path=')[this.renderedPath.split('/?path=').length - 1];
-      this.renderedPath = 'Home ➤ ' + this.renderedPath.split('/').join(' ➤ ');
+      this.renderedPath = 'Gestor documental -> ' + this.renderedPath.split('/').join(' -> ');
     }
   }
 }
