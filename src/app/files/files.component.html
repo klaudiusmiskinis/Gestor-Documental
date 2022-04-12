@@ -1,9 +1,22 @@
 <div class="container-fluid">
   <div *ngIf="expanded" class="row p-2 g-0 overflow-hidden">
     <div class="row text-color">
-      <p>Archivos {{ files.length }}</p>
+      <p
+        class="col-auto fw-bolder mb-2"
+        data-bs-toggle="collapse"
+        href="#filesCollapse"
+        role="button"
+        aria-expanded="true"
+        aria-controls="filesCollapse"
+      >
+        Archivos {{ files.length }}
+      </p>
     </div>
-    <div *ngFor="let file of files; let i = index">
+    <div
+      id="filesCollapse"
+      class="show"
+      *ngFor="let file of files; let i = index"
+    >
       <div *ngIf="i % 3 == 0" class="d-grid d-xl-flex justify-content-xl-end">
         <div class="d-grid col m-1" id="folder + i">
           <accordion [isAnimated]="true" class="text-truncate">
@@ -19,7 +32,7 @@
                 <div class="text-color text-truncate pull-left float-left">
                   {{ file.name }}
                 </div>
-                <a class="text-color icon-size" href="{{ getFile(file.name) }}"
+                <a class="link-color icon-size" href="{{ getFile(file.name) }}"
                   ><i class="bi bi-cloud-arrow-down-fill"></i
                 ></a>
               </button>
@@ -59,7 +72,8 @@
           <accordion [isAnimated]="true" class="text-truncate">
             <accordion-group>
               <div class="badge bg-secondary pull-left float-left mb-2">
-                <i class="bi bi-gear-fill me-2"></i>Opciones {{ files[i + 1].name }}
+                <i class="bi bi-gear-fill me-2"></i>Opciones
+                {{ files[i + 1].name }}
               </div>
               <button
                 class="btn justify-content-between d-flex w-100 shadow-none"
@@ -70,7 +84,7 @@
                   {{ files[i + 1].name }}
                 </div>
                 <a
-                  class="text-color icon-size"
+                  class="link-color icon-size"
                   href="{{ getFile(files[i + 1].name) }}"
                   ><i class="bi bi-cloud-arrow-down-fill"></i
                 ></a>
@@ -111,7 +125,8 @@
           <accordion [isAnimated]="true" class="text-truncate">
             <accordion-group>
               <div class="badge bg-secondary pull-left float-left mb-2">
-                <i class="bi bi-gear-fill me-2"></i>Opciones {{ files[i + 2].name }}
+                <i class="bi bi-gear-fill me-2"></i>Opciones
+                {{ files[i + 2].name }}
               </div>
               <button
                 class="btn justify-content-between d-flex w-100 shadow-none"
@@ -121,8 +136,7 @@
                 <div class="text-color text-truncate pull-left float-left">
                   {{ files[i + 2].name }}
                 </div>
-                <a
-                  class="text-color icon-size"
+                <a class="link-color icon-size"
                   href="{{ getFile(files[i + 2].name) }}"
                   ><i class="bi bi-cloud-arrow-down-fill"></i
                 ></a>

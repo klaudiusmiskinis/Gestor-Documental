@@ -1,9 +1,22 @@
 <div class="container-fluid">
   <div *ngIf="expanded" class="row p-2 g-0 overflow-hidden">
     <div class="row text-color">
-      <p>Carpetas {{ folders.length }}</p>
+      <p
+        class="col-auto fw-bolder mb-2"
+        data-bs-toggle="collapse"
+        href="#foldersCollapse"
+        role="button"
+        aria-expanded="true"
+        aria-controls="foldersCollapse"
+      >
+        Carpetas {{ folders.length }}
+      </p>
     </div>
-    <div *ngFor="let folder of folders; let i = index">
+    <div
+      id="foldersCollapse"
+      class="show"
+      *ngFor="let folder of folders; let i = index"
+    >
       <div *ngIf="i % 3 == 0" class="d-grid d-xl-flex justify-content-xl-end">
         <div class="d-grid col text-truncate m-1" id="folder{{ i }}">
           <accordion [isAnimated]="true" class="text-truncate">
@@ -19,11 +32,13 @@
                 <div class="text-color text-truncate pull-left float-left">
                   {{ folder }}
                 </div>
-                <span
-                  class="text-color icon-size"
+                <a
+                  class="link-color icon-size"
                   (click)="folderEmitter('goinside', folder)"
-                  ><i class="bi bi-folder-symlink-fill"></i
-                ></span>
+                  a
+                  class="link-color icon-size"
+                  ><i class="bi bi-arrow-right-circle-fill"></i
+                ></a>
               </button>
               <div class="row">
                 <div class="col d-grid">
@@ -77,11 +92,11 @@
                 <div class="text-color text-truncate pull-left float-left">
                   {{ folders[i + 1] }}
                 </div>
-                <span
-                  class="text-color icon-size"
+                <a
+                  class="link-color icon-size"
                   (click)="folderEmitter('goinside', folders[i + 1])"
-                  ><i class="bi bi-folder-symlink-fill"></i
-                ></span>
+                  ><i class="bi bi-arrow-right-circle-fill"></i
+                ></a>
               </button>
               <div class="row">
                 <div class="col d-grid">
@@ -135,11 +150,11 @@
                 <div class="text-color text-truncate pull-left float-left">
                   {{ folders[i + 2] }}
                 </div>
-                <span
-                  class="text-color icon-size"
+                <a
+                  class="link-color icon-size"
                   (click)="folderEmitter('goinside', folders[i + 2])"
-                  ><i class="bi bi-folder-symlink-fill"></i
-                ></span>
+                  ><i class="bi bi-arrow-right-circle-fill"></i
+                ></a>
               </button>
               <div class="row">
                 <div class="col d-grid">
