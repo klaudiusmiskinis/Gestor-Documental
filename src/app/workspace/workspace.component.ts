@@ -35,6 +35,7 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
   public showloader: boolean = false;
   private subscription: Subscription;
   private timer: Observable<any>;
+  public filteredFiles: any;
   @ViewChild('btnExtendFolders') btnExtendFolders: ElementRef;
   @ViewChild('btnExtendFiles') btnExtendFiles: ElementRef;
 
@@ -47,8 +48,9 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
     this.checkReasonBoolean = false;
     this.selected = true;
     this.tooltip = {
-      arrow: false,
-      placement: 'bottom'
+      arrow: true,
+      placement: 'top',
+      animation: 'fade',
     };
     this.expandedFolders = true;
     this.expandedFiles = true;
@@ -97,6 +99,71 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
     });
   };
 
+  @ViewChild(MatAccordion) accordion: MatAccordion;
+  @ViewChild('fileInputField') fileInputField: ElementRef;
+
+  /* Methods */
+  async ngOnInit(): Promise<void> {
+    await this.getContent(this.url.url);
+    this.filterLastVersions();
+  };
+
+  public ngOnDestroy() {
+    if (this.subscription && this.subscription instanceof Subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+
+  ngAfterViewChecked(): void {
+    this.cdRef.detectChanges();
+  }
+
+  filterRemoved() {
+    this.filteredFiles = this.content.files.filter(file => file.isRemoved === 1)
+  }
+
+  filterLastVersions() {
+    this.filteredFiles = this.content.files.filter(file => file.isLastVersion === 1)
+  }
+
+  noFilter() {
+    this.filteredFiles = this.content.files;
+  }
+
+  togglecheckBoxBoolean() {
+    this.checkBoxBoolean = !this.checkBoxBoolean;
+  }
+
+  togglecheckReasonBoolean() {
+    this.checkReasonBoolean = !this.checkReasonBoolean;
+  }
+
+  setSelected(element: string, isFile: boolean): void {
+    this.selected = {
+      element: element,
+      isFile: isFile
+    }
+  }
+
+  modal(id: string, state: string): void {
+    $('#' + id).modal(state);
+  }
+
+  getUrl(): string {
+    return this.url.url;
+  }
+
+  setPath(path: string): void {
+    this.url.url = path;
+  };
+
+  checkExistence(): void {
+    const file = this.fileInputField.nativeElement;
+    if (file.files.length > 0) {
+      this.fileInfo = new FileInfo(true, file.files[0].name, file.files[0].size)
+    }
+  }
+
   setConditionalValidators(value: any, field: string, minLength: boolean, maxLength: boolean, names: boolean, minLengthChars?: number | any, maxLengthChars?: number | any) {
     const validators: ValidatorFn | ValidatorFn[] | null = [];
     if (value) {
@@ -136,58 +203,6 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
       btnExtendFiles.innerHTML = 'Minimizar archivos <i class="bi bi-arrows-angle-contract ms-1"></i>'
     } else {
       btnExtendFiles.innerHTML = 'Desplegar archivos <i class="bi bi-arrows-angle-expand ms-1"></i>'
-    }
-  }
-
-  @ViewChild(MatAccordion) accordion: MatAccordion;
-  @ViewChild('fileInputField') fileInputField: ElementRef;
-
-  /* Methods */
-  async ngOnInit(): Promise<void> {
-    await this.getContent(this.url.url);
-  };
-
-  public ngOnDestroy() {
-    if (this.subscription && this.subscription instanceof Subscription) {
-      this.subscription.unsubscribe();
-    }
-  }
-
-  ngAfterViewChecked(): void {
-    this.cdRef.detectChanges();
-  }
-
-  togglecheckBoxBoolean() {
-    this.checkBoxBoolean = !this.checkBoxBoolean;
-  }
-
-  togglecheckReasonBoolean() {
-    this.checkReasonBoolean = !this.checkReasonBoolean;
-  }
-
-  setSelected(element: string, isFile: boolean): void {
-    this.selected = {
-      element: element,
-      isFile: isFile
-    }
-  }
-
-  modal(id: string, state: string): void {
-    $('#' + id).modal(state);
-  }
-
-  getUrl(): string {
-    return this.url.url;
-  }
-
-  setPath(path: string): void {
-    this.url.url = path;
-  };
-
-  checkExistence(): void {
-    const file = this.fileInputField.nativeElement;
-    if (file.files.length > 0) {
-      this.fileInfo = new FileInfo(true, file.files[0].name, file.files[0].size)
     }
   }
 
@@ -341,5 +356,4 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
       this.showloader = false;
     });
   }
-
 }
