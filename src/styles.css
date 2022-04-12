@@ -1,15 +1,17 @@
 @import url(roboto.css);
 
 * {
-  font-family: 'Roboto', sans-serif !important;
+  font-family: "Roboto", sans-serif !important;
 }
 
 :root {
-  --bs-danger-htransparent: #dc354559;
-  --transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out
+  --transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  --custom-color: #f27428;
 }
 
-html, body {
+html,
+body {
   min-height: 100vh;
   height: auto;
   margin: 0;
@@ -25,15 +27,53 @@ html, body {
 
 /* SCROLLBAR */
 ::-webkit-scrollbar-thumb {
-  background: var(--bs-danger);
+  background: var(--custom-color);
   border-radius: 10px;
+}
+
+.text-color {
+  color: var(--custom-color);
+}
+
+.bg-color {
+  background-color: var(--custom-color);
+}
+
+.btn-color {
+  color: #fff;
+  background-color: var(--custom-color);
+  border: 1px solid var(--custom-color);
+  transition: var(--transition);
+}
+
+.btn-outline-color {
+  color: var(--custom-color);
+  background-color: #fff;
+  border: 1px solid var(--custom-color);
+  transition: var(--transition);
+}
+
+.btn-outline-color:hover {
+  color: #fff;
+  background-color: var(--custom-color);
+  border: 1px solid var(--custom-color);
+  transition: var(--transition);
+}
+
+.btn-color:hover {
+  color: var(--custom-color);
+  background-color: #fff;
+  transition: var(--transition);
 }
 
 .mat-expansion-panel-body {
   padding: 0 !important;
 }
 
-.btn-check:focus+.btn, .btn:focus, .form-control:focus, .form-check-input:focus {
+.btn-check:focus + .btn,
+.btn:focus,
+.form-control:focus,
+.form-check-input:focus {
   outline: 0;
   box-shadow: 0 0 0 0.1rem transparent;
   transition: var(--transition);
@@ -41,7 +81,7 @@ html, body {
 
 .btn-link {
   font-weight: 400;
-  color: var(--bs-danger);
+  color: var(--custom-color);
   text-decoration: none;
 }
 
@@ -50,18 +90,12 @@ html, body {
 }
 
 .notifier__notification--default {
-  background-color: var(--bs-red);
+  background-color: var(--custom-color);
   color: #fff;
 }
 
 .icon-size {
   font-size: 1.5rem;
-}
-
-@media screen and (max-width: 1024px) {
-  .mat-drawer {
-      display: none !important;
-  }
 }
 
 .upload-file {
@@ -78,14 +112,10 @@ html, body {
 }
 
 .form-check-input:checked {
-  background-color: var(--bs-danger);
-  border-color: var(--bs-danger);
+  background-color: var(--custom-color);
+  border-color: var(--custom-color);
 }
 
 .form-switch .form-check-input:focus {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='FireBrick'/%3e%3c/svg%3e");
-}
-
-.mat-drawer-content {
-  overflow: hidden !important;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='grey'/%3e%3c/svg%3e");
 }
