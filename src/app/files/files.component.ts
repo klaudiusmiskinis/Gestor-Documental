@@ -9,8 +9,14 @@ import { RequestService } from '../services/request.service';
 })
 
 export class FilesComponent implements OnInit {
-
-  constructor(private request: RequestService) { }
+  public tooltip: any;
+  constructor(private request: RequestService) {
+    this.tooltip = {
+      arrow: true,
+      placement: 'bottom',
+      animation: 'fade',
+    }
+  }
 
   @Input() files: any;
   @Input() path: string;

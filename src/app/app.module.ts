@@ -11,14 +11,11 @@ import { AppComponent } from './app.component';
 import { FoldersComponent } from './folders/folders.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FilesComponent } from './files/files.component';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatSidenavModule } from '@angular/material/sidenav';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { NotifierConfiguration } from './config/notifier.config';
 import { NotifierModule } from 'angular-notifier';
 import { NgxTippyModule } from 'ngx-tippy-wrapper';
 import { AdminComponent } from './admin/admin.component';
-import { ItemBoxComponent } from './components/item-box/item-box.component';
 import { LoaderComponent } from './loader/loader.component';
 
 @NgModule({
@@ -29,7 +26,6 @@ import { LoaderComponent } from './loader/loader.component';
     FilesComponent,
     NavbarComponent,
     AdminComponent,
-    ItemBoxComponent,
     LoaderComponent,
   ],
   imports: [
@@ -41,8 +37,6 @@ import { LoaderComponent } from './loader/loader.component';
     FormsModule,
     NotifierModule.withConfig(NotifierConfiguration),
     AccordionModule.forRoot(),
-    MatExpansionModule,
-    MatSidenavModule,
     NgxTippyModule
   ],
   providers: [

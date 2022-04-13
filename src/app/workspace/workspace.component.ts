@@ -1,7 +1,6 @@
 
 import { AfterViewChecked, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { RequestService } from '../services/request.service';
-import { MatAccordion } from '@angular/material/expansion';
 import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { slideIn, fadeIn, fadeOut, fadeInError } from '../config/animations.config';
 import { FileInfo } from '../models/file.model';
@@ -38,7 +37,6 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
   public filteredFiles: any;
   @ViewChild('btnExtendFolders') btnExtendFolders: ElementRef;
   @ViewChild('btnExtendFiles') btnExtendFiles: ElementRef;
-  @ViewChild('workspaceContainer') workspaceContainer: ElementRef;
 
   /* Constructor */
   constructor(private request: RequestService, private cdRef: ChangeDetectorRef) {
@@ -100,7 +98,6 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
     });
   };
 
-  @ViewChild(MatAccordion) accordion: MatAccordion;
   @ViewChild('fileInputField') fileInputField: ElementRef;
 
   /* Methods */
@@ -288,7 +285,6 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
   }
 
   async uploadFile(): Promise<void> {
-    console.log(this.uploadFileForm.controls['fileRelated'].value)
     let fileList: FileList = this.fileInputField.nativeElement.files;
     let nameSwitch = this.uploadFileForm.controls['nameSwitch'].value ?? undefined;
     let fileNewName = this.uploadFileForm.controls['fileNewName'].value ?? undefined;
@@ -351,9 +347,6 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
   };
 
   public setTimer() {
-    if (this.workspaceContainer) {
-      console.log(this.workspaceContainer.nativeElement.height)
-    }
     this.showloader = true;
     this.timer = timer(500);
     this.subscription = this.timer.subscribe(() => {
