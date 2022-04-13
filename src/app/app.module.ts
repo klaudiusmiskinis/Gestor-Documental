@@ -19,6 +19,7 @@ import { NotifierModule } from 'angular-notifier';
 import { NgxTippyModule } from 'ngx-tippy-wrapper';
 import { AdminComponent } from './admin/admin.component';
 import { ItemBoxComponent } from './components/item-box/item-box.component';
+import { LoaderComponent } from './loader/loader.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { ItemBoxComponent } from './components/item-box/item-box.component';
     NavbarComponent,
     AdminComponent,
     ItemBoxComponent,
+    LoaderComponent,
   ],
   imports: [
     BrowserAnimationsModule,
