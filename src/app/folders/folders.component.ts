@@ -1,5 +1,6 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, } from '@angular/core';
 import { fadeIn, slideDownHideUp, slideIn } from '../config/animations.config';
+import { followCursor } from 'tippy.js';
 
 @Component({
   selector: 'folders',
@@ -22,16 +23,25 @@ export class FoldersComponent implements OnInit {
       arrow: true,
       placement: 'right',
       animation: 'fade',
+delay: [500, 0],
+followCursor: true,
+plugins: [followCursor],
     }
     this.tooltipLeft = {
       arrow: true,
       placement: 'left',
       animation: 'fade',
+delay: [500, 0],
+followCursor: true,
+plugins: [followCursor],
     }
     this.tooltipBottom = {
       arrow: true,
       placement: 'bottom',
       animation: 'fade',
+delay: [500, 0],
+followCursor: true,
+plugins: [followCursor],
     }
   }
 

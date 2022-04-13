@@ -10,7 +10,7 @@
         aria-controls="filesCollapse"
         ngxTippy
         data-tippy-content="Click para abrir o cerrar"
-        [tippyProps]="tooltip"
+        [tippyProps]="tooltipRight"
       >
         Archivos {{ files.length }}
       </p>
@@ -35,7 +35,12 @@
                 <div class="text-color text-truncate pull-left float-left">
                   {{ file.name }}
                 </div>
-                <a class="link-color icon-size" href="{{ getFile(file.name) }}"
+                <a
+                  class="link-color icon-size"
+                  ngxTippy
+                  data-tippy-content="Descargar"
+                  [tippyProps]="tooltipLeft"
+                  href="{{ getFile(file.name) }}"
                   ><i class="bi bi-cloud-arrow-down-fill"></i
                 ></a>
               </button>
@@ -87,6 +92,9 @@
                   {{ files[i + 1].name }}
                 </div>
                 <a
+                  ngxTippy
+                  data-tippy-content="Descargar"
+                  [tippyProps]="tooltipLeft"
                   class="link-color icon-size"
                   href="{{ getFile(files[i + 1].name) }}"
                   ><i class="bi bi-cloud-arrow-down-fill"></i
@@ -139,7 +147,11 @@
                 <div class="text-color text-truncate pull-left float-left">
                   {{ files[i + 2].name }}
                 </div>
-                <a class="link-color icon-size"
+                <a
+                  class="link-color icon-size"
+                  ngxTippy
+                  data-tippy-content="Descargar"
+                  [tippyProps]="tooltipLeft"
                   href="{{ getFile(files[i + 2].name) }}"
                   ><i class="bi bi-cloud-arrow-down-fill"></i
                 ></a>

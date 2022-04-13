@@ -6,6 +6,7 @@ import { slideIn, fadeIn, fadeOut, fadeInError } from '../config/animations.conf
 import { FileInfo } from '../models/file.model';
 import { AppUrl } from '../models/appurl.model';
 import { Observable, Subscription, timer } from 'rxjs';
+import { followCursor } from 'tippy.js';
 declare var $: any;
 
 @Component({
@@ -50,6 +51,9 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
       arrow: true,
       placement: 'bottom',
       animation: 'fade',
+delay: [500, 0],
+followCursor: true,
+plugins: [followCursor],
     };
     this.expandedFolders = true;
     this.expandedFiles = true;

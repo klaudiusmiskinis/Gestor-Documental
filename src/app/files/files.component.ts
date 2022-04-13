@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { fadeIn, slideIn } from '../config/animations.config';
+import { followCursor } from 'tippy.js';
 import { RequestService } from '../services/request.service';
 
 @Component({
@@ -9,12 +10,24 @@ import { RequestService } from '../services/request.service';
 })
 
 export class FilesComponent implements OnInit {
-  public tooltip: any;
+  public tooltipRight: object;
+  public tooltipLeft: object;
   constructor(private request: RequestService) {
-    this.tooltip = {
+    this.tooltipRight = {
       arrow: true,
       placement: 'right',
       animation: 'fade',
+      delay: [500, 0],
+      followCursor: true,
+      plugins: [followCursor],
+    }
+    this.tooltipLeft = {
+      arrow: true,
+      placement: 'left',
+      animation: 'fade',
+      delay: [500, 0],
+      followCursor: true,
+      plugins: [followCursor],
     }
   }
 
