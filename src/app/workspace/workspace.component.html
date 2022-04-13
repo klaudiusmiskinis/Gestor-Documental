@@ -46,7 +46,7 @@
   </div>
 
   <!-- FOLDERS -->
-  <div *ngIf="content && !showloader" @fadeInError #workspaceContainer>
+  <div *ngIf="content && !showloader" @fadeInError>
     <div *ngIf="content.folders && content.folders.length > 0">
       <folders
         [folders]="content.folders"
@@ -67,8 +67,8 @@
     <preloader></preloader>
   </div>
 
-  <div class="container-fluid">
-    <div class="row g-0 gap-1 p-2" *ngIf="!showloader" @fadeInError>
+  <div class="container-fluid" *ngIf="!showloader" @fadeInError>
+    <div class="row g-0 gap-1 p-2">
       <label class="col d-grid" for="file">
         <div
           class="btn btn-sm btn-color"
