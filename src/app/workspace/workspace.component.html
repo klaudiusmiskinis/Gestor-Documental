@@ -1,39 +1,11 @@
-<div class="container-fluid g-0" [@fadeIn]>
+<div class="container-fluid g-0" @fadeIn>
   <navbar [path]="getUrl()"></navbar>
 
   <!-- OPCIONES -->
   <div class="row p-2 g-0 gap-1">
     <div class="col-auto" *ngIf="getUrl().includes('?path=')">
-      <button class="btn btn-sm btn-outline-color shadow-sm" (click)="goBack()">
+      <button class="btn btn-sm btn-color shadow-sm" (click)="goBack()">
         Volver<i class="bi bi-arrow-left-short ms-1"></i>
-      </button>
-    </div>
-    <div class="col-auto">
-      <button
-        data-bs-toggle="collapse"
-        href="#foldersCollapse"
-        role="button"
-        aria-expanded="true"
-        aria-controls="foldersCollapse"
-        class="btn btn-sm btn-color"
-        (click)="toggleExpandedFolders()"
-        #btnExtendFolders
-      >
-        Minimizar directorios<i class="bi bi-arrows-angle-contract ms-1"></i>
-      </button>
-    </div>
-    <div class="col-auto">
-      <button
-        data-bs-toggle="collapse"
-        href="#filesCollapse"
-        role="button"
-        aria-expanded="true"
-        aria-controls="filesCollapse"
-        class="btn btn-sm btn-color"
-        (click)="toggleExpandedFiles()"
-        #btnExtendFiles
-      >
-        Minimizar archivos<i class="bi bi-arrows-angle-contract ms-1"></i>
       </button>
     </div>
     <div class="col-auto">
@@ -54,7 +26,10 @@
       </button>
     </div>
     <div class="col-auto">
-      <button class="btn btn-sm btn-color shadow-sm" (click)="filterLastVersions()">
+      <button
+        class="btn btn-sm btn-color shadow-sm"
+        (click)="filterLastVersions()"
+      >
         Ver ultimas versiones<i class="bi bi-search ms-1"></i>
       </button>
     </div>
@@ -71,7 +46,7 @@
   </div>
 
   <!-- FOLDERS -->
-  <div *ngIf="content">
+  <div *ngIf="content && !showloader" @fadeInError #workspaceContainer>
     <div *ngIf="content.folders && content.folders.length > 0">
       <folders
         [folders]="content.folders"
@@ -88,8 +63,12 @@
     </div>
   </div>
 
+  <div *ngIf="showloader" @fadeInError>
+    <preloader></preloader>
+  </div>
+
   <div class="container-fluid">
-    <div class="row g-0 gap-1 p-2">
+    <div class="row g-0 gap-1 p-2" *ngIf="!showloader" @fadeInError>
       <label class="col d-grid" for="file">
         <div
           class="btn btn-sm btn-color"
@@ -159,7 +138,7 @@
     aria-labelledby="confirmationDeleteLabel"
     aria-hidden="true"
   >
-    <div class="modal-dialog mt-5">
+    <div class="modal-dialog">
       <div *ngIf="selected.isFile; then isFile; else isFolder"></div>
     </div>
   </div>
@@ -173,9 +152,9 @@
   aria-hidden="true"
 >
   <div class="modal-dialog">
-    <div class="modal-content">
+    <div class="modal-content border-0 shadow rounded-0">
       <div class="modal-header bg-color border-0">
-        <h5 class="modal-title text-light">Subida de archivo</h5>
+        <h6 class="modal-title text-light">Subida de archivo</h6>
         <button
           type="button"
           class="btn-close btn-close-white"
@@ -383,11 +362,11 @@
   aria-hidden="true"
 >
   <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header bg-color border-0">
-        <h5 class="modal-title text-light" id="makeDirectoryModalLabel">
+    <div class="modal-content border-0 shadow rounded-0">
+      <div class="modal-header rounded-0 bg-color border-0">
+        <h6 class="modal-title text-light" id="makeDirectoryModalLabel">
           Crear una carpeta
-        </h5>
+        </h6>
         <button
           type="button"
           class="btn-close btn-close-white"
@@ -401,7 +380,7 @@
           [formGroup]="makeDirectoryForm"
           (ngSubmit)="makeDirectory()"
         >
-          <div class="mt-3">
+          <div class="mt-1">
             <span class="p-0 mt-1">Nombre de la carpeta</span>
             <input
               class="form-control"
@@ -461,7 +440,7 @@
               ><i class="bi bi-check-lg me-1"></i>Este nombre es válido.<br
             /></small>
           </div>
-          <div class="row gap-2 mt-3 mx-2">
+          <div class="row gap-2 mt-3 mx-1">
             <button
               type="button"
               class="col d-grid btn btn-sm btn-color"
@@ -492,9 +471,9 @@
   aria-hidden="true"
 >
   <div class="modal-dialog">
-    <div class="modal-content">
+    <div class="modal-content border-0 shadow rounded-0">
       <div class="modal-header bg-color border-0">
-        <h5 class="modal-title text-light">Cambio de nombre</h5>
+        <h6 class="modal-title text-light">Cambio de nombre</h6>
         <button
           type="button"
           class="btn-close btn-close-white"
@@ -594,11 +573,11 @@
   aria-hidden="true"
 >
   <div class="modal-dialog">
-    <div class="modal-content">
+    <div class="modal-content border-0 shadow rounded-0">
       <div class="modal-header bg-color border-0">
-        <h5 class="modal-title text-light" id="editFolderNameLabel">
+        <h6 class="modal-title text-light" id="editFolderNameLabel">
           Cambio de nombre para carpeta
-        </h5>
+        </h6>
         <button
           type="button"
           class="btn-close btn-close-white"
@@ -631,11 +610,11 @@
 </div>
 
 <ng-template #isFile>
-  <div class="modal-content">
+  <div class="modal-content border-0 shadow rounded-0">
     <div class="modal-header bg-color border-0">
-      <h5 class="modal-title text-light" id="confirmationDeleteLabel">
+      <h6 class="modal-title text-light" id="confirmationDeleteLabel">
         ¿Deseas eliminar este archivo?
-      </h5>
+      </h6>
       <button
         type="button"
         class="btn-close btn-close-white"
@@ -669,11 +648,11 @@
 </ng-template>
 
 <ng-template #isFolder>
-  <div class="modal-content">
+  <div class="modal-content border-0 shadow rounded-0">
     <div class="modal-header bg-color border-0">
-      <h5 class="modal-title text-light" id="confirmationDeleteLabel">
+      <h6 class="modal-title text-light" id="confirmationDeleteLabel">
         ¿Deseas eliminar esta carpeta?
-      </h5>
+      </h6>
       <button
         type="button"
         class="btn-close btn-close-white"

@@ -32,12 +32,13 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
   public tooltip: object;
   public expandedFolders: boolean;
   public expandedFiles: boolean;
-  public showloader: boolean = false;
+  public showloader: boolean;
   private subscription: Subscription;
   private timer: Observable<any>;
   public filteredFiles: any;
   @ViewChild('btnExtendFolders') btnExtendFolders: ElementRef;
   @ViewChild('btnExtendFiles') btnExtendFiles: ElementRef;
+  @ViewChild('workspaceContainer') workspaceContainer: ElementRef;
 
   /* Constructor */
   constructor(private request: RequestService, private cdRef: ChangeDetectorRef) {
@@ -49,12 +50,12 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
     this.selected = true;
     this.tooltip = {
       arrow: true,
-      placement: 'top',
+      placement: 'bottom',
       animation: 'fade',
     };
     this.expandedFolders = true;
     this.expandedFiles = true;
-
+    this.showloader = false;
     this.uploadFileForm = new FormGroup({
       nameSwitch: new FormControl(false, [Validators.required]),
       reasonSwitch: new FormControl(false),
@@ -332,7 +333,6 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
   };
 
   async editFileNameSubmit() {
-    console.log('asd')
     await this.request.editElementName(this.getUrl(), this.editFileName.value.fileName + '.' + this.selected.element.split('.')[this.selected.element.split('.').length - 1], this.selected.element);
     this.modal('editFileName', 'hide');
     this.getContent(this.getUrl());
@@ -345,13 +345,17 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
   }
 
   async getContent(path: string): Promise<void> {
+    this.setTimer();
     this.content = [];
     this.content = await this.request.getWorkspace(path);
   };
 
   public setTimer() {
+    if (this.workspaceContainer) {
+      console.log(this.workspaceContainer.nativeElement.height)
+    }
     this.showloader = true;
-    this.timer = timer(5000);
+    this.timer = timer(500);
     this.subscription = this.timer.subscribe(() => {
       this.showloader = false;
     });
