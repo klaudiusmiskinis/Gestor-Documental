@@ -8,6 +8,9 @@
         role="button"
         aria-expanded="true"
         aria-controls="filesCollapse"
+        ngxTippy
+        data-tippy-content="Click para desplegar o extender"
+        [tippyProps]="tooltip"
       >
         Archivos {{ files.length }}
       </p>

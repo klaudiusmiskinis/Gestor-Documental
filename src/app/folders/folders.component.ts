@@ -8,7 +8,9 @@ import { fadeIn, slideDownHideUp, slideIn } from '../config/animations.config';
 })
 
 export class FoldersComponent implements OnInit {
-  public tooltip: object;
+  public tooltipRight: object;
+  public tooltipLeft: object;
+  public tooltipBottom: object;
   public menuStatus: boolean;
   @Input() expanded: boolean;
   @Input() folders: any;
@@ -16,9 +18,20 @@ export class FoldersComponent implements OnInit {
 
   constructor() {
     this.menuStatus = false;
-    this.tooltip = {
-      arrow: false,
-      placement: 'top'
+    this.tooltipRight = {
+      arrow: true,
+      placement: 'right',
+      animation: 'fade',
+    }
+    this.tooltipLeft = {
+      arrow: true,
+      placement: 'left',
+      animation: 'fade',
+    }
+    this.tooltipBottom = {
+      arrow: true,
+      placement: 'bottom',
+      animation: 'fade',
     }
   }
 

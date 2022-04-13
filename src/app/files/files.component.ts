@@ -13,7 +13,7 @@ export class FilesComponent implements OnInit {
   constructor(private request: RequestService) {
     this.tooltip = {
       arrow: true,
-      placement: 'bottom',
+      placement: 'right',
       animation: 'fade',
     }
   }
