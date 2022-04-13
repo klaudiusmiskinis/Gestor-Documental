@@ -9,7 +9,7 @@
         aria-expanded="true"
         aria-controls="foldersCollapse"
         ngxTippy
-        data-tippy-content="Click para desplegar o extender"
+        data-tippy-content="Click para abrir o cerrar"
         [tippyProps]="tooltipRight"
       >
         Carpetas {{ folders.length }}
@@ -99,6 +99,9 @@
                 <a
                   class="link-color icon-size"
                   (click)="folderEmitter('goinside', folders[i + 1])"
+                  ngxTippy
+                  data-tippy-content="Entrar"
+                  [tippyProps]="tooltipLeft"
                   ><i class="bi bi-arrow-right-circle-fill"></i
                 ></a>
               </button>
@@ -157,6 +160,9 @@
                 <a
                   class="link-color icon-size"
                   (click)="folderEmitter('goinside', folders[i + 2])"
+                  ngxTippy
+                  data-tippy-content="Entrar"
+                  [tippyProps]="tooltipLeft"
                   ><i class="bi bi-arrow-right-circle-fill"></i
                 ></a>
               </button>
