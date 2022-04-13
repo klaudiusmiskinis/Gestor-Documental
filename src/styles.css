@@ -11,8 +11,6 @@
   --custom-color-darker: #c36023;
 }
 
-
-
 html,
 body {
   min-height: 100vh;
@@ -85,6 +83,7 @@ body {
   transition: var(--transition);
 }
 
+
 .mat-expansion-panel-body {
   padding: 0 !important;
 }
@@ -96,6 +95,12 @@ body {
   outline: 0;
   box-shadow: 0 0 0 0.1rem transparent;
   transition: var(--transition);
+}
+
+.fullscreen {
+  position: fixed;
+  height: 100vh;
+  width: 100%;
 }
 
 .btn-link {
