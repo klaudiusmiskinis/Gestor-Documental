@@ -51,9 +51,9 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
       arrow: true,
       placement: 'bottom',
       animation: 'fade',
-delay: [500, 0],
-followCursor: true,
-plugins: [followCursor],
+      delay: [500, 0],
+      followCursor: true,
+      plugins: [followCursor],
     };
     this.expandedFolders = true;
     this.expandedFiles = true;
@@ -166,6 +166,15 @@ plugins: [followCursor],
     }
   }
 
+  checkUploadName() {
+    const file = this.fileInputField.nativeElement
+    let name;
+    if (file) {
+      name = file.files[0].name;
+      console.log(name);
+    }
+  }
+
   setConditionalValidators(value: any, field: string, minLength: boolean, maxLength: boolean, names: boolean, minLengthChars?: number | any, maxLengthChars?: number | any) {
     const validators: ValidatorFn | ValidatorFn[] | null = [];
     if (value) {
@@ -180,6 +189,7 @@ plugins: [followCursor],
     if (maxLength && value) {
       validators.push(Validators.maxLength(maxLengthChars));
     }
+
     if (value) {
       this.uploadFileForm.controls[field].setValidators(validators);
     } else {
@@ -287,6 +297,24 @@ plugins: [followCursor],
     }
     return null;
   }
+
+  validateUploadingFile(control: AbstractControl): { [key: string]: any } | null {
+    if (control.value) {
+      const name: string = this.fileInputField.nativeElement.files[0].name.toLowerCase();
+      const response = this.content.files.filter(file => {
+        const nameCompare = file.name.toLowerCase();
+        const fileWithoutDot = file.name.split('.')[0];
+        if (nameCompare === name || fileWithoutDot === name) {
+          return file;
+        }
+      });
+      if (response.length > 0) {
+        return { 'nameExists': true }
+      }
+    }
+    return null;
+  }
+
 
   async uploadFile(): Promise<void> {
     let fileList: FileList = this.fileInputField.nativeElement.files;

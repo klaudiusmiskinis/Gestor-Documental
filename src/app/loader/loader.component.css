@@ -8,7 +8,7 @@
 }
 .loader div {
   left: 94px;
-  top: 48px;
+  top: 20px;
   position: absolute;
   animation: loader linear 1s infinite;
   background: #f27428;

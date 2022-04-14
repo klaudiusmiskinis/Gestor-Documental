@@ -89,10 +89,8 @@
       </label>
       <div *ngIf="fileInfo.exists" class="col-auto">
         <button
+          (click)="checkUploadName()"
           type="button"
-          ngxTippy
-          data-tippy-content="Subir"
-          [tippyProps]="tooltip"
           class="btn btn-sm btn-outline-color px-4"
           data-bs-toggle="modal"
           data-bs-target="#uploadNameChange"

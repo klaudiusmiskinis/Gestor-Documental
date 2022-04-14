@@ -23,25 +23,25 @@ export class FoldersComponent implements OnInit {
       arrow: true,
       placement: 'right',
       animation: 'fade',
-delay: [500, 0],
-followCursor: true,
-plugins: [followCursor],
+      delay: [500, 0],
+      followCursor: true,
+      plugins: [followCursor],
     }
     this.tooltipLeft = {
       arrow: true,
       placement: 'left',
       animation: 'fade',
-delay: [500, 0],
-followCursor: true,
-plugins: [followCursor],
+      delay: [500, 0],
+      followCursor: true,
+      plugins: [followCursor],
     }
     this.tooltipBottom = {
       arrow: true,
       placement: 'bottom',
       animation: 'fade',
-delay: [500, 0],
-followCursor: true,
-plugins: [followCursor],
+      delay: [500, 0],
+      followCursor: true,
+      plugins: [followCursor],
     }
   }
 
