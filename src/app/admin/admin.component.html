@@ -4,6 +4,12 @@
   <div class="col-2">Gestor Documental</div>
 </div>
 
-<div class="container-fluid">
-    
+<div class="container-fluid mt-2" *ngIf="datos">
+  <ag-grid-angular
+    class="ag-theme-alpine"
+    [rowData]="datos"
+    [columnDefs]="columnas"
+    (gridReady)="onGridReady($event)"
+  >
+  </ag-grid-angular>
 </div>
