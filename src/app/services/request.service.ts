@@ -21,6 +21,15 @@ export class RequestService {
     }
   };
 
+  async getAllFiles() {
+    try {
+      return await this.http.get<any>('http://localhost:3001/getAllFiles').toPromise();
+    } catch (e) {
+      this.notificate('Error con el servidor.');
+      return 'Error';
+    }
+  }
+
   async getWorkspace(path: string): Promise<Object> {
     try {
       this.setContent(this.parse(await this.http.get<any>(path).toPromise()));
