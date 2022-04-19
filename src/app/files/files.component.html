@@ -33,7 +33,7 @@
                 type="button"
               >
                 <div class="text-color text-truncate pull-left float-left">
-                  {{ file.name }}
+                  <i *ngIf="file.isRemoved" class="bi bi-trash-fill me-1"></i>{{ file.name }}
                 </div>
                 <a class="link-color icon-size" href="{{ getFile(file.name) }}"
                   ><i class="bi bi-cloud-arrow-down-fill"></i
@@ -59,6 +59,7 @@
                 </div>
                 <div class="col d-grid">
                   <button
+                    [disabled]="file.isRemoved"
                     class="btn btn-sm btn-outline-color"
                     (click)="fileEmitter('delete', file.name)"
                   >
@@ -84,7 +85,7 @@
                 type="button"
               >
                 <div class="text-color text-truncate pull-left float-left">
-                  {{ files[i + 1].name }}
+                  <i *ngIf="files[i + 1].isRemoved" class="bi bi-trash-fill me-1"></i>{{ files[i + 1].name }}
                 </div>
                 <a
                   class="link-color icon-size"
@@ -112,6 +113,7 @@
                 </div>
                 <div class="col d-grid">
                   <button
+                    [disabled]="files[i + 1].isRemoved"
                     class="btn btn-sm btn-outline-color"
                     (click)="fileEmitter('delete', files[i + 1].name)"
                   >
@@ -137,7 +139,7 @@
                 type="button"
               >
                 <div class="text-color text-truncate pull-left float-left">
-                  {{ files[i + 2].name }}
+                  <i *ngIf="files[i + 2].isRemoved" class="bi bi-trash-fill me-1"></i>{{ files[i + 2].name }}
                 </div>
                 <a
                   class="link-color icon-size"
@@ -165,6 +167,7 @@
                 </div>
                 <div class="col d-grid">
                   <button
+                    [disabled]="files[i + 2].isRemoved"
                     class="btn btn-sm btn-outline-color"
                     (click)="fileEmitter('delete', files[i + 2].name)"
                   >
