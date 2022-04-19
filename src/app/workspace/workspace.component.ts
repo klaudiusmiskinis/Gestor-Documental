@@ -122,14 +122,17 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
   }
 
   filterRemoved() {
+    this.request.notificate('Viendo archivos borrados');
     this.filteredFiles = this.content.files.filter(file => file.isRemoved === 1)
   }
 
   filterLastVersions() {
+    this.request.notificate('Viendo últimas versiones');
     this.filteredFiles = this.content.files.filter(file => file.isLastVersion === 1)
   }
 
   noFilter() {
+    this.request.notificate('Viendo todos los archivos');
     this.filteredFiles = this.content.files;
   }
 
