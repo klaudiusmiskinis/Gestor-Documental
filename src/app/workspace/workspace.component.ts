@@ -59,7 +59,6 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
     this.expandedFiles = true;
     this.showloader = false;
     this.uploadFileForm = new FormGroup({
-      nameSwitch: new FormControl(false, [Validators.required]),
       reasonSwitch: new FormControl(false),
       fileNewName: new FormControl(),
       fileRelated: new FormControl(false, [Validators.required]),
@@ -107,7 +106,6 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
   /* Methods */
   async ngOnInit(): Promise<void> {
     await this.getContent(this.url.url);
-    this.filterLastVersions();
   };
 
   public ngOnDestroy() {
@@ -309,7 +307,6 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
 
   async uploadFile(): Promise<void> {
     let fileList: FileList = this.fileInputField.nativeElement.files;
-    let nameSwitch = this.uploadFileForm.controls['nameSwitch'].value ?? undefined;
     let fileNewName = this.uploadFileForm.controls['fileNewName'].value ?? undefined;
     let reasonSwitch = this.uploadFileForm.controls['reasonSwitch'].value ?? undefined;
     let fileReason = this.uploadFileForm.controls['fileReason'].value ?? undefined;
@@ -322,7 +319,6 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
     const options = {
       headers: headers
     };
-    if (!nameSwitch) fileNewName = undefined;
     if (!reasonSwitch) fileReason = undefined;
     if (!fileRelated) fileRelated = undefined;
     await this.request.uploadFile(formData, options, this.getUrl(), fileNewName, fileRelated, fileReason);
@@ -367,6 +363,7 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
     this.setTimer();
     this.content = [];
     this.content = await this.request.getWorkspace(path);
+    this.filterLastVersions();
   };
 
   public setTimer() {
