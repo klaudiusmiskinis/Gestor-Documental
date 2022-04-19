@@ -4,7 +4,7 @@ export interface Parameter {
 }
 
 export class AppUrl {
-    public url: string;
+    public url: string | any;
     public parameters: Parameter[];
 
     constructor(url, parameters?) {
