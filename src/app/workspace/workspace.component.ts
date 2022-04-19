@@ -105,7 +105,10 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
 
   /* Methods */
   async ngOnInit(): Promise<void> {
-    await this.getContent(this.url.url);
+    if (localStorage.getItem('path')) {
+      this.url.url = localStorage.getItem('path')
+    }
+    await this.getContent(this.getUrl());
   };
 
   public ngOnDestroy() {
@@ -213,6 +216,7 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
     } else {
       this.setPath(this.getUrl() + '?path=' + foldername);
     }
+    localStorage.setItem('path', this.getUrl())
     this.getContent(this.getUrl());
   };
 
@@ -223,6 +227,7 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
       } else {
         this.setPath(this.getUrl().substring(0, this.getUrl().lastIndexOf('/')));
       };
+      localStorage.setItem('path', this.getUrl())
       this.getContent(this.getUrl());
     };
   };
