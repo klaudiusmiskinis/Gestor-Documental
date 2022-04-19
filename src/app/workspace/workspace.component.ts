@@ -33,9 +33,9 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
   public expandedFolders: boolean;
   public expandedFiles: boolean;
   public showloader: boolean;
+  public filteredFiles: any;
   private subscription: Subscription;
   private timer: Observable<any>;
-  public filteredFiles: any;
   @ViewChild('btnExtendFolders') btnExtendFolders: ElementRef;
   @ViewChild('btnExtendFiles') btnExtendFiles: ElementRef;
 
@@ -44,7 +44,7 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
     this.url = new AppUrl('http://localhost:3001/');
     this.newResourceName = new FormControl('', [Validators.required])
     this.fileInfo = new FileInfo(false);
-    this.checkBoxBoolean = false;
+    this.checkBoxBoolean = true;
     this.checkReasonBoolean = false;
     this.selected = true;
     this.tooltip = {
@@ -66,7 +66,7 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
       fileReason: new FormControl()
     });
 
-    this.uploadFileForm.controls['nameSwitch'].valueChanges.subscribe(() => this.setConditionalValidators(this.uploadFileForm.controls['nameSwitch'].value, 'fileNewName', true, true, true, 3, 30));
+    this.setConditionalValidators(true, 'fileNewName', true, true, true, 3, 30);
     this.uploadFileForm.controls['reasonSwitch'].valueChanges.subscribe(() => this.setConditionalValidators(this.uploadFileForm.controls['reasonSwitch'].value, 'fileReason', true, true, false, 3, 300));
 
     this.makeDirectoryForm = new FormGroup({
@@ -163,15 +163,6 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
     const file = this.fileInputField.nativeElement;
     if (file.files.length > 0) {
       this.fileInfo = new FileInfo(true, file.files[0].name, file.files[0].size)
-    }
-  }
-
-  checkUploadName() {
-    const file = this.fileInputField.nativeElement
-    let name;
-    if (file) {
-      name = file.files[0].name;
-      console.log(name);
     }
   }
 
