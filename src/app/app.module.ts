@@ -17,6 +17,7 @@ import { NotifierModule } from 'angular-notifier';
 import { NgxTippyModule } from 'ngx-tippy-wrapper';
 import { AdminComponent } from './admin/admin.component';
 import { LoaderComponent } from './loader/loader.component';
+import { AgGridModule } from 'ag-grid-angular';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { LoaderComponent } from './loader/loader.component';
     BrowserModule,
     ReactiveFormsModule, 
     FormsModule,
+    AgGridModule.withComponents([]),
     NotifierModule.withConfig(NotifierConfiguration),
     AccordionModule.forRoot(),
     NgxTippyModule
