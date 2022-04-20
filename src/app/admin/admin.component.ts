@@ -12,18 +12,19 @@ export class AdminComponent implements OnInit {
 
   public columnas: ColDef[] = [
     { headerName: "ID", filter: 'agNumberColumnFilter', sortable: true, field: "id", resizable: true },
-    { headerName: 'Nombre', filter: 'agTextColumnFilter', sortable: true, field: "name", resizable: true },
-    { headerName: 'Ruta', filter: 'agTextColumnFilter', sortable: true, field: "path", resizable: true },
-    { headerName: 'Ultima versión', filter: 'agNumberColumnFilter', sortable: true, field: "isLastVersion" },
-    { headerName: 'Fecha Creado', filter: 'agDateColumnFilter', sortable: true, field: "createdDate", resizable: true },
-    { headerName: 'ID Padre', filter: 'agNumberColumnFilter', sortable: true, field: "idParent", resizable: true },
-    { headerName: 'Eliminado', filter: 'agDateColumnFilter', sortable: true, field: "isRemoved", resizable: true },
-    { headerName: 'Fecha Eliminado', filter: 'agDateColumnFilter', sortable: true, field: "removedDate", resizable: true },
-    { headerName: 'Motivo', filter: 'agTextColumnFilter', sortable: true, field: "reason", resizable: true },
+    { headerName: 'Nombre', filter: 'agTextColumnFilter', sortable: true, field: "name", resizable: true, editable: true },
+    { headerName: 'Ruta', filter: 'agTextColumnFilter', sortable: true, field: "path", resizable: true, editable: true },
+    { headerName: 'Ultima versión', filter: 'agNumberColumnFilter', sortable: true, field: "isLastVersion", editable: true },
+    { headerName: 'Fecha Creado', filter: 'agDateColumnFilter', sortable: true, field: "createdDate", resizable: true, editable: true },
+    { headerName: 'ID Padre', filter: 'agNumberColumnFilter', sortable: true, field: "idParent", resizable: true, editable: true },
+    { headerName: 'Eliminado', filter: 'agDateColumnFilter', sortable: true, field: "isRemoved", resizable: true, editable: true },
+    { headerName: 'Fecha Eliminado', filter: 'agDateColumnFilter', sortable: true, field: "removedDate", resizable: true, editable: true },
+    { headerName: 'Motivo', filter: 'agTextColumnFilter', sortable: true, field: "reason", resizable: true, editable: true },
   ];
   public datos: any
   public gridApi: any;
-  public gridOptions = {};
+  public gridOptions = {}
+  public rowsOnDisplay: number = 20;
 
   constructor(private request: RequestService) { }
 
@@ -32,6 +33,12 @@ export class AdminComponent implements OnInit {
     this.gridOptions = {
       localeTextFunc: (key: string, defaultValue: string) => localeEs[key] || defaultValue
     }
+  }
+
+  setRowsOnDisplay(rows: string) {
+    this.rowsOnDisplay = Number(rows);
+    this.gridApi.paginationSetPageSize(this.rowsOnDisplay);
+    this.request.notificate('Mostrando ' + rows + ' filas');
   }
 
   onGridReady(params: any) {
@@ -47,5 +54,9 @@ export class AdminComponent implements OnInit {
 
   restartSize() {
     this.gridApi.sizeColumnsToFit();
+  }
+
+  cellValueChanged(event): void {
+    console.log(event.data);
   }
 }
