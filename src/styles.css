@@ -11,6 +11,7 @@
     border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   --custom-color: #f27428;
   --custom-color-darker: #c36023;
+  --custom-color-hover: #f275286b;
 }
 
 html,
