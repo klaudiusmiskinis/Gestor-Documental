@@ -6,9 +6,21 @@
 
 <div class="container-fluid">
   <div class="d-flex mt-2">
-    <button (click)="restartSize()" class="btn btn-sm btn-color shadow-sm">
+    <button (click)="restartSize()" class="btn btn-sm btn-color shadow-sm me-2">
       Restablecer columnas<i class="bi bi-arrow-clockwise ms-1"></i>
     </button>
+    <div class="col-1 mt-2">
+      <input
+        #range
+        (change)="setRowsOnDisplay(range.value)"
+        class="form-range"
+        type="range"
+        min="1"
+        max="100"
+        value="20"
+        step="1"
+      />
+    </div>
   </div>
 </div>
 
@@ -18,10 +30,11 @@
     [rowData]="datos"
     [columnDefs]="columnas"
     [pagination]="true"
-    [paginationPageSize]="21"
+    [paginationPageSize]="rowsOnDisplay"
     [animateRows]="true"
     [gridOptions]="gridOptions"
     (gridReady)="onGridReady($event)"
+    (cellValueChanged)="cellValueChanged($event)"
   >
   </ag-grid-angular>
 </div>
