@@ -3,7 +3,7 @@
 @import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 
 * {
-  font-family: "Roboto", sans-serif !important;
+  font-family: "Roboto", sans-serif;
 }
 
 :root {
