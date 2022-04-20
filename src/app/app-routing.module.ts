@@ -5,8 +5,8 @@ import { WorkspaceComponent } from './workspace/workspace.component';
 
 const routes: Routes = [
   { path: 'admin', component: AdminComponent, pathMatch: 'full' },
-  { path: 'workspace', component: WorkspaceComponent, pathMatch: 'full' },
-  { path: '**',   redirectTo: '/workspace', pathMatch: 'full' },
+  { path: 'gestor-documental', component: WorkspaceComponent, pathMatch: 'full' },
+  { path: '**',   redirectTo: '/gestor-documental', pathMatch: 'full' },
 ];
 
 @NgModule({
