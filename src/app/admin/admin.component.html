@@ -5,11 +5,17 @@
 </div>
 
 <div class="container-fluid">
-  <div class="d-flex mt-2">
-    <button (click)="restartSize()" class="btn btn-sm btn-color shadow-sm me-2">
-      Restablecer columnas<i class="bi bi-arrow-clockwise ms-1"></i>
-    </button>
-    <div class="col-1 mt-2">
+  <div class="row justify-content-between mt-2">
+    <div class="col-auto">
+      <button (click)="restartSize()" class="btn btn-sm btn-color shadow-sm me-1">
+        Restablecer columnas<i class="bi bi-arrow-clockwise ms-1"></i>
+      </button>
+
+      <button class="btn btn-sm btn-color shadow-sm" routerLink="/gestor-documental">
+        Gestor <i class="bi bi-hexagon-fill ms-1"></i>
+      </button>
+    </div>
+    <div class="col-auto mt-1">
       <input
         #range
         (change)="setRowsOnDisplay(range.value)"
@@ -31,10 +37,13 @@
     [columnDefs]="columnas"
     [pagination]="true"
     [paginationPageSize]="rowsOnDisplay"
+    [enableCellChangeFlash]="true"
     [animateRows]="true"
     [gridOptions]="gridOptions"
     (gridReady)="onGridReady($event)"
-    (cellValueChanged)="cellValueChanged($event)"
+    (cellEditingStarted)="onCellEditingStarted($event)"
+    (cellEditingStopped)="onCellEditingStopped($event)"
+    (columnVisible)="restartSize()"
   >
   </ag-grid-angular>
 </div>
