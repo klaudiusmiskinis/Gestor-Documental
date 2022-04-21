@@ -41,19 +41,27 @@
         >
           Filtros de archivos
         </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+        <ul class="dropdown-menu">
           <li>
-            <a class="dropdown-item text-color" (click)="filterLastVersions()"
-              >Ver ultimas versiones</a
+            <a
+              class="dropdown-item dropdown-item-sm text-color"
+              (click)="filterLastVersions()"
+              >Ver últimas versiones</a
             >
           </li>
           <li>
-            <a class="dropdown-item text-color" (click)="filterRemoved()">
+            <a
+              class="dropdown-item dropdown-item-sm text-color"
+              (click)="filterRemoved()"
+            >
               Ver archivos eliminados</a
             >
           </li>
           <li>
-            <a class="dropdown-item text-color" (click)="noFilter()">
+            <a
+              class="dropdown-item dropdown-item-sm text-color"
+              (click)="noFilter()"
+            >
               Ver todos los archivos</a
             >
           </li>
