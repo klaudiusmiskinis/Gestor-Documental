@@ -4,7 +4,11 @@
   <div class="row justify-content-between mt-2">
     <div class="col-auto">
       <button (click)="restartSize()" class="btn btn-sm btn-color shadow-sm me-1">
-        Restablecer columnas<i class="bi bi-arrow-clockwise ms-1"></i>
+        Restablecer columnas<i class="bi bi-arrow-counterclockwise ms-1"></i>
+      </button>
+
+      <button (click)="setDatos()" class="btn btn-sm btn-color shadow-sm me-1">
+        Actualizar<i class="bi bi-arrow-repeat ms-1"></i>
       </button>
 
       <button class="btn btn-sm btn-color shadow-sm" routerLink="/gestor-documental">
