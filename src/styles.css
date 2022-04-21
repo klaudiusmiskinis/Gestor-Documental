@@ -137,6 +137,10 @@ body {
   display: none;
 }
 
+.dropdown-item-sm {
+  font-size: .875rem;
+}
+
 .dropdown-item {
   transition: var(--transition);
 }
