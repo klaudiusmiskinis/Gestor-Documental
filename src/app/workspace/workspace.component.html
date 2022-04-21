@@ -27,7 +27,7 @@
         class="btn btn-sm btn-color shadow-sm"
         (click)="getContent(getUrl())"
       >
-        Actualizar<i class="bi bi-arrow-clockwise ms-1"></i>
+        Actualizar<i class="bi bi-arrow-repeat ms-1"></i>
       </button>
     </div>
     <div class="col-auto">
@@ -43,17 +43,17 @@
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
           <li>
-            <a class="dropdown-item" (click)="filterLastVersions()"
+            <a class="dropdown-item text-color" (click)="filterLastVersions()"
               >Ver ultimas versiones</a
             >
           </li>
           <li>
-            <a class="dropdown-item" (click)="filterRemoved()">
+            <a class="dropdown-item text-color" (click)="filterRemoved()">
               Ver archivos eliminados</a
             >
           </li>
           <li>
-            <a class="dropdown-item" (click)="noFilter()">
+            <a class="dropdown-item text-color" (click)="noFilter()">
               Ver todos los archivos</a
             >
           </li>
