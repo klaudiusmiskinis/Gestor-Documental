@@ -137,6 +137,16 @@ body {
   display: none;
 }
 
+.dropdown-item {
+  transition: var(--transition);
+}
+
+.dropdown-item:hover {
+  background-color: var(--custom-color);
+  color: #fff;
+  transition: var(--transition);
+}
+
 .form-check-input:checked {
   background-color: var(--custom-color);
   border-color: var(--custom-color);
@@ -248,7 +258,8 @@ body {
   border: transparent !important;
 }
 
-input[class^=ag-][type=text], input[class^=ag-][type=text]:focus {
+input[class^="ag-"][type="text"],
+input[class^="ag-"][type="text"]:focus {
   font-size: inherit;
   line-height: inherit;
   color: inherit;
