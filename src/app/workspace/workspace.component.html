@@ -9,6 +9,11 @@
       </button>
     </div>
     <div class="col-auto">
+      <button class="btn btn-sm btn-color shadow-sm" routerLink="/admin">
+        Admin<i class="bi bi-hammer ms-1"></i>
+      </button>
+    </div>
+    <div class="col-auto">
       <button
         class="btn btn-sm btn-color shadow-sm"
         data-bs-toggle="modal"
@@ -26,27 +31,34 @@
       </button>
     </div>
     <div class="col-auto">
-      <button
-        class="btn btn-sm btn-color shadow-sm"
-        (click)="filterLastVersions()"
-      >
-        Ver ultimas versiones<i class="bi bi-search ms-1"></i>
-      </button>
-    </div>
-    <div class="col-auto">
-      <button class="btn btn-sm btn-color shadow-sm" (click)="filterRemoved()">
-        Ver archivos eliminados<i class="bi bi-trash-fill ms-1"></i>
-      </button>
-    </div>
-    <div class="col-auto">
-      <button class="btn btn-sm btn-color shadow-sm" (click)="noFilter()">
-        Ver todos los archivos<i class="bi bi-file-earmark ms-1"></i>
-      </button>
-    </div>
-    <div class="col-auto">
-      <button class="btn btn-sm btn-color shadow-sm" routerLink="/admin">
-        Admin<i class="bi bi-hammer ms-1"></i>
-      </button>
+      <div class="dropdown">
+        <button
+          class="btn btn-color btn-sm dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton1"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          Filtros de archivos
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          <li>
+            <a class="dropdown-item" (click)="filterLastVersions()"
+              >Ver ultimas versiones</a
+            >
+          </li>
+          <li>
+            <a class="dropdown-item" (click)="filterRemoved()">
+              Ver archivos eliminados</a
+            >
+          </li>
+          <li>
+            <a class="dropdown-item" (click)="noFilter()">
+              Ver todos los archivos</a
+            >
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 
