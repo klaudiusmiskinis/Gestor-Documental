@@ -29,13 +29,18 @@ export class AdminComponent implements OnInit {
   constructor(private request: RequestService) { }
 
   async ngOnInit(): Promise<void> {
-    this.setTable();
+    this.setDatos();
     this.gridOptions = {
       localeTextFunc: (key: string, defaultValue: string) => localeEs[key] || defaultValue
     }
   }
 
-  async setTable() {
+  ngOnDestroy(): void {
+    if (!this.gridApi) throw "gridApi doesn't exist"
+    this.gridApi.destroy();
+  }
+
+  async setDatos() {
     this.datos = await this.request.getAllFiles()
   }
 
@@ -57,17 +62,17 @@ export class AdminComponent implements OnInit {
   }
 
   restartSize() {
-    if (!this.gridApi) throw this.gridApi + 'Not exists'
+    if (!this.gridApi) throw "gridApi doesn't exist"
     this.gridApi.sizeColumnsToFit();
   }
 
   onCellEditingStarted(event) {
-    var oldCellValue = event.value;
-    console.log('cellEditingStarted');
+    const oldCellValue = event.value;
+    console.log('cellEditingStarted', oldCellValue);
   }
 
   onCellEditingStopped(event) {
-    var editedCellValue = event.value;
-    console.log('cellEditingStopped');
+    const editedCellValue = event.value;
+    console.log('cellEditingStopped', editedCellValue);
   }
 }
