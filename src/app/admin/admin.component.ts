@@ -29,10 +29,14 @@ export class AdminComponent implements OnInit {
   constructor(private request: RequestService) { }
 
   async ngOnInit(): Promise<void> {
-    this.datos = await this.request.getAllFiles()
+    this.setTable();
     this.gridOptions = {
       localeTextFunc: (key: string, defaultValue: string) => localeEs[key] || defaultValue
     }
+  }
+
+  async setTable() {
+    this.datos = await this.request.getAllFiles()
   }
 
   setRowsOnDisplay(rows: string) {
@@ -53,10 +57,17 @@ export class AdminComponent implements OnInit {
   }
 
   restartSize() {
+    if (!this.gridApi) throw this.gridApi + 'Not exists'
     this.gridApi.sizeColumnsToFit();
   }
 
-  cellValueChanged(event): void {
-    console.log(event.data);
+  onCellEditingStarted(event) {
+    var oldCellValue = event.value;
+    console.log('cellEditingStarted');
+  }
+
+  onCellEditingStopped(event) {
+    var editedCellValue = event.value;
+    console.log('cellEditingStopped');
   }
 }
