@@ -86,7 +86,6 @@ body {
   transition: var(--transition);
 }
 
-
 .mat-expansion-panel-body {
   padding: 0 !important;
 }
@@ -220,4 +219,40 @@ body {
   position: relative;
   padding: 5px 9px;
   z-index: 1;
+}
+
+.ag-header-row {
+  background-color: var(--custom-color);
+}
+
+.ag-header-cell-moving {
+  background-color: var(--custom-color) !important;
+}
+
+.ag-theme-alpine input[class^="ag-"] {
+  margin: 0;
+  background-color: #fff;
+}
+
+.ag-theme-alpine .ag-cell-inline-editing {
+  border-color: #ffdbc5 !important;
+}
+
+.ag-theme-alpine .ag-row-hover {
+  background-color: #ffdbc5;
+}
+
+.ag-dnd-ghost {
+  background-color: var(--custom-color) !important;
+  border: transparent !important;
+}
+
+input[class^=ag-][type=text], input[class^=ag-][type=text]:focus {
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+  border-width: 1px;
+  border-style: solid;
+  border-color: transparent !important;
+  box-shadow: none !important;
 }
