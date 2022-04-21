@@ -223,6 +223,7 @@ body {
 
 .ag-header-row {
   background-color: var(--custom-color);
+  color: #fff !important;
 }
 
 .ag-header-cell-moving {
