@@ -321,7 +321,9 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
     let fileRelated = this.uploadFileForm.controls['fileRelated'].value ?? undefined;
     const formData: FormData = new FormData();
     const headers = new Headers();
-    formData.append('file', fileList[0], fileList[0].name);
+    if (fileList[0]) {
+      formData.append('file', fileList[0], fileList[0].name);
+    }
     headers.append('Content-Type', 'multipart/form-data');
     headers.append('Accept', 'application/json');
     const options = {
