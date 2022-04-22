@@ -3,16 +3,21 @@
 <div class="container-fluid">
   <div class="row justify-content-between mt-2">
     <div class="col-auto">
-      <button (click)="restartSize()" class="btn btn-sm btn-color shadow-sm me-1">
+      <button
+        class="btn btn-sm btn-color shadow-sm me-1"
+        routerLink="/gestor-documental"
+      >
+        Gestor <i class="bi bi-hexagon-fill me-1"></i>
+      </button>
+      <button
+        (click)="restartSize()"
+        class="btn btn-sm btn-color shadow-sm me-1"
+      >
         Restablecer columnas<i class="bi bi-arrow-counterclockwise ms-1"></i>
       </button>
 
       <button (click)="setDatos()" class="btn btn-sm btn-color shadow-sm me-1">
         Actualizar<i class="bi bi-arrow-repeat ms-1"></i>
-      </button>
-
-      <button class="btn btn-sm btn-color shadow-sm" routerLink="/gestor-documental">
-        Gestor <i class="bi bi-hexagon-fill ms-1"></i>
       </button>
     </div>
     <div class="col-auto mt-1">
