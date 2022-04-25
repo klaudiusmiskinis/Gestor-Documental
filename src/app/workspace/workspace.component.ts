@@ -26,6 +26,7 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
   public checkReasonBoolean: boolean;
   public makeDirectoryForm: FormGroup;
   public uploadFileForm: FormGroup;
+  public recoverForm: FormGroup;
   public editDirectoryName: FormGroup;
   public editFileName: FormGroup;
   public newResourceName: FormControl;
@@ -67,6 +68,12 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
 
     this.setConditionalValidators(true, 'fileNewName', true, true, true, 3, 30);
     this.uploadFileForm.controls['reasonSwitch'].valueChanges.subscribe(() => this.setConditionalValidators(this.uploadFileForm.controls['reasonSwitch'].value, 'fileReason', true, true, false, 3, 300));
+
+    this.recoverForm = new FormGroup({
+      isLastVersion: new FormControl(false, [
+        Validators.required
+      ])
+    })
 
     this.makeDirectoryForm = new FormGroup({
       directory: new FormControl('', [
@@ -259,6 +266,9 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
       case 'delete':
         this.modal('confirmationDelete', 'show');
         break;
+      case 'recover':
+        this.modal('recoverModal', 'show');
+        break;
     }
   }
 
@@ -342,6 +352,13 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
       await this.request.makeDirectory(this.getUrl(), directoryName);
     };
     this.modal('makeDirectoryModal', 'hide');
+    this.getContent(this.getUrl());
+  };
+
+  async recoverFile(): Promise<void> {
+    const id = this.selected.element.id;
+    await this.request.recoverFile(id, this.recoverForm.controls['isLastVersion'].value);
+    this.modal('recoverModal', 'hide');
     this.getContent(this.getUrl());
   };
 
