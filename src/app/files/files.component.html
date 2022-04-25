@@ -65,7 +65,7 @@
                 <div class="col d-grid" *ngIf="file.isRemoved">
                   <button
                     class="btn btn-sm btn-outline-color"
-                    (click)="fileEmitter('delete', file.name)"
+                    (click)="fileEmitter('recover', file)"
                   >
                     Recuperar<i class="ms-1 bi bi-recycle"></i>
                   </button>
@@ -124,7 +124,7 @@
                 <div class="col d-grid" *ngIf="files[i + 1].isRemoved">
                   <button
                     class="btn btn-sm btn-outline-color"
-                    (click)="fileEmitter('delete', files[i + 1].name)"
+                    (click)="fileEmitter('recover', files[i + 1])"
                   >
                     Recuperar<i class="ms-1 bi bi-recycle"></i>
                   </button>
@@ -183,7 +183,7 @@
                 <div class="col d-grid" *ngIf="files[i + 2].isRemoved">
                   <button
                     class="btn btn-sm btn-outline-color"
-                    (click)="fileEmitter('delete', files[i + 2].name)"
+                    (click)="fileEmitter('recover', files[i + 2])"
                   >
                     Recuperar<i class="ms-1 bi bi-recycle"></i>
                   </button>
