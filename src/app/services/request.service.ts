@@ -66,6 +66,18 @@ export class RequestService {
     }
   };
 
+  async recoverFile(id: number, isLastVersion: boolean): Promise<void> {
+    try {
+      const status = this.parse(await this.http.post<any>('http://localhost:3001/recover', { id: id, isLastVersion: isLastVersion }).toPromise());
+      if (status.success) {
+        this.notificate('¡Archivo recuperado!');
+        this.setContent(status);
+      };
+    } catch (e) {
+      this.notificate('Error con la creación de la carpeta');
+    }
+  }
+
   async makeDirectory(path: string, directoryName: string): Promise<void> {
     try {
       let char = this.setParameterChar(path);
