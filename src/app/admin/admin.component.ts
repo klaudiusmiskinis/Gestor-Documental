@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ColDef, GridOptions } from 'ag-grid-community';
 import { RequestService } from '../services/request.service';
 import { localeEs } from '../../assets/locale.es';
+import { fadeInError } from '../config/animations.config';
 
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
-  styleUrls: ['./admin.component.css']
+  styleUrls: ['./admin.component.css'],
+  animations: [fadeInError]
 })
-export class AdminComponent implements OnInit {
-
+export class AdminComponent implements OnInit, OnDestroy {
   public columnas: ColDef[] = [
     { headerName: "ID", filter: 'agNumberColumnFilter', sortable: true, field: "id", resizable: true },
     { headerName: 'Nombre', filter: 'agTextColumnFilter', sortable: true, field: "name", resizable: true, editable: true },
@@ -35,7 +36,7 @@ export class AdminComponent implements OnInit {
     }
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy() {
     if (!this.gridApi) throw "gridApi doesn't exist"
     this.gridApi.destroy();
   }
