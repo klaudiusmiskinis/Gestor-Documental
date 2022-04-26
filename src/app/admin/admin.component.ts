@@ -37,7 +37,6 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy() {
-    if (!this.gridApi) throw "gridApi doesn't exist"
     this.gridApi.destroy();
   }
 
