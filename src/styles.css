@@ -3,7 +3,7 @@
 @import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 
 * {
-  font-family: "Roboto", sans-serif;
+  font-family: Roboto, sans-serif;
 }
 
 :root {
@@ -14,28 +14,25 @@
   --custom-color-hover: #f275286b;
 }
 
-html,
-body {
+body,
+html {
   min-height: 100vh;
   height: auto;
   margin: 0;
 }
 
-/* SELECTION */
 ::selection {
   background-color: var(--custom-color-darker);
   color: #fff;
 }
 
-/* SCROLLBAR */
 ::-webkit-scrollbar {
   width: 4px;
   height: 4px;
   overflow-y: scroll;
-  background: transparent;
+  background: 0 0;
 }
 
-/* SCROLLBAR */
 ::-webkit-scrollbar-thumb {
   background: var(--custom-color);
   border-radius: 10px;
@@ -138,7 +135,7 @@ body {
 }
 
 .dropdown-item-sm {
-  font-size: .875rem;
+  font-size: 0.875rem;
 }
 
 .dropdown-item {
