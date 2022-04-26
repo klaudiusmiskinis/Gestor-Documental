@@ -1,6 +1,6 @@
 <navbar [path]="'/'"></navbar>
 
-<div class="container-fluid">
+<div class="container-fluid" @fadeInError>
   <div class="row justify-content-between mt-2">
     <div class="col-auto">
       <button
@@ -35,7 +35,7 @@
   </div>
 </div>
 
-<div class="container-fluid mt-2" *ngIf="datos">
+<div class="container-fluid mt-2" *ngIf="datos" @fadeInError>
   <ag-grid-angular
     class="ag-theme-alpine"
     [rowData]="datos"
