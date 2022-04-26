@@ -254,6 +254,25 @@ html {
   background-color: #ffdbc5;
 }
 
+.ag-filter-body-wrapper {
+  background-color: var(--custom-color);
+  border: transparent;
+}
+
+.ag-theme-alpine .ag-menu {
+  border: transparent;
+}
+
+span {
+  color: white;
+  fill: white;
+}
+
+span:hover {
+  fill: grey;
+  transition: var(--transition);
+}
+
 .ag-dnd-ghost {
   background-color: var(--custom-color) !important;
   border: transparent !important;
