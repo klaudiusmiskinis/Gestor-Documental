@@ -48,6 +48,16 @@ html {
   transition: var(--transition);
 }
 
+.link-white {
+  color: #fff;
+  transition: var(--transition);
+}
+
+.link-white:hover {
+  color: var(--custom-color-hover-two);
+  transition: var(--transition);
+}
+
 .link-color:hover {
   color: var(--custom-color-darker);
   transition: var(--transition);
