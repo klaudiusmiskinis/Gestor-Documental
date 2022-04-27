@@ -19,18 +19,9 @@
       <button (click)="setDatos()" class="btn btn-sm btn-color shadow-sm me-1">
         Actualizar<i class="bi bi-arrow-repeat ms-1"></i>
       </button>
-    </div>
-    <div class="col-auto mt-1">
-      <input
-        #range
-        (change)="setRowsOnDisplay(range.value)"
-        class="form-range"
-        type="range"
-        min="1"
-        max="100"
-        value="20"
-        step="1"
-      />
+      <button *ngIf="selected" @fadeInError class="btn btn-sm btn-color shadow-sm me-1">
+        Editar id: {{ selected.id }}
+      </button>
     </div>
   </div>
 </div>
@@ -41,14 +32,13 @@
     [rowData]="datos"
     [columnDefs]="columnas"
     [pagination]="true"
-    [paginationPageSize]="rowsOnDisplay"
+    [paginationPageSize]="20"
     [enableCellChangeFlash]="true"
     [animateRows]="true"
     [gridOptions]="gridOptions"
     (gridReady)="onGridReady($event)"
-    (cellEditingStarted)="onCellEditingStarted($event)"
-    (cellEditingStopped)="onCellEditingStopped($event)"
     (columnVisible)="restartSize()"
+    (rowClicked)="onRowClicked($event)"
   >
   </ag-grid-angular>
 </div>
