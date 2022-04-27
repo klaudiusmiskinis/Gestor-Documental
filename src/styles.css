@@ -12,6 +12,7 @@
   --custom-color: #f27428;
   --custom-color-darker: #c36023;
   --custom-color-hover: #f275286b;
+  --custom-color-hover-two: #ffe7d7;
 }
 
 body,
@@ -247,11 +248,11 @@ html {
 }
 
 .ag-theme-alpine .ag-cell-inline-editing {
-  border-color: #ffdbc5 !important;
+  border-color: var(--custom-color-hover-two) !important;
 }
 
 .ag-theme-alpine .ag-row-hover {
-  background-color: #ffdbc5;
+  background-color: var(--custom-color-hover-two);
 }
 
 .ag-filter-body-wrapper {
@@ -263,12 +264,30 @@ html {
   border: transparent;
 }
 
-.ag-theme-alpine span {
+.ag-picker-field-icon {
+  color: var(--custom-color);
+}
+
+.ag-theme-alpine .ag-list-item.ag-active-item {
+  background-color: var(--custom-color-hover-two);
+  transition: var(--transition);
+  color: #fff !important;
+}
+
+.ag-picker-field-display {
+  color: var(--custom-color);
+}
+
+.ag-list-item span {
+  color: var(--custom-color);
+}
+
+.ag-cell-label-container span {
   color: white;
   fill: white;
 }
 
-.ag-theme-alpine span:hover {
+.ag-cell-label-container span:hover {
   fill: grey;
   transition: var(--transition);
 }
