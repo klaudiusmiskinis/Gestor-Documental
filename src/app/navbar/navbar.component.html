@@ -27,17 +27,27 @@
         ></button>
       </div>
       <div class="modal-body">
-        <form>
+        <form [formGroup]="loginForm" (ngSubmit)="login()">
           <div class="mt-0">
             <span class="p-0 mt-1">Usuario</span>
             <input
               class="form-control"
               type="text"
-              formControlName="name"
+              formControlName="username"
               maxlength="50"
               placeholder="Introduce el usuario"
               autocomplete="off"
             />
+            <div>
+              <error-message [ctrl]="loginForm.get('username')"></error-message>
+            </div>
+            <div *ngIf="!loginForm.controls['username'].errors">
+              <div class="d-grid mt-1">
+                <small @fadeInError class="text-success"
+                  ><i class="bi bi-check-lg me-1"></i>Este formato es válido.
+                </small>
+              </div>
+            </div>
           </div>
           <div class="mt-2">
             <span class="p-0 mt-1">Contraseña</span>
@@ -49,9 +59,23 @@
               placeholder="Introduce la contraseña"
               autocomplete="off"
             />
+            <div>
+              <error-message [ctrl]="loginForm.get('password')"></error-message>
+            </div>
+            <div *ngIf="!loginForm.controls['password'].errors">
+              <div class="d-grid mt-1">
+                <small @fadeInError class="text-success"
+                  ><i class="bi bi-check-lg me-1"></i>Este formato es válido.
+                </small>
+              </div>
+            </div>
           </div>
           <div class="d-grid mt-3">
-            <button type="submit" class="btn btn-sm btn-color">
+            <button
+              type="submit"
+              [disabled]="loginForm.invalid"
+              class="btn btn-sm btn-color"
+            >
               Iniciar sesión
             </button>
           </div>
