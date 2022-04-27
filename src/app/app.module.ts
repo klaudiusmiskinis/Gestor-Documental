@@ -18,6 +18,7 @@ import { NgxTippyModule } from 'ngx-tippy-wrapper';
 import { AdminComponent } from './admin/admin.component';
 import { LoaderComponent } from './loader/loader.component';
 import { AgGridModule } from 'ag-grid-angular';
+import { ErrorMessageComponent } from './error-message/error-message.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { AgGridModule } from 'ag-grid-angular';
     NavbarComponent,
     AdminComponent,
     LoaderComponent,
+    ErrorMessageComponent,
   ],
   imports: [
     BrowserAnimationsModule,
