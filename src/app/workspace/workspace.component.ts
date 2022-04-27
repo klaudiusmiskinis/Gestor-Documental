@@ -80,7 +80,7 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
         Validators.required,
         Validators.minLength(3),
         Validators.maxLength(50),
-        Validators.pattern('^[a-zA-Z\\s]+$'),
+        Validators.pattern('^[ A-Za-z0-9_-]*$'),
         this.validateFoldername.bind(this),
         this.validateFilename.bind(this)
       ])
@@ -91,7 +91,7 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
         Validators.required,
         Validators.minLength(4),
         Validators.maxLength(50),
-        Validators.pattern('^[a-zA-Z\\s]+$'),
+        Validators.pattern('^[ A-Za-z0-9_-]*$'),
         this.validateFoldername.bind(this),
         this.validateFilename.bind(this)
       ])
@@ -102,7 +102,7 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
         Validators.required,
         Validators.minLength(4),
         Validators.maxLength(50),
-        Validators.pattern('^[A-Za-z0-9-\\s]+$'),
+        Validators.pattern('^[ A-Za-z0-9_-]*$'),
         this.validateFilename.bind(this)
       ])
     });
@@ -180,7 +180,7 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
   setConditionalValidators(value: any, field: string, minLength: boolean, maxLength: boolean, names: boolean, minLengthChars?: number | any, maxLengthChars?: number | any) {
     const validators: ValidatorFn | ValidatorFn[] | null = [];
     if (value) {
-      validators.push(Validators.required, Validators.pattern('^[a-zA-Z \-\']+'))
+      validators.push(Validators.required, Validators.pattern('^[ A-Za-z0-9_-]*$'))
     }
     if (names) {
       validators.push(this.validateFilename.bind(this), this.validateFoldername.bind(this))
