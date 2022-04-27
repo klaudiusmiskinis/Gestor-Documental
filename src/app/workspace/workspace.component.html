@@ -245,7 +245,7 @@
               >
                 <small [@fadeInError] class="text-color"
                   ><i class="bi bi-x me-1"></i>No puede contener caracteres
-                  especiales ni números.</small
+                  especiales.</small
                 >
               </div>
             </div>
@@ -313,7 +313,7 @@
               >
                 <small [@fadeInError] class="text-color"
                   ><i class="bi bi-x me-1"></i>No puede contener caracteres
-                  especiales ni números.</small
+                  especiales.</small
                 >
               </div>
             </div>
@@ -432,7 +432,7 @@
               [@fadeInError]
               class="text-color"
               ><i class="bi bi-x me-1"></i>No puede contener caracteres
-              especiales ni números.<br
+              especiales.<br
             /></small>
             <small
               [@fadeInError]
@@ -552,6 +552,13 @@
               ><i class="bi bi-x me-1"></i>La longitud máxima debe ser de 30
               caracteres.<br
             /></small>
+            <small
+              [@fadeInError]
+              *ngIf="editFileName.controls['fileName'].errors['pattern']"
+              class="text-color"
+              ><i class="bi bi-x me-1"></i>No puede contener caracteres
+              especiales.</small
+            >
           </div>
           <div>
             <small
