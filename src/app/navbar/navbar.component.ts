@@ -21,7 +21,7 @@ export class NavbarComponent implements OnChanges {
       this.renderedPath = 'Gestor documental';
     } else {
       this.renderedPath = this.renderedPath.split('/?path=')[this.renderedPath.split('/?path=').length - 1];
-      this.renderedPath = 'Gestor documental -> ' + this.renderedPath.split('/').join(' -> ');
+      this.renderedPath = 'Gestor documental > ' + this.renderedPath.split('/').join(' > ');
     }
   }
 }
