@@ -19,7 +19,11 @@
       <button (click)="setDatos()" class="btn btn-sm btn-color shadow-sm me-1">
         Actualizar<i class="bi bi-arrow-repeat ms-1"></i>
       </button>
-      <button *ngIf="selected" @fadeInError class="btn btn-sm btn-color shadow-sm me-1">
+      <button
+        *ngIf="selected"
+        @fadeInError
+        class="btn btn-sm btn-color shadow-sm me-1"
+      >
         Editar id: {{ selected.id }}
       </button>
     </div>
