@@ -19,6 +19,7 @@ import { AdminComponent } from './admin/admin.component';
 import { LoaderComponent } from './loader/loader.component';
 import { AgGridModule } from 'ag-grid-angular';
 import { ErrorMessageComponent } from './error-message/error-message.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { ErrorMessageComponent } from './error-message/error-message.component';
     AdminComponent,
     LoaderComponent,
     ErrorMessageComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserAnimationsModule,
