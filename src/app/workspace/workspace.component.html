@@ -204,58 +204,18 @@
               formControlName="fileNewName"
               placeholder="{{ fileInfo.name || 'Introduce el nombre' }}"
             />
-            <div *ngIf="uploadFileForm.controls['fileNewName'].errors">
-              <small
-                [@fadeInError]
-                class="text-color"
-                *ngIf="
-                  uploadFileForm.controls['fileNewName'].errors['maxlength']
-                "
-                ><i class="bi bi-x me-1"></i>La longitud máxima debe ser de 30
-                caracteres.</small
-              >
-              <small
-                [@fadeInError]
-                class="text-color"
-                *ngIf="
-                  uploadFileForm.controls['fileNewName'].errors['minlength']
-                "
-                ><i class="bi bi-x me-1"></i>La longitud mínima debe ser de 3
-                caracteres.</small
-              >
-              <small
-                [@fadeInError]
-                class="text-color"
-                *ngIf="
-                  uploadFileForm.controls['fileNewName'].errors['required']
-                "
-                ><i class="bi bi-x me-1"></i>Este campo es obligatorio.</small
-              >
-              <small
-                [@fadeInError]
-                class="text-color"
-                *ngIf="
-                  uploadFileForm.controls['fileNewName'].errors['nameExists']
-                "
-                ><i class="bi bi-x me-1"></i>Este nombre ya esta en uso en esta
-                carpeta.</small
-              >
-              <small
-                *ngIf="uploadFileForm.controls['fileNewName'].errors['pattern']"
-                [@fadeInError]
-                class="text-color"
-                ><i class="bi bi-x me-1"></i>No puede contener caracteres
-                especiales.</small
-              >
+            <div>
+              <error-message
+                [ctrl]="uploadFileForm.get('fileNewName')"
+              ></error-message>
             </div>
-          </div>
-          <div>
-            <small
-              [@fadeInError]
-              class="text-success"
-              *ngIf="!uploadFileForm.controls['fileNewName'].errors"
-              ><i class="bi bi-check-lg me-1"></i>Este nombre es válido.</small
-            >
+            <div *ngIf="!uploadFileForm.controls['fileNewName'].errors">
+              <div class="d-grid mt-1">
+                <small [@fadeInError] class="text-success"
+                  ><i class="bi bi-check-lg me-1"></i>Este nombre es válido.
+                </small>
+              </div>
+            </div>
           </div>
           <div class="d-grid mx-1 mt-2">
             <div class="form-check form-switch">
@@ -282,48 +242,17 @@
                 fileInfo.name
               }}"
             ></textarea>
-            <div *ngIf="uploadFileForm.controls['fileReason'].errors">
-              <small
-                [@fadeInError]
-                class="text-color"
-                *ngIf="
-                  uploadFileForm.controls['fileReason'].errors['maxlength']
-                "
-                ><i class="bi bi-x me-1"></i>La longitud máxima debe ser de 30
-                caracteres.</small
-              >
-              <small
-                [@fadeInError]
-                class="text-color"
-                *ngIf="
-                  uploadFileForm.controls['fileReason'].errors['minlength']
-                "
-                ><i class="bi bi-x me-1"></i>La longitud mínima debe ser de 3
-                caracteres.</small
-              >
-              <small
-                [@fadeInError]
-                class="text-color"
-                *ngIf="uploadFileForm.controls['fileReason'].errors['required']"
-                ><i class="bi bi-x me-1"></i>Este campo es obligatorio.</small
-              >
-              <div
-                *ngIf="uploadFileForm.controls['fileReason'].errors['pattern']"
-              >
-                <small [@fadeInError] class="text-color"
-                  ><i class="bi bi-x me-1"></i>No puede contener caracteres
-                  especiales.</small
-                >
-              </div>
-            </div>
             <div>
-              <small
-                [@fadeInError]
-                class="text-success"
-                *ngIf="!uploadFileForm.controls['fileReason'].errors"
-                ><i class="bi bi-check-lg me-1"></i>La descripción es
-                válida.</small
-              >
+              <error-message
+                [ctrl]="uploadFileForm.get('fileReason')"
+              ></error-message>
+            </div>
+            <div *ngIf="!uploadFileForm.controls['fileReason'].errors">
+              <div class="d-grid mt-1">
+                <small [@fadeInError] class="text-success"
+                  ><i class="bi bi-check-lg me-1"></i>Esta razón es válida.
+                </small>
+              </div>
             </div>
           </div>
           <div *ngIf="content.files" class="d-grid mt-2 mx-1">
@@ -401,55 +330,17 @@
               autocomplete="off"
             />
           </div>
-          <div *ngIf="makeDirectoryForm.controls['directory'].errors">
-            <small
-              [@fadeInError]
-              class="text-color"
-              *ngIf="
-                makeDirectoryForm.controls['directory'].errors['maxlength']
-              "
-              ><i class="bi bi-x me-1"></i>La longitud máxima debe ser de 30
-              caracteres.<br
-            /></small>
-            <small
-              [@fadeInError]
-              class="text-color"
-              *ngIf="
-                makeDirectoryForm.controls['directory'].errors['minlength']
-              "
-              ><i class="bi bi-x me-1"></i>La longitud mínima debe ser de 3
-              caracteres.<br
-            /></small>
-            <small
-              [@fadeInError]
-              class="text-color"
-              *ngIf="makeDirectoryForm.controls['directory'].errors['required']"
-              ><i class="bi bi-x me-1"></i>El campo es obligatorio.<br
-            /></small>
-            <small
-              [@fadeInError]
-              *ngIf="makeDirectoryForm.controls['directory'].errors['pattern']"
-              class="text-color"
-              ><i class="bi bi-x me-1"></i>No puede contener caracteres
-              especiales.<br
-            /></small>
-            <small
-              [@fadeInError]
-              class="text-color"
-              *ngIf="
-                makeDirectoryForm.controls['directory'].errors['nameExists']
-              "
-              ><i class="bi bi-x me-1"></i>Este nombre ya esta en uso en esta
-              carpeta.</small
-            >
-          </div>
           <div>
-            <small
-              [@fadeInError]
-              *ngIf="!makeDirectoryForm.controls['directory'].errors"
-              class="text-success"
-              ><i class="bi bi-check-lg me-1"></i>Este nombre es válido.<br
-            /></small>
+            <error-message
+              [ctrl]="makeDirectoryForm.get('directory')"
+            ></error-message>
+          </div>
+          <div *ngIf="makeDirectoryForm.valid">
+            <div class="d-grid mt-1">
+              <small [@fadeInError] class="text-success"
+                ><i class="bi bi-check-lg me-1"></i>Este nombre es válido.
+              </small>
+            </div>
           </div>
           <div class="row gap-2 mt-3 mx-1">
             <button
@@ -519,53 +410,21 @@
               class="form-control"
               type="text"
               formControlName="fileName"
-              placeholder="Introduce el nombre de la carpeta"
+              placeholder="Introduce el nombre del archivo"
               autocomplete="off"
             />
           </div>
-          <div *ngIf="editFileName.controls['fileName'].errors">
-            <small
-              [@fadeInError]
-              class="text-color"
-              *ngIf="editFileName.controls['fileName'].errors['required']"
-              ><i class="bi bi-x me-1"></i>Este campo es obligatorio.<br
-            /></small>
-            <small
-              [@fadeInError]
-              class="text-color"
-              *ngIf="editFileName.controls['fileName'].errors['nameExists']"
-              ><i class="bi bi-x me-1"></i>Este nombre ya esta en uso en esta
-              carpeta.<br
-            /></small>
-            <small
-              [@fadeInError]
-              class="text-color"
-              *ngIf="editFileName.controls['fileName'].errors['minlength']"
-              ><i class="bi bi-x me-1"></i>La longitud mínima debe ser de 3
-              caracteres.<br
-            /></small>
-            <small
-              [@fadeInError]
-              class="text-color"
-              *ngIf="editFileName.controls['fileName'].errors['maxlength']"
-              ><i class="bi bi-x me-1"></i>La longitud máxima debe ser de 30
-              caracteres.<br
-            /></small>
-            <small
-              [@fadeInError]
-              *ngIf="editFileName.controls['fileName'].errors['pattern']"
-              class="text-color"
-              ><i class="bi bi-x me-1"></i>No puede contener caracteres
-              especiales.</small
-            >
-          </div>
           <div>
-            <small
-              [@fadeInError]
-              class="text-success"
-              *ngIf="!editFileName.controls['fileName'].errors"
-              ><i class="bi bi-check-lg me-1"></i>Este nombre es válido.<br
-            /></small>
+            <error-message
+              [ctrl]="editFileName.get('fileName')"
+            ></error-message>
+          </div>
+          <div *ngIf="editFileName.valid">
+            <div class="d-grid mt-1">
+              <small [@fadeInError] class="text-success"
+                ><i class="bi bi-check-lg me-1"></i>Este nombre es válido.
+              </small>
+            </div>
           </div>
           <div class="row gap-2 mt-3 mx-1">
             <button
