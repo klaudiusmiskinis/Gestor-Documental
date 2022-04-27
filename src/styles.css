@@ -263,12 +263,12 @@ html {
   border: transparent;
 }
 
-span {
+.ag-theme-alpine span {
   color: white;
   fill: white;
 }
 
-span:hover {
+.ag-theme-alpine span:hover {
   fill: grey;
   transition: var(--transition);
 }
