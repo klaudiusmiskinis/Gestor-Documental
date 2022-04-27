@@ -1,4 +1,5 @@
 import { Component, Input, OnChanges } from '@angular/core';
+declare var $: any;
 
 @Component({
   selector: 'navbar',
@@ -13,6 +14,10 @@ export class NavbarComponent implements OnChanges {
 
   ngOnChanges(): void {
     this.setupPath();
+  }
+
+  modal(id: string, state: string): void {
+    $('#' + id).modal(state);
   }
 
   setupPath(): void {

@@ -3,10 +3,60 @@
     {{ renderedPath }}
   </div>
   <div class="col-auto text-end link-white me-2">
-    <div class="link-white">
+    <div class="link-white" (click)="modal('login', 'show')">
       <i class="bi bi-person-circle"></i>
     </div>
   </div>
 </div>
 
-<login></login>
+<div
+  class="modal fade bg-opacity-75 bg-light"
+  id="login"
+  tabindex="-1"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-color border-0">
+        <h6 class="modal-title text-light">Inicio de sesión</h6>
+        <button
+          type="button"
+          class="btn-close btn-close-white"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mt-0">
+            <span class="p-0 mt-1">Usuario</span>
+            <input
+              class="form-control"
+              type="text"
+              formControlName="name"
+              maxlength="50"
+              placeholder="Introduce el usuario"
+              autocomplete="off"
+            />
+          </div>
+          <div class="mt-2">
+            <span class="p-0 mt-1">Contraseña</span>
+            <input
+              class="form-control"
+              type="password"
+              maxlength="50"
+              formControlName="password"
+              placeholder="Introduce la contraseña"
+              autocomplete="off"
+            />
+          </div>
+          <div class="d-grid mt-3">
+            <button type="submit" class="btn btn-sm btn-color">
+              Iniciar sesión
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
