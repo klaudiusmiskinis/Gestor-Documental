@@ -1,5 +1,5 @@
 /* NG */
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { WorkspaceComponent } from './workspace/workspace.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -36,7 +36,7 @@ import { ErrorMessageComponent } from './error-message/error-message.component';
     AppRoutingModule,
     HttpClientModule,
     BrowserModule,
-    ReactiveFormsModule, 
+    ReactiveFormsModule,
     FormsModule,
     AgGridModule.withComponents([]),
     NotifierModule.withConfig(NotifierConfiguration),
@@ -44,9 +44,9 @@ import { ErrorMessageComponent } from './error-message/error-message.component';
     NgxTippyModule
   ],
   providers: [
-    {provide: APP_BASE_HREF, useValue: '/' }, 
+    { provide: APP_BASE_HREF, useValue: '/' },
     HttpClientModule
-],
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
