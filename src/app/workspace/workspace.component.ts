@@ -80,7 +80,7 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
         Validators.required,
         Validators.minLength(3),
         Validators.maxLength(50),
-        Validators.pattern('^[ A-Za-z0-9_-]*$'),
+        Validators.pattern('^[A-zÀ-ú0-9_-]*$'),
         this.validateFoldername.bind(this),
         this.validateFilename.bind(this)
       ])
@@ -91,7 +91,7 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
         Validators.required,
         Validators.minLength(4),
         Validators.maxLength(50),
-        Validators.pattern('^[ A-Za-z0-9_-]*$'),
+        Validators.pattern('^[ A-zÀ-ú0-9_-]*$'),
         this.validateFoldername.bind(this),
         this.validateFilename.bind(this)
       ])
@@ -102,7 +102,7 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
         Validators.required,
         Validators.minLength(4),
         Validators.maxLength(50),
-        Validators.pattern('^[ A-Za-z0-9_-]*$'),
+        Validators.pattern('^[ A-zÀ-ú0-9_-]*$'),
         this.validateFilename.bind(this)
       ])
     });
@@ -180,7 +180,7 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
   setConditionalValidators(value: any, field: string, minLength: boolean, maxLength: boolean, names: boolean, minLengthChars?: number | any, maxLengthChars?: number | any) {
     const validators: ValidatorFn | ValidatorFn[] | null = [];
     if (value) {
-      validators.push(Validators.required, Validators.pattern('^[ A-Za-z0-9_-]*$'))
+      validators.push(Validators.required, Validators.pattern('^[ A-zÀ-ú0-9_-]*$'))
     }
     if (names) {
       validators.push(this.validateFilename.bind(this), this.validateFoldername.bind(this))
@@ -304,24 +304,6 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
     }
     return null;
   }
-
-  validateUploadingFile(control: AbstractControl): { [key: string]: any } | null {
-    if (control.value) {
-      const name: string = this.fileInputField.nativeElement.files[0].name.toLowerCase();
-      const response = this.content.files.filter(file => {
-        const nameCompare = file.name.toLowerCase();
-        const fileWithoutDot = file.name.split('.')[0];
-        if (nameCompare === name || fileWithoutDot === name) {
-          return file;
-        }
-      });
-      if (response.length > 0) {
-        return { 'nameExists': true }
-      }
-    }
-    return null;
-  }
-
 
   async uploadFile(): Promise<void> {
     let fileList: FileList = this.fileInputField.nativeElement.files;
