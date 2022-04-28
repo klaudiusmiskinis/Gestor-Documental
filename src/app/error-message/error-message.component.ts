@@ -17,7 +17,8 @@ export class ErrorMessageComponent implements OnInit {
     minlength: (par) => `Mínimo ${par.requiredLength} caracteres.`,
     maxlength: (par) => `Máximo ${par.requiredLength} caracteres.`,
     pattern: () => `No se permiten cáracteres especiales.`,
-    nameExists: () => `Este nombre ya existe.`
+    nameExists: () => `Este nombre ya existe.`,
+    invalidNumber: () => `Debes introducir un número válido.`
   };
 
   constructor() { }
