@@ -23,6 +23,7 @@
         @fadeInError
         *ngIf="selected"
         class="btn btn-sm btn-color shadow-sm me-1"
+        (click)="modal('editRowModal', 'show')"
       >
         Editar id: {{ selected.id }}
       </button>
@@ -45,4 +46,84 @@
     (rowClicked)="onRowClicked($event)"
   >
   </ag-grid-angular>
+</div>
+
+<div
+  class="modal fade bg-opacity-75 bg-light"
+  id="editRowModal"
+  tabindex="-1"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-color border-0">
+        <h6 class="modal-title text-light">Cambiar datos de fila</h6>
+        <button
+          type="button"
+          class="btn-close btn-close-white"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="editRowForm" (ngSubmit)="editRowSubmit()">
+          <div class="row g-3">
+            <div class="col-sm-2">
+              <span class="p-0 mt-1">Id</span>
+              <input
+                class="form-control"
+                type="text"
+                formControlName="id"
+                maxlength="4"
+                autocomplete="off"
+              />
+            </div>
+            <div class="col-sm">
+              <span class="p-0 mt-1">Nombre</span>
+              <input
+                class="form-control"
+                type="text"
+                formControlName="name"
+                maxlength="30"
+                autocomplete="off"
+              />
+            </div>
+          </div>
+          <div class="row g-3 mt-1">
+            <div class="col-sm">
+              <span class="p-0 mt-1">Path</span>
+              <input
+                class="form-control"
+                type="text"
+                formControlName="path"
+                maxlength="30"
+                autocomplete="off"
+              />
+            </div>
+          </div>
+          <div class="row g-3 mt-1">
+            <div class="col-sm">
+              <span class="p-0 mt-1">Última versión</span>
+              <input
+                class="form-control"
+                type="text"
+                formControlName="isLastVersion"
+                maxlength="30"
+                autocomplete="off"
+              />
+            </div>
+          </div>
+          <div class="d-grid mt-3">
+            <button
+              type="submit"
+              [disabled]="editRowForm.invalid"
+              class="btn btn-sm btn-color"
+            >
+              Editar archivo
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
