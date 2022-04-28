@@ -45,11 +45,6 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   onGridReady(params: any) {
-    window.addEventListener('resize', function () {
-      setTimeout(function () {
-        params.api.sizeColumnsToFit();
-      });
-    });
     this.gridApi = params.api;
     this.gridApi.setDomLayout('autoHeight');
     this.restartSize();
