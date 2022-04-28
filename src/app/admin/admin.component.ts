@@ -3,7 +3,7 @@ import { ColDef } from 'ag-grid-community';
 import { RequestService } from '../services/request.service';
 import { localeEs } from '../../assets/locale.es';
 import { fadeInError } from '../config/animations.config';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CustomValidator } from '../validators/CustomValidators';
 declare var $: any;
 
@@ -38,19 +38,42 @@ export class AdminComponent implements OnInit, OnDestroy {
         Validators.required,
         Validators.minLength(3),
         Validators.maxLength(30),
-        Validators.pattern('^[A-zÀ-ú]*$')
+        Validators.pattern('^[ A-zÀ-ú0-9_-]*$'),
+        this.validateFilename.bind(this),
+        CustomValidator.hasExtension
       ]),
       path: new FormControl('', [
         Validators.required,
-        Validators.minLength(3),
-        Validators.maxLength(30),
-        Validators.pattern('^[A-zÀ-ú]/*$')
+        Validators.minLength(1),
+        Validators.maxLength(80),
+        Validators.pattern('^[a-zA-Z/ ]+$'),
+        CustomValidator.lastSlash
       ]),
       isLastVersion: new FormControl('', [
         Validators.required,
-        Validators.minLength(0),
-        Validators.maxLength(1),
-        CustomValidator.numeric
+        Validators.min(0),
+        Validators.max(1),
+      ]),
+      createdDate: new FormControl('', [
+        Validators.required,
+        CustomValidator.dateValidator
+      ]),
+      idParent: new FormControl('', [
+        Validators.min(1),
+        Validators.max(9999),
+      ]),
+      isRemoved: new FormControl('', [
+        Validators.min(1),
+        Validators.max(1),
+      ]),
+      removedDate: new FormControl('', [
+        CustomValidator.dateValidator
+      ]),
+      reason: new FormControl('', [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(300),
+        Validators.pattern('^[ A-zÀ-ú0-9._-]*$')
       ])
     })
   }
@@ -69,12 +92,17 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   setFormValues() {
     const controls = this.editRowForm.controls;
-    if (!controls) throw 'Error with the form data';
+    if (!controls) throw 'Error with the form information';
     if (this.selected) {
       controls['id'].setValue(this.selected.id);
-      controls['name'].setValue(this.selected.name);
+      controls['name'].setValue(this.selected.name.split('.')[0]);
       controls['path'].setValue(this.selected.path);
       controls['isLastVersion'].setValue(this.selected.isLastVersion);
+      controls['createdDate'].setValue(this.selected.createdDate);
+      controls['idParent'].setValue(this.selected.idParent);
+      controls['isRemoved'].setValue(this.selected.isRemoved);
+      controls['removedDate'].setValue(this.selected.removedDate);
+      controls['reason'].setValue(this.selected.reason);
     }
   }
 
@@ -95,11 +123,50 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   onRowClicked(event) {
     this.selected = event.data;
+    console.log(this.selected);
     this.setFormValues();
   }
 
   editRowSubmit() {
-    console.log('Submit');
+    const file = {}
+    const where = {
+      id: this.editRowForm.controls['id'].value
+    }
+    Object.keys(this.editRowForm.controls).forEach((key) => {
+      if (key === 'name') {
+        const name = this.editRowForm.controls[key];
+        const selected = this.selected.name;
+        const extension = selected.split('.')[selected.split('.').length - 1]
+        if (!name.value.includes(extension)) {
+          name.setValue(name.value + '.' + extension)
+        }
+      }
+      if (this.editRowForm.controls[key].value !== this.selected[key]) {
+        file[key] = this.editRowForm.controls[key].value
+        console.log(file, where);
+      }
+    })
+    this.editRowForm.controls['name'].setValue(this.editRowForm.controls['name'].value.split('.' + this.selected.name.split('.')[this.selected.name.split('.').length - 1])[0])
+  }
+
+  validateFilename(control: AbstractControl): { [key: string]: any } | null {
+    if (control.value) {
+      const value = this.selected;
+      const valueName = control.value
+      const extension = valueName.split('.')[valueName.split('.').length - 1]
+      const valueWithExtension = value + '.' + extension;
+      const response = this.datos.filter(row => {
+        if (value.path === row.path && value.id !== row.id) {
+          if (row.name.toLowerCase() === valueWithExtension.toLowerCase() || row.name.split('.')[0].toLowerCase() === valueName.toLowerCase()) {
+            return row.id;
+          }
+        }
+      });
+      if (response.length > 0) {
+        return { 'nameExists': true }
+      }
+    }
+    return null;
   }
 
   modal(id: string, state: string): void {
