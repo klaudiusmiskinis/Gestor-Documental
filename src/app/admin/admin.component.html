@@ -87,6 +87,16 @@
                 maxlength="30"
                 autocomplete="off"
               />
+              <div>
+                <error-message [ctrl]="editRowForm.get('name')"></error-message>
+              </div>
+              <div *ngIf="!editRowForm.controls['name'].errors">
+                <div class="d-grid mt-1">
+                  <small @fadeInError class="text-success"
+                    ><i class="bi bi-check-lg me-1"></i>Este nombre es válido.
+                  </small>
+                </div>
+              </div>
             </div>
           </div>
           <div class="row g-3 mt-1">
@@ -96,21 +106,177 @@
                 class="form-control"
                 type="text"
                 formControlName="path"
-                maxlength="30"
+                maxlength="200"
                 autocomplete="off"
               />
+              <div>
+                <error-message [ctrl]="editRowForm.get('path')"></error-message>
+              </div>
+              <div *ngIf="!editRowForm.controls['path'].errors">
+                <div class="d-grid mt-1">
+                  <small @fadeInError class="text-success"
+                    ><i class="bi bi-check-lg me-1"></i>Esta ruta es válida.
+                  </small>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row g-3 mt-1">
+            <div class="col-2">
+              <span class="p-0 mt-1">Última versión</span>
+              <input
+                class="form-control"
+                type="number"
+                formControlName="isLastVersion"
+                min="0"
+                max="1"
+                autocomplete="off"
+              />
+              <div>
+                <error-message
+                  [ctrl]="editRowForm.get('isLastVersion')"
+                ></error-message>
+              </div>
+              <div *ngIf="!editRowForm.controls['isLastVersion'].errors">
+                <div class="d-grid mt-1">
+                  <small @fadeInError class="text-success"
+                    ><i class="bi bi-check-lg me-1"></i>Este campo válido.
+                  </small>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm">
+              <span class="p-0 mt-1">Fecha creado</span>
+              <input
+                class="form-control"
+                type="date"
+                formControlName="createdDate"
+                autocomplete="off"
+              />
+              <div>
+                <error-message
+                  [ctrl]="editRowForm.get('createdDate')"
+                ></error-message>
+              </div>
+              <div *ngIf="!editRowForm.controls['createdDate'].errors">
+                <div class="d-grid mt-1">
+                  <small @fadeInError class="text-success"
+                    ><i class="bi bi-check-lg me-1"></i>Esta fecha es válida.
+                  </small>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm">
+              <span class="p-0 mt-1">Id Padre</span>
+              <input
+                class="form-control"
+                type="number"
+                min="0"
+                max="9999"
+                formControlName="idParent"
+                autocomplete="off"
+              />
+              <div>
+                <error-message
+                  [ctrl]="editRowForm.get('idParent')"
+                ></error-message>
+              </div>
+              <div
+                *ngIf="
+                  !editRowForm.controls['idParent'].errors &&
+                  editRowForm.controls['idParent'].value
+                "
+              >
+                <div class="d-grid mt-1">
+                  <small @fadeInError class="text-success"
+                    ><i class="bi bi-check-lg me-1"></i>Este id es válido.
+                  </small>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row g-3 mt-1">
+            <div class="col-sm-2">
+              <span class="p-0 mt-1">Eliminado</span>
+              <input
+                class="form-control"
+                type="number"
+                formControlName="isRemoved"
+                min="0"
+                max="1"
+                autocomplete="off"
+              />
+              <div>
+                <error-message
+                  [ctrl]="editRowForm.get('isRemoved')"
+                ></error-message>
+              </div>
+              <div
+                *ngIf="
+                  !editRowForm.controls['isRemoved'].errors &&
+                  editRowForm.controls['isRemoved'].value
+                "
+              >
+                <div class="d-grid mt-1">
+                  <small @fadeInError class="text-success"
+                    ><i class="bi bi-check-lg me-1"></i>Este campo es válido.
+                  </small>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm">
+              <span class="p-0 mt-1">Fecha eliminado</span>
+              <input
+                class="form-control"
+                type="date"
+                formControlName="removedDate"
+                autocomplete="off"
+              />
+              <div>
+                <error-message
+                  [ctrl]="editRowForm.get('removedDate')"
+                ></error-message>
+              </div>
+              <div
+                *ngIf="
+                  !editRowForm.controls['removedDate'].errors &&
+                  editRowForm.controls['removedDate'].value
+                "
+              >
+                <div class="d-grid mt-1">
+                  <small @fadeInError class="text-success"
+                    ><i class="bi bi-check-lg me-1"></i>Este fecha es válida.
+                  </small>
+                </div>
+              </div>
             </div>
           </div>
           <div class="row g-3 mt-1">
             <div class="col-sm">
-              <span class="p-0 mt-1">Última versión</span>
-              <input
+              <span class="p-0 mt-1">Motivo</span>
+              <textarea
                 class="form-control"
                 type="text"
-                formControlName="isLastVersion"
-                maxlength="30"
+                formControlName="reason"
+                maxlength="300"
                 autocomplete="off"
-              />
+              ></textarea>
+              <div>
+                <error-message
+                  [ctrl]="editRowForm.get('reason')"
+                ></error-message>
+              </div>
+              <div
+                *ngIf="
+                  !editRowForm.controls['reason'].errors
+                "
+              >
+                <div class="d-grid mt-1">
+                  <small @fadeInError class="text-success"
+                    ><i class="bi bi-check-lg me-1"></i>Esta razón es válida.
+                  </small>
+                </div>
+              </div>
             </div>
           </div>
           <div class="d-grid mt-3">
