@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { fadeInError } from '../config/animations.config';
+import { RequestService } from '../services/request.service';
 declare var $: any;
 
 @Component({
@@ -16,7 +17,7 @@ export class NavbarComponent implements OnChanges {
 
   @Input() path: string;
 
-  constructor() {
+  constructor(public request: RequestService) {
     this.loginForm = new FormGroup({
       username: new FormControl('', [
         Validators.required,
@@ -41,7 +42,12 @@ export class NavbarComponent implements OnChanges {
   }
 
   login() {
-    console.log('Login');
+    const user = {
+      username: this.loginForm.controls['username'].value,
+      password: this.loginForm.controls['password'].value
+    }
+    console.log(user);
+    
   }
 
   setupPath(): void {
