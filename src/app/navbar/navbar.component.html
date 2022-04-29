@@ -39,7 +39,7 @@
               autocomplete="off"
             />
             <div>
-              <error-message [ctrl]="loginForm.get('username')"></error-message>
+              <error-message [isTouched]="true" [ctrl]="loginForm.get('username')"></error-message>
             </div>
             <div *ngIf="!loginForm.controls['username'].errors">
               <div class="d-grid mt-1">
@@ -60,7 +60,7 @@
               autocomplete="off"
             />
             <div>
-              <error-message [ctrl]="loginForm.get('password')"></error-message>
+              <error-message [isTouched]="true" [ctrl]="loginForm.get('password')"></error-message>
             </div>
             <div *ngIf="!loginForm.controls['password'].errors">
               <div class="d-grid mt-1">
