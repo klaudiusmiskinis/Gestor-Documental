@@ -57,7 +57,9 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header bg-color border-0">
-        <h6 class="modal-title text-light">Cambiar datos de fila</h6>
+        <h6 *ngIf="selected" class="modal-title text-light">
+          Cambiar datos de {{ selected.name }}
+        </h6>
         <button
           type="button"
           class="btn-close btn-close-white"
@@ -98,10 +100,21 @@
                 </div>
               </div>
             </div>
+            <div *ngIf="selected" class="col-sm-2">
+              <span class="p-0 mt-1">Extension</span>
+              <input
+                class="form-control"
+                type="text"
+                maxlength="4"
+                autocomplete="off"
+                value="{{ selected.extension }}"
+                disabled
+              />
+            </div>
           </div>
           <div class="row g-3 mt-1">
             <div class="col-sm">
-              <span class="p-0 mt-1">Path</span>
+              <span class="p-0 mt-1">Ruta</span>
               <input
                 class="form-control"
                 type="text"
@@ -109,29 +122,15 @@
                 maxlength="200"
                 autocomplete="off"
               />
-              <div>
-                <error-message [ctrl]="editRowForm.get('path')"></error-message>
-              </div>
-              <div *ngIf="!editRowForm.controls['path'].errors">
-                <div class="d-grid mt-1">
-                  <small @fadeInError class="text-success"
-                    ><i class="bi bi-check-lg me-1"></i>Esta ruta es válida.
-                  </small>
-                </div>
-              </div>
             </div>
           </div>
           <div class="row g-3 mt-1">
             <div class="col-2">
               <span class="p-0 mt-1">Última versión</span>
-              <input
-                class="form-control"
-                type="number"
-                formControlName="isLastVersion"
-                min="0"
-                max="1"
-                autocomplete="off"
-              />
+              <select class="form-control" formControlName="isLastVersion">
+                <option [value]="0">No</option>
+                <option [value]="1">Sí</option>
+              </select>
               <div>
                 <error-message
                   [ctrl]="editRowForm.get('isLastVersion')"
@@ -140,7 +139,7 @@
               <div *ngIf="!editRowForm.controls['isLastVersion'].errors">
                 <div class="d-grid mt-1">
                   <small @fadeInError class="text-success"
-                    ><i class="bi bi-check-lg me-1"></i>Este campo válido.
+                    ><i class="bi bi-check-lg me-1"></i>Campo válido.
                   </small>
                 </div>
               </div>
@@ -198,14 +197,10 @@
           <div class="row g-3 mt-1">
             <div class="col-sm-2">
               <span class="p-0 mt-1">Eliminado</span>
-              <input
-                class="form-control"
-                type="number"
-                formControlName="isRemoved"
-                min="0"
-                max="1"
-                autocomplete="off"
-              />
+              <select class="form-control" formControlName="isRemoved">
+                <option [value]="0">No</option>
+                <option [value]="1">Sí</option>
+              </select>
               <div>
                 <error-message
                   [ctrl]="editRowForm.get('isRemoved')"
@@ -219,7 +214,7 @@
               >
                 <div class="d-grid mt-1">
                   <small @fadeInError class="text-success"
-                    ><i class="bi bi-check-lg me-1"></i>Este campo es válido.
+                    ><i class="bi bi-check-lg me-1"></i>Campo válido.
                   </small>
                 </div>
               </div>
