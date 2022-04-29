@@ -46,8 +46,7 @@ export class NavbarComponent implements OnChanges {
       username: this.loginForm.controls['username'].value,
       password: this.loginForm.controls['password'].value
     }
-    console.log(user);
-    
+    this.request.login(user)
   }
 
   setupPath(): void {

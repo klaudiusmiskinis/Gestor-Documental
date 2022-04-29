@@ -11,9 +11,9 @@ export class RequestService {
     this.notifier = notifier;
   }
 
-  async login(path: string, user: object): Promise<Object> {
+  async login(user: object): Promise<Object> {
     try {
-      this.setContent(this.parse(await this.http.post<any>(path, user).toPromise()));
+      this.setContent(this.parse(await this.http.post<any>('http://localhost:3001/login', user).toPromise()));
       return this.getContent();
     } catch (e) {
       this.notificate('Error con el login.');
@@ -115,6 +115,17 @@ export class RequestService {
     try {
       path = path + this.setParameterChar(path) + 'edit=' + oldName + '&to=' + newName;
       const status = this.parse(await this.http.post<any>(path, []).toPromise());
+      if (status.success) {
+        this.setContent(status);
+      }
+    } catch (e) {
+      this.notificate('Error con el cambio de nombre');
+    }
+  }
+
+  async updateRow(data: any): Promise<void> {
+    try {
+      const status = this.parse(await this.http.post<any>('http://localhost:3001/updateRow', data).toPromise());
       if (status.success) {
         this.setContent(status);
       }
