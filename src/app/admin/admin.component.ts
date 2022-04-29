@@ -42,13 +42,7 @@ export class AdminComponent implements OnInit, OnDestroy {
         this.validateFilename.bind(this),
         CustomValidator.hasExtension
       ]),
-      path: new FormControl('', [
-        Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(80),
-        Validators.pattern('^[a-zA-Z/ ]+$'),
-        CustomValidator.lastSlash
-      ]),
+      path: new FormControl({ value: 'path', disabled: true }),
       isLastVersion: new FormControl('', [
         Validators.required,
         Validators.min(0),
@@ -63,7 +57,7 @@ export class AdminComponent implements OnInit, OnDestroy {
         Validators.max(9999),
       ]),
       isRemoved: new FormControl('', [
-        Validators.min(1),
+        Validators.min(0),
         Validators.max(1),
       ]),
       removedDate: new FormControl('', [
@@ -128,10 +122,11 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   onRowClicked(event) {
     this.selected = event.data;
+    this.selected.extension = this.selected.name.split('.')[this.selected.name.split('.').length - 1];
     this.setFormValues();
   }
 
-  editRowSubmit() {
+  async editRowSubmit() {
     const file = {}
     const where = {
       id: this.editRowForm.controls['id'].value
@@ -147,9 +142,14 @@ export class AdminComponent implements OnInit, OnDestroy {
       }
       if (this.editRowForm.controls[key].value !== this.selected[key]) {
         file[key] = this.editRowForm.controls[key].value
-        console.log(file, where);
+        if (key === 'isLastVersion' || key === 'isRemoved') {
+          file[key] = parseInt(file[key])
+          if (file[key] === 0) file[key] = null;
+        }
       }
     })
+    const data = [file, where, this.selected]
+    await this.request.updateRow(data);
     this.editRowForm.controls['name'].setValue(this.editRowForm.controls['name'].value.split('.' + this.selected.name.split('.')[this.selected.name.split('.').length - 1])[0])
   }
 
@@ -157,11 +157,10 @@ export class AdminComponent implements OnInit, OnDestroy {
     if (control.value) {
       const value = this.selected;
       const valueName = control.value
-      const extension = valueName.split('.')[valueName.split('.').length - 1]
-      const valueWithExtension = value + '.' + extension;
+      const valueWithExtension = valueName + '.' + value.extension;
       const response = this.datos.filter(row => {
         if (value.path === row.path && value.id !== row.id) {
-          if (row.name.toLowerCase() === valueWithExtension.toLowerCase() || row.name.split('.')[0].toLowerCase() === valueName.toLowerCase()) {
+          if (row.name.toLowerCase() === valueWithExtension.toLowerCase()) {
             return row.id;
           }
         }
