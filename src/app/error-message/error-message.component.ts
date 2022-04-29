@@ -11,6 +11,7 @@ import { fadeInError } from '../config/animations.config';
 export class ErrorMessageComponent implements OnInit {
 
   @Input() ctrl: FormControl | any;
+  @Input() isTouched: boolean = false;
 
   ERROR_MESSAGE = {
     required: () => `El campo es obligatorio.`,
@@ -33,7 +34,8 @@ export class ErrorMessageComponent implements OnInit {
   }
 
   shouldShowErrors(): boolean {
-    return this.ctrl && this.ctrl.errors;
+    if (!this.isTouched) return this.ctrl && this.ctrl.errors;
+    return this.ctrl && this.ctrl.errors && this.ctrl.touched;
   }
 
   listOfErrors(): string[] {
