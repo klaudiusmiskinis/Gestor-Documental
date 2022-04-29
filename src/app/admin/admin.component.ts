@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { ColDef } from 'ag-grid-community';
 import { RequestService } from '../services/request.service';
 import { localeEs } from '../../assets/locale.es';
@@ -110,6 +110,11 @@ export class AdminComponent implements OnInit, OnDestroy {
     this.datos = await this.request.getAllFiles()
   }
 
+  @HostListener('window:resize')
+  onResize() {
+    this.restartSize();
+  }
+
   onGridReady(params: any) {
     this.gridApi = params.api;
     this.gridApi.setDomLayout('autoHeight');
@@ -123,7 +128,6 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   onRowClicked(event) {
     this.selected = event.data;
-    console.log(this.selected);
     this.setFormValues();
   }
 
