@@ -13,13 +13,15 @@ export class TokenService {
   }
 
   getToken() {
-    if (!this.token) throw 'Token does not exist';
     return this.token;
   }
 
   getSavedToken() {
-    if (!this.isSaved()) throw 'No token saved';
-    return localStorage.getItem('Bearer');
+    if (this.isSaved()) {
+      return localStorage.getItem('Bearer');
+    } else {
+      return '';
+    }
   }
 
   setToken(token) {
@@ -37,10 +39,14 @@ export class TokenService {
     return true;
   }
 
-
-  initializingToken() {
-    const tokenSaved = this.getSavedToken();
-    this.setToken(tokenSaved)
+  removeToken() {
+    localStorage.removeItem('Bearer')
   }
 
+  initializingToken() {
+    if (this.isSaved()) {
+      const tokenSaved = this.getSavedToken();
+      this.setToken(tokenSaved)
+    }
+  }
 }
