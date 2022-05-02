@@ -37,10 +37,10 @@ export class AdminComponent implements OnInit, OnDestroy {
       name: new FormControl('', [
         Validators.required,
         Validators.minLength(3),
-        Validators.maxLength(30),
+        Validators.maxLength(60),
         Validators.pattern('^[ A-zÀ-ú0-9_-]*$'),
+        CustomValidator.hasExtension,
         this.validateFilename.bind(this),
-        CustomValidator.hasExtension
       ]),
       path: new FormControl({ value: 'path', disabled: true }),
       isLastVersion: new FormControl('', [
