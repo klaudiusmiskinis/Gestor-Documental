@@ -1,23 +1,26 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { NotifierService } from 'angular-notifier';
+import { TokenService } from './token.service';
 
 @Injectable({ providedIn: 'root' })
 
 export class RequestService {
   private content: any;
   private notifier: any;
-  constructor(private http: HttpClient, notifier: NotifierService) {
+  constructor(private http: HttpClient, notifier: NotifierService, private token: TokenService) {
     this.notifier = notifier;
   }
 
   async login(user: object): Promise<Object> {
     try {
-      this.setContent(this.parse(await this.http.post<any>('http://localhost:3001/login', user).toPromise()));
-      return this.getContent();
+      const res = await this.http.post<any>('http://localhost:3001/login', user).toPromise();
+      this.token.setToken(res.token)
+      this.token.saveToken();
+      return true;
     } catch (e) {
       this.notificate('Error con el login.');
-      return 'Error';
+      return false;
     }
   };
 
