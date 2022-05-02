@@ -41,12 +41,17 @@ export class NavbarComponent implements OnChanges {
     $('#' + id).modal(state);
   }
 
-  login() {
+  async login() {
     const user = {
       username: this.loginForm.controls['username'].value,
       password: this.loginForm.controls['password'].value
     }
-    this.request.login(user)
+    const res = await this.request.login(user)
+    if (res) {
+      this.modal('login', 'hide')
+    } else {
+      this.loginForm.reset();
+    }
   }
 
   setupPath(): void {
