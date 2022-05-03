@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { fadeIn, slideIn } from '../config/animations.config';
-import { followCursor } from 'tippy.js';
 import { RequestService } from '../services/request.service';
 
 @Component({
@@ -18,19 +17,15 @@ export class FilesComponent implements OnInit {
       placement: 'right',
       animation: 'fade',
       delay: [500, 0],
-      followCursor: true,
-      plugins: [followCursor],
     }
     this.tooltipLeft = {
       arrow: true,
       placement: 'left',
       animation: 'fade',
       delay: [500, 0],
-      followCursor: true,
-      plugins: [followCursor],
     }
   }
-
+  @Input() isAdmin: boolean;
   @Input() files: any;
   @Input() path: string;
   @Input() expanded: boolean;
