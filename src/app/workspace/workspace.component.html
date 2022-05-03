@@ -1,5 +1,5 @@
 <div class="container-fluid g-0" @fadeIn>
-  <navbar [path]="getUrl()"></navbar>
+  <navbar [path]="getUrl()" (isAdminEmitter)="adminEvent($event)"></navbar>
 
   <!-- OPCIONES -->
   <div class="row p-2 g-0 gap-1">
@@ -9,7 +9,11 @@
       </button>
     </div>
     <div class="col-auto">
-      <button class="btn btn-sm btn-color shadow-sm" routerLink="/admin">
+      <button
+        class="btn btn-sm btn-color shadow-sm"
+        [disabled]="!isAuth"
+        routerLink="/admin"
+      >
         Admin<i class="bi bi-hammer ms-1"></i>
       </button>
     </div>
@@ -18,6 +22,7 @@
         class="btn btn-sm btn-color shadow-sm"
         data-bs-toggle="modal"
         data-bs-target="#makeDirectoryModal"
+        [disabled]="!isAuth"
       >
         Crear una carpeta<i class="bi bi-folder-plus ms-1"></i>
       </button>
@@ -74,6 +79,7 @@
   <div *ngIf="content && !showloader" @fadeInError>
     <div *ngIf="content.folders && content.folders.length > 0">
       <folders
+        [isAdmin]="isAuth"
         [folders]="content.folders"
         (folderEvent)="folderEvent($event)"
       ></folders>
@@ -81,6 +87,7 @@
     <!-- FILES -->
     <div *ngIf="content.files && content.files.length > 0">
       <files
+        [isAdmin]="isAuth"
         [files]="filteredFiles"
         (fileEvent)="fileEvent($event)"
         [path]="getUrl()"
@@ -92,17 +99,17 @@
     <preloader></preloader>
   </div>
 
-  <div class="container-fluid" *ngIf="!showloader" @fadeInError>
+  <div class="container-fluid" *ngIf="!showloader && isAuth" @fadeInError>
     <div class="row g-0 gap-1 p-2">
       <label class="col d-grid" for="file">
-        <div
+        <button
           class="btn btn-sm btn-color"
           ngxTippy
           data-tippy-content="Selecciona un archivo"
           [tippyProps]="tooltip"
         >
           <i class="bi bi-cloud-plus-fill me-2"></i>Subir un archivo
-        </div>
+        </button>
         <input
           #fileInputField
           type="file"
@@ -255,7 +262,7 @@
               </div>
             </div>
           </div>
-          <div *ngIf="content.files" class="d-grid mt-2 mx-1">
+          <div *ngIf="content && content.files" class="d-grid mt-2 mx-1">
             <label for="fileRelated" class="form-label"
               >Archivo al que remplaza.</label
             >
