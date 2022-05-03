@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { fadeInError } from '../config/animations.config';
 import { RequestService } from '../services/request.service';
@@ -11,11 +11,11 @@ declare var $: any;
 })
 
 export class NavbarComponent implements OnChanges {
-
+  @Output() isAdminEmitter: any = new EventEmitter();
+  @Input() path: string;
+  public isAdmin: boolean;
   public renderedPath: string;
   public loginForm: FormGroup;
-
-  @Input() path: string;
 
   constructor(public request: RequestService) {
     this.loginForm = new FormGroup({
@@ -31,10 +31,21 @@ export class NavbarComponent implements OnChanges {
         Validators.maxLength(50),
       ])
     })
+    this.getAdmin();
   }
 
   ngOnChanges(): void {
     this.setupPath();
+  }
+
+  emitAdmin() {
+    this.isAdminEmitter.emit(this.isAdmin);
+  }
+
+  async getAdmin() {
+    const response = await this.request.isAuthenticated();
+    this.isAdmin = response.isAuthenticated
+    this.emitAdmin();
   }
 
   modal(id: string, state: string): void {
@@ -48,10 +59,20 @@ export class NavbarComponent implements OnChanges {
     }
     const res = await this.request.login(user)
     if (res) {
+      this.isAdmin = true;
+      this.emitAdmin();
       this.modal('login', 'hide')
     } else {
       this.loginForm.reset();
     }
+  }
+
+  logout() {
+    this.isAdmin = false;
+    this.emitAdmin();
+    this.request.logout();
+    this.request.redirectTo('gestor-documental')
+    this.modal('logout', 'hide')
   }
 
   setupPath(): void {
