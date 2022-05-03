@@ -16,7 +16,6 @@ declare var $: any;
 })
 
 export class WorkspaceComponent implements OnInit, AfterViewChecked {
-
   /* Atributes */
   public url: AppUrl;
   public content: any;
@@ -37,6 +36,7 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
   public filteredFiles: any;
   private subscription: Subscription;
   private timer: Observable<any>;
+  public isAuth: boolean
   @ViewChild('btnExtendFolders') btnExtendFolders: ElementRef;
   @ViewChild('btnExtendFiles') btnExtendFiles: ElementRef;
 
@@ -122,6 +122,10 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
     if (this.subscription && this.subscription instanceof Subscription) {
       this.subscription.unsubscribe();
     }
+  }
+
+  adminEvent(event) {
+    this.isAuth = event
   }
 
   ngAfterViewChecked(): void {
