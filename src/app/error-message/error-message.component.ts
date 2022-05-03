@@ -5,7 +5,6 @@ import { fadeInError } from '../config/animations.config';
 @Component({
   selector: 'error-message',
   templateUrl: './error-message.component.html',
-  styleUrls: ['./error-message.component.css'],
   animations: [fadeInError]
 })
 export class ErrorMessageComponent implements OnInit {
