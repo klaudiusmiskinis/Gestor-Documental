@@ -3,8 +3,21 @@
     {{ renderedPath }}
   </div>
   <div class="col-auto text-end link-white me-2">
-    <div class="link-white" (click)="modal('login', 'show')">
+    <div
+      *ngIf="!isAdmin"
+      @fadeInError
+      class="link-white"
+      (click)="modal('login', 'show')"
+    >
       <i class="bi bi-person-circle"></i>
+    </div>
+    <div
+      *ngIf="isAdmin"
+      @fadeInError
+      class="link-white"
+      (click)="modal('logout', 'show')"
+    >
+      <i class="bi bi-door-closed-fill"></i>
     </div>
   </div>
 </div>
@@ -39,7 +52,10 @@
               autocomplete="off"
             />
             <div>
-              <error-message [isTouched]="true" [ctrl]="loginForm.get('username')"></error-message>
+              <error-message
+                [isTouched]="true"
+                [ctrl]="loginForm.get('username')"
+              ></error-message>
             </div>
             <div *ngIf="!loginForm.controls['username'].errors">
               <div class="d-grid mt-1">
@@ -60,7 +76,10 @@
               autocomplete="off"
             />
             <div>
-              <error-message [isTouched]="true" [ctrl]="loginForm.get('password')"></error-message>
+              <error-message
+                [isTouched]="true"
+                [ctrl]="loginForm.get('password')"
+              ></error-message>
             </div>
             <div *ngIf="!loginForm.controls['password'].errors">
               <div class="d-grid mt-1">
@@ -80,6 +99,46 @@
             </button>
           </div>
         </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade bg-opacity-75 bg-light"
+  id="logout"
+  tabindex="-1"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-color border-0">
+        <h6 class="modal-title text-light">Cerrar sesión</h6>
+        <button
+          type="button"
+          class="btn-close btn-close-white"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <p class="text-center">¿Deseas cerrar la sesión de administrador?</p>
+        <div class="row gap-2 mt-3 mx-2">
+          <button
+            type="button"
+            class="col d-grid btn btn-sm btn-color shadow-sm"
+            (click)="logout()"
+          >
+            Eliminar
+          </button>
+          <button
+            type="button"
+            class="col d-grid btn btn-sm btn-secondary shadow-sm"
+            data-bs-dismiss="modal"
+          >
+            Cancelar
+          </button>
+        </div>
       </div>
     </div>
   </div>
