@@ -1,4 +1,4 @@
-import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { ColDef } from 'ag-grid-community';
 import { RequestService } from '../services/request.service';
 import { localeEs } from '../../assets/locale.es';
@@ -13,7 +13,8 @@ declare var $: any;
   styleUrls: ['./admin.component.css'],
   animations: [fadeInError]
 })
-export class AdminComponent implements OnInit, OnDestroy {
+export class AdminComponent implements OnInit {
+  public isAdmin: boolean;
   public columnas: ColDef[] = [
     { headerName: "ID", filter: 'agNumberColumnFilter', sortable: true, field: "id", resizable: true },
     { headerName: 'Nombre', filter: 'agTextColumnFilter', sortable: true, field: "name", resizable: true },
@@ -74,14 +75,17 @@ export class AdminComponent implements OnInit, OnDestroy {
 
 
   async ngOnInit(): Promise<void> {
-    this.setDatos();
+    if (!this.isAdmin) this.request.redirectTo('workspace')
+    if (this.isAdmin) {
+      await this.setDatos();
+    }
     this.gridOptions = {
       localeTextFunc: (key: string, defaultValue: string) => localeEs[key] || defaultValue
     }
   }
 
-  public ngOnDestroy() {
-    this.gridApi.destroy();
+  adminEvent(event) {
+    this.isAdmin = event
   }
 
   setFormValues() {
