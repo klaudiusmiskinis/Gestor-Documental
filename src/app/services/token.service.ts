@@ -9,7 +9,6 @@ export class TokenService {
 
   constructor() {
     this.initializingToken();
-    console.log(this.getToken())
   }
 
   getToken() {
