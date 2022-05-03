@@ -63,6 +63,7 @@
                   <button
                     class="btn btn-sm btn-outline-color"
                     (click)="folderEmitter('delete', folder)"
+                    [disabled]="!isAdmin"
                   >
                     Eliminar<i class="bi bi-trash-fill ms-1"></i>
                   </button>
@@ -101,7 +102,7 @@
                     class="btn btn-sm btn-outline-primary"
                     (click)="folderEmitter('goinside', folders[i + 1])"
                   >
-                  Entrar<i class="bi bi-arrow-right-circle-fill ms-1"></i>
+                    Entrar<i class="bi bi-arrow-right-circle-fill ms-1"></i>
                   </button>
                 </div>
                 <div class="col d-grid">
@@ -117,8 +118,9 @@
                   <button
                     class="btn btn-sm btn-outline-color"
                     (click)="folderEmitter('delete', folders[i + 1])"
+                    [disabled]="!isAdmin"
                   >
-                  Eliminar<i class="bi bi-trash-fill ms-1"></i>
+                    Eliminar<i class="bi bi-trash-fill ms-1"></i>
                   </button>
                 </div>
               </div>
@@ -164,15 +166,16 @@
                     (click)="folderEmitter('edit', folders[i + 2])"
                     disabled
                   >
-                  Editar<i class="bi bi-pencil-fill ms-1"></i>
+                    Editar<i class="bi bi-pencil-fill ms-1"></i>
                   </button>
                 </div>
                 <div class="col d-grid">
                   <button
                     class="btn btn-sm btn-outline-color"
                     (click)="folderEmitter('delete', folders[i + 2])"
+                    [disabled]="!isAdmin"
                   >
-                  Eliminar<i class="bi bi-trash-fill ms-1"></i>
+                    Eliminar<i class="bi bi-trash-fill ms-1"></i>
                   </button>
                 </div>
               </div>
