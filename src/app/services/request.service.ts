@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { NotifierService } from 'angular-notifier';
 import { TokenService } from './token.service';
 
@@ -8,7 +9,7 @@ import { TokenService } from './token.service';
 export class RequestService {
   private content: any;
   private notifier: any;
-  constructor(private http: HttpClient, notifier: NotifierService, private token: TokenService) {
+  constructor(private http: HttpClient, notifier: NotifierService, private token: TokenService, private router: Router) {
     this.notifier = notifier;
   }
 
@@ -19,7 +20,7 @@ export class RequestService {
       this.token.saveToken();
       return true;
     } catch (e) {
-      this.notificate('Error con el login.');
+      this.notificate('Datos incorrectos.');
       return false;
     }
   };
@@ -30,6 +31,14 @@ export class RequestService {
     } catch (e) {
       this.notificate('Error con el servidor.');
       return 'Error';
+    }
+  }
+
+  async isAuthenticated() {
+    try {
+      return await this.http.get<any>('http://localhost:3001/isAuthenticated').toPromise();
+    } catch (e) {
+      this.notificate('No tienes permiso para acceder aquí.');
     }
   }
 
@@ -169,4 +178,14 @@ export class RequestService {
   notificate(message: string): void {
     this.notifier.notify('default', message);
   };
+
+  logout() {
+    this.token.removeToken()
+
+  }
+
+  redirectTo(path: string) {
+    if (path.charAt(0) !== '/') path = '/' + path;
+    this.router.navigate([path])
+  }
 };
