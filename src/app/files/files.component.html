@@ -49,6 +49,7 @@
                   <button
                     class="btn btn-sm btn-outline-success"
                     (click)="fileEmitter('edit', file.name)"
+                    [disabled]="!isAdmin"
                   >
                     Editar<i class="bi bi-pencil-fill ms-1"></i>
                   </button>
@@ -58,6 +59,7 @@
                     [disabled]="file.isRemoved"
                     class="btn btn-sm btn-outline-color"
                     (click)="fileEmitter('delete', file.name)"
+                    [disabled]="!isAdmin"
                   >
                     Eliminar<i class="ms-1 bi bi-trash-fill"></i>
                   </button>
@@ -108,6 +110,7 @@
                   <button
                     class="btn btn-sm btn-outline-success"
                     (click)="fileEmitter('edit', files[i + 1].name)"
+                    [disabled]="!isAdmin"
                   >
                     Editar<i class="bi bi-pencil-fill ms-1"></i>
                   </button>
@@ -117,6 +120,7 @@
                     [disabled]="files[i + 1].isRemoved"
                     class="btn btn-sm btn-outline-color"
                     (click)="fileEmitter('delete', files[i + 1].name)"
+                    [disabled]="!isAdmin"
                   >
                     Eliminar<i class="ms-1 bi bi-trash-fill"></i>
                   </button>
@@ -125,6 +129,7 @@
                   <button
                     class="btn btn-sm btn-outline-color"
                     (click)="fileEmitter('recover', files[i + 1])"
+                    [disabled]="!isAdmin"
                   >
                     Recuperar<i class="ms-1 bi bi-recycle"></i>
                   </button>
@@ -167,6 +172,7 @@
                   <button
                     class="btn btn-sm btn-outline-success"
                     (click)="fileEmitter('edit', files[i + 2].name)"
+                    [disabled]="!isAdmin"
                   >
                     Editar<i class="bi bi-pencil-fill ms-1"></i>
                   </button>
@@ -176,6 +182,7 @@
                     [disabled]="files[i + 2].isRemoved"
                     class="btn btn-sm btn-outline-color"
                     (click)="fileEmitter('delete', files[i + 2].name)"
+                    [disabled]="!isAdmin"
                   >
                     Eliminar<i class="ms-1 bi bi-trash-fill"></i>
                   </button>
@@ -184,6 +191,7 @@
                   <button
                     class="btn btn-sm btn-outline-color"
                     (click)="fileEmitter('recover', files[i + 2])"
+                    [disabled]="!isAdmin"
                   >
                     Recuperar<i class="ms-1 bi bi-recycle"></i>
                   </button>
