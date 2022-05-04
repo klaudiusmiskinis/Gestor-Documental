@@ -85,6 +85,7 @@ export class AdminComponent implements OnInit {
   }
 
   adminEvent(event) {
+    console.log(event);
     this.isAdmin = event
   }
 
