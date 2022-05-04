@@ -36,6 +36,7 @@ export class NavbarComponent implements OnChanges {
 
   ngOnChanges(): void {
     this.setupPath();
+    this.emitAdmin();
   }
 
   emitAdmin() {
