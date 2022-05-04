@@ -75,6 +75,8 @@ export class AdminComponent implements OnInit {
 
 
   async ngOnInit(): Promise<void> {
+    const response = await this.request.isAuthenticated();
+    this.isAdmin = response.isAuthenticated
     if (!this.isAdmin) this.request.redirectTo('workspace')
     if (this.isAdmin) {
       await this.setDatos();
@@ -82,11 +84,6 @@ export class AdminComponent implements OnInit {
     this.gridOptions = {
       localeTextFunc: (key: string, defaultValue: string) => localeEs[key] || defaultValue
     }
-  }
-
-  adminEvent(event) {
-    console.log(event);
-    this.isAdmin = event
   }
 
   setFormValues() {
