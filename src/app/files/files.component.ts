@@ -42,4 +42,10 @@ export class FilesComponent implements OnInit {
   fileEmitter(type: string, file: string) {
     this.fileEvent.emit({ type: type, file: file });
   }
+
+  isDoxcOrXlsx(filename: string) {
+    if (!filename.includes('.')) throw "Extension not detected";
+    if (filename.includes('.docx')) return true;
+    return false;
+  }
 }
