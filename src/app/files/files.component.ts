@@ -28,11 +28,9 @@ export class FilesComponent implements OnInit {
   @Input() isAdmin: boolean;
   @Input() files: any;
   @Input() path: string;
-  @Input() expanded: boolean;
   @Output() fileEvent = new EventEmitter<Object>();
 
   ngOnInit(): void {
-    this.expanded = true;
   }
 
   getFile(file: string): string {
@@ -40,7 +38,6 @@ export class FilesComponent implements OnInit {
   };
 
   getFilePDF(file: string): string {
-    console.log('pdf');
     return this.request.getPDF(this.path, file);
   };
 
