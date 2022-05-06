@@ -118,7 +118,6 @@ export class RequestService {
         this.setContent(status);
       };
     } catch (e) {
-      console.log(e);
       this.notificate('Error con la subida del archivo.');
     }
   };
