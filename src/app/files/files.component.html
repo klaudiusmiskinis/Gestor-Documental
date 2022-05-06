@@ -38,6 +38,15 @@
                 ></a>
               </button>
               <div class="row">
+                <div *ngIf="isDocx(file.name)" class="col d-grid">
+                  <a
+                    href="{{ getFilePDF(file.name) }}"
+                    class="btn btn-sm btn-outline-danger"
+                    >Descargar en PDF<i
+                      class="bi bi-cloud-arrow-down-fill ms-1"
+                    ></i
+                  ></a>
+                </div>
                 <div class="col d-grid">
                   <a
                     href="{{ getFile(file.name) }}"
@@ -99,6 +108,15 @@
                 ></a>
               </button>
               <div class="row">
+                <div *ngIf="isDocx(files[i + 1].name)" class="col d-grid">
+                  <a
+                    href="{{ getFilePDF(files[i + 1].name) }}"
+                    class="btn btn-sm btn-outline-danger"
+                    >Descargar en PDF<i
+                      class="bi bi-cloud-arrow-down-fill ms-1"
+                    ></i
+                  ></a>
+                </div>
                 <div class="col d-grid">
                   <a
                     href="{{ getFile(files[i + 1].name) }}"
@@ -161,6 +179,15 @@
                 ></a>
               </button>
               <div class="row">
+                <div *ngIf="isDocx(files[i + 2].name)" class="col d-grid">
+                  <a
+                    href="{{ getFilePDF(files[i + 2].name) }}"
+                    class="btn btn-sm btn-outline-danger"
+                    >Descargar en PDF<i
+                      class="bi bi-cloud-arrow-down-fill ms-1"
+                    ></i
+                  ></a>
+                </div>
                 <div class="col d-grid">
                   <a
                     href="{{ getFile(files[i + 2].name) }}"
