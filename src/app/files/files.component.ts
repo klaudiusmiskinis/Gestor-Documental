@@ -39,11 +39,16 @@ export class FilesComponent implements OnInit {
     return this.request.getFile(this.path, file);
   };
 
+  getFilePDF(file: string): string {
+    console.log('pdf');
+    return this.request.getPDF(this.path, file);
+  };
+
   fileEmitter(type: string, file: string) {
     this.fileEvent.emit({ type: type, file: file });
   }
 
-  isDoxcOrXlsx(filename: string) {
+  isDocx(filename: string) {
     if (!filename.includes('.')) throw "Extension not detected";
     if (filename.includes('.docx')) return true;
     return false;
