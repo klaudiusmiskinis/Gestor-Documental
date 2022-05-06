@@ -17,7 +17,7 @@ export class TokenInterceptorInterceptor implements HttpInterceptor {
     if (this.token.isSaved()) {
       request = request.clone({
         setHeaders: {
-          Authorization: 'Bearer' + this.token.getSavedToken()
+          Authorization: 'Bearer ' + this.token.getSavedToken()
         }
       })
     }
