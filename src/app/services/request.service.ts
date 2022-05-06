@@ -155,6 +155,15 @@ export class RequestService {
     }
   };
 
+  getPDF(path: string, file: string): string {
+    let char = this.setParameterChar(path);
+    if (path == 'http://localhost:3001/') {
+      return path.split('?').join('download/pdf?') + 'download/pdf' + char + 'download=' + file;
+    } else {
+      return path.split('?').join('download/pdf?') + char + 'download=' + file;
+    }
+  };
+
   parse(request: any): any {
     return JSON.parse(JSON.stringify(request));
   };
