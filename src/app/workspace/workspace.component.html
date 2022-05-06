@@ -102,14 +102,14 @@
   <div class="container-fluid" *ngIf="!showloader && isAuth" @fadeInError>
     <div class="row g-0 gap-1 p-2">
       <label class="col d-grid" for="file">
-        <button
+        <div
           class="btn btn-sm btn-color"
           ngxTippy
           data-tippy-content="Selecciona un archivo"
           [tippyProps]="tooltip"
         >
           <i class="bi bi-cloud-plus-fill me-2"></i>Subir un archivo
-        </button>
+        </div>
         <input
           #fileInputField
           type="file"
