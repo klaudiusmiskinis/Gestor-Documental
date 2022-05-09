@@ -31,6 +31,10 @@ export class AdminComponent implements OnInit {
   public gridOptions = {}
   public selected: any;
   public editRowForm: FormGroup;
+  public overlayLoadingTemplate =
+    '<span class="ag-overlay-loading-center">Espera un momento.</span>';
+  public overlayNoRowsTemplate =
+    '<span style="padding: 10px; border: 2px solid #444; background: lightgoldenrodyellow;">No hay datos.</span>';
 
   constructor(private request: RequestService) {
     this.editRowForm = new FormGroup({
@@ -71,6 +75,7 @@ export class AdminComponent implements OnInit {
         Validators.pattern('^[ A-zÀ-ú0-9._-]*$')
       ])
     })
+
   }
 
 
@@ -150,9 +155,15 @@ export class AdminComponent implements OnInit {
         }
       }
     })
-    const data = [file, where, this.selected]
-    await this.request.updateRow(data);
+    console.log(file, where, this.selected);
+
+    const data = {
+      new: file,
+      where: where,
+      old: this.selected
+    }
     this.editRowForm.controls['name'].setValue(this.editRowForm.controls['name'].value.split('.' + this.selected.name.split('.')[this.selected.name.split('.').length - 1])[0])
+    await this.request.updateRow(data)
   }
 
   validateFilename(control: AbstractControl): { [key: string]: any } | null {
