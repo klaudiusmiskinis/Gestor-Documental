@@ -103,6 +103,11 @@ export class RequestService {
     }
   };
 
+  async getPersons() {
+    const response = await this.http.get<any>('http://localhost:3001/persons').toPromise();
+    return response;
+  }
+
   async uploadFile(formData: FormData, options: Object, path: string, name: string, fileRelated: string, fileReason: string): Promise<void> {
     try {
       if (name) {
