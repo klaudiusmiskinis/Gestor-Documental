@@ -68,7 +68,8 @@ export class AdminComponent implements OnInit {
       removedDate: new FormControl('', [
         CustomValidator.dateValidator
       ]),
-      updateDate: new FormControl('', []),
+      updateDate: new FormControl('', [
+      ]),
       author: new FormControl('', []),
       reason: new FormControl('', [
         Validators.required,
