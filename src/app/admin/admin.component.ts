@@ -68,6 +68,8 @@ export class AdminComponent implements OnInit {
       removedDate: new FormControl('', [
         CustomValidator.dateValidator
       ]),
+      updateDate: new FormControl('', []),
+      author: new FormControl('', []),
       reason: new FormControl('', [
         Validators.required,
         Validators.minLength(3),
@@ -87,7 +89,7 @@ export class AdminComponent implements OnInit {
       await this.setDatos();
     }
     this.gridOptions = {
-      localeTextFunc: (key: string, defaultValue: string) => localeEs[key] || defaultValue
+      getLocaleText: (key: string, defaultValue: string) => localeEs[key] || defaultValue
     }
   }
 
