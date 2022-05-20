@@ -275,7 +275,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-sm">
+            <div class="col-sm-8">
               <span class="p-0 mt-1">Persona encargada</span>
               <input
                 class="form-control"
@@ -290,13 +290,13 @@
               </div>
               <div
                 *ngIf="
-                  !editRowForm.controls['removedDate'].errors &&
-                  editRowForm.controls['removedDate'].value
+                  !editRowForm.controls['author'].errors &&
+                  editRowForm.controls['author'].value
                 "
               >
                 <div class="d-grid mt-1">
                   <small @fadeInError class="text-success"
-                    ><i class="bi bi-check-lg me-1"></i>Este fecha es válida.
+                    ><i class="bi bi-check-lg me-1"></i>Campo válido.
                   </small>
                 </div>
               </div>
