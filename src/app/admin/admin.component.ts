@@ -77,9 +77,7 @@ export class AdminComponent implements OnInit {
         Validators.pattern('^[ A-zÀ-ú0-9._-]*$')
       ])
     })
-
   }
-
 
   async ngOnInit(): Promise<void> {
     const response = await this.request.isAuthenticated();
