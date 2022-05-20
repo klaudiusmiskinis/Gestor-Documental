@@ -89,7 +89,7 @@ export class AdminComponent implements OnInit {
     if (!this.isAdmin) this.request.redirectTo('workspace')
     if (this.isAdmin) await this.setDatos();
     this.gridOptions = {
-      getLocaleText: (key: string, defaultValue: string) => localeEs[key] || defaultValue
+      localeText: (key: string, defaultValue: string) => localeEs[key] || defaultValue,
     }
   }
 
