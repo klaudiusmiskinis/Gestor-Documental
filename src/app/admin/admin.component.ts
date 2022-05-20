@@ -87,9 +87,7 @@ export class AdminComponent implements OnInit {
     const response = await this.request.isAuthenticated();
     this.isAdmin = response.isAuthenticated
     if (!this.isAdmin) this.request.redirectTo('workspace')
-    if (this.isAdmin) {
-      await this.setDatos();
-    }
+    if (this.isAdmin) await this.setDatos();
     this.gridOptions = {
       getLocaleText: (key: string, defaultValue: string) => localeEs[key] || defaultValue
     }
@@ -159,8 +157,6 @@ export class AdminComponent implements OnInit {
         }
       }
     })
-    console.log(file, where, this.selected);
-
     const data = {
       new: file,
       where: where,
