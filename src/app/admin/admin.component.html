@@ -277,12 +277,10 @@
             </div>
             <div class="col-sm-8">
               <span class="p-0 mt-1">Persona encargada</span>
-              <select
-                *ngFor="let person of persons"
-                class="form-control"
-                formControlName="author"
-              >
-                <option [value]="person.dni">{{ person.name }}</option>
+              <select class="form-control" formControlName="author">
+                <option *ngFor="let person of persons" [value]="person.dni">
+                  {{ person.name }}
+                </option>
               </select>
               <div>
                 <error-message
