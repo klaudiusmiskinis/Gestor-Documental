@@ -249,6 +249,60 @@
             </div>
           </div>
           <div class="row g-3 mt-1">
+            <div class="col-sm-4">
+              <span class="p-0 mt-1">Fecha de actualización</span>
+              <input
+                class="form-control"
+                type="date"
+                formControlName="updateDate"
+                autocomplete="off"
+              />
+              <div>
+                <error-message
+                  [ctrl]="editRowForm.get('updateDate')"
+                ></error-message>
+              </div>
+              <div
+                *ngIf="
+                  !editRowForm.controls['updateDate'].errors &&
+                  editRowForm.controls['updateDate'].value
+                "
+              >
+                <div class="d-grid mt-1">
+                  <small @fadeInError class="text-success"
+                    ><i class="bi bi-check-lg me-1"></i>Campo válido.
+                  </small>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm">
+              <span class="p-0 mt-1">Persona encargada</span>
+              <input
+                class="form-control"
+                type="text"
+                formControlName="author"
+                autocomplete="off"
+              />
+              <div>
+                <error-message
+                  [ctrl]="editRowForm.get('author')"
+                ></error-message>
+              </div>
+              <div
+                *ngIf="
+                  !editRowForm.controls['removedDate'].errors &&
+                  editRowForm.controls['removedDate'].value
+                "
+              >
+                <div class="d-grid mt-1">
+                  <small @fadeInError class="text-success"
+                    ><i class="bi bi-check-lg me-1"></i>Este fecha es válida.
+                  </small>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row g-3 mt-1">
             <div class="col-sm">
               <span class="p-0 mt-1">Motivo</span>
               <textarea
