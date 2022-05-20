@@ -5,6 +5,7 @@ import { localeEs } from '../../assets/locale.es';
 import { fadeInError } from '../config/animations.config';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CustomValidator } from '../validators/CustomValidators';
+import { Person } from '../models/persons';
 declare var $: any;
 
 @Component({
@@ -30,11 +31,12 @@ export class AdminComponent implements OnInit {
   public gridApi: any;
   public gridOptions = {}
   public selected: any;
+  public persons: Person[] = [];
   public editRowForm: FormGroup;
   public overlayLoadingTemplate =
     '<span class="ag-overlay-loading-center">Espera un momento.</span>';
   public overlayNoRowsTemplate =
-    '<span style="padding: 10px; border: 2px solid #444; background: lightgoldenrodyellow;">No hay datos.</span>';
+    '<span style="padding: 10px; background: #f27428; color: #fff;">No hay datos.</span>';
 
   constructor(private request: RequestService) {
     this.editRowForm = new FormGroup({
@@ -81,6 +83,7 @@ export class AdminComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    this.persons = await this.request.getPersons();
     const response = await this.request.isAuthenticated();
     this.isAdmin = response.isAuthenticated
     if (!this.isAdmin) this.request.redirectTo('workspace')
