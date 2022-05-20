@@ -249,7 +249,7 @@
             </div>
           </div>
           <div class="row g-3 mt-1">
-            <div class="col-sm-4">
+            <div class="col-sm">
               <span class="p-0 mt-1">Fecha de actualización</span>
               <input
                 class="form-control"
@@ -277,12 +277,13 @@
             </div>
             <div class="col-sm-8">
               <span class="p-0 mt-1">Persona encargada</span>
-              <input
+              <select
+                *ngFor="let person of persons"
                 class="form-control"
-                type="text"
                 formControlName="author"
-                autocomplete="off"
-              />
+              >
+                <option [value]="person.dni">{{ person.name }}</option>
+              </select>
               <div>
                 <error-message
                   [ctrl]="editRowForm.get('author')"
