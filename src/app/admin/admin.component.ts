@@ -25,6 +25,8 @@ export class AdminComponent implements OnInit {
     { headerName: 'ID Padre', filter: 'agNumberColumnFilter', sortable: true, field: "idParent", resizable: true },
     { headerName: 'Eliminado', filter: 'agDateColumnFilter', sortable: true, field: "isRemoved", resizable: true },
     { headerName: 'Fecha Eliminado', filter: 'agDateColumnFilter', sortable: true, field: "removedDate", resizable: true },
+    { headerName: 'Fecha Modificado', filter: 'agDateColumnFilter', sortable: true, field: "updateDate", resizable: true },
+    { headerName: 'Encargado/a', filter: 'agTextColumnFilter', sortable: true, field: "author", resizable: true },
     { headerName: 'Motivo', filter: 'agTextColumnFilter', sortable: true, field: "reason", resizable: true },
   ];
   public datos: any
@@ -71,8 +73,12 @@ export class AdminComponent implements OnInit {
         CustomValidator.dateValidator
       ]),
       updateDate: new FormControl('', [
+        Validators.required,
+        CustomValidator.dateValidator
       ]),
-      author: new FormControl('', []),
+      author: new FormControl('', [
+        Validators.required
+      ]),
       reason: new FormControl('', [
         Validators.required,
         Validators.minLength(3),
@@ -163,7 +169,13 @@ export class AdminComponent implements OnInit {
       old: this.selected
     }
     this.editRowForm.controls['name'].setValue(this.editRowForm.controls['name'].value.split('.' + this.selected.name.split('.')[this.selected.name.split('.').length - 1])[0])
-    await this.request.updateRow(data)
+    const response = await this.request.updateRow(data)
+    console.log(data);
+    if (response) {
+      await this.setDatos();
+      this.modal('editRowModal', 'hide');
+    }
+
   }
 
   validateFilename(control: AbstractControl): { [key: string]: any } | null {
@@ -171,6 +183,7 @@ export class AdminComponent implements OnInit {
       const value = this.selected;
       const valueName = control.value
       const valueWithExtension = valueName + '.' + value.extension;
+      console.log(value, valueName, valueWithExtension);
       const response = this.datos.filter(row => {
         if (value.path === row.path && value.id !== row.id) {
           if (row.name.toLowerCase() === valueWithExtension.toLowerCase()) {
