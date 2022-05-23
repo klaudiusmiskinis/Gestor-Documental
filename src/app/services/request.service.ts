@@ -108,15 +108,12 @@ export class RequestService {
     return response;
   }
 
-  async uploadFile(formData: FormData, options: Object, path: string, name: string, fileRelated: string, fileReason: string): Promise<void> {
+  async uploadFile(formData: FormData, options: Object, path: string, name: string, fileRelated: string, fileReason: string, author: string): Promise<void> {
     try {
-      if (name) {
-        path = path + this.setParameterChar(path) + 'updateName=' + name;
-      } if (fileRelated !== undefined) {
-        path = path + this.setParameterChar(path) + 'fileRelated=' + fileRelated;
-      } if (fileReason && fileReason.length > 5) {
-        path = path + this.setParameterChar(path) + 'reason=' + fileReason;
-      }
+      if (name) path = path + this.setParameterChar(path) + 'updateName=' + name;
+      if (fileRelated !== undefined) path = path + this.setParameterChar(path) + 'fileRelated=' + fileRelated;
+      if (fileReason && fileReason.length > 5) path = path + this.setParameterChar(path) + 'reason=' + fileReason;
+      if (author) path = path + this.setParameterChar(path) + 'author=' + author;
       const status = this.parse(await this.http.post<any>(path, formData, options).toPromise());
       if (status.success) {
         this.notificate('¡Archivo subido!');

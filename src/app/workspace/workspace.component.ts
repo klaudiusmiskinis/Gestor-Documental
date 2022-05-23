@@ -6,6 +6,7 @@ import { slideIn, fadeIn, fadeOut, fadeInError } from '../config/animations.conf
 import { FileInfo } from '../models/file.model';
 import { AppUrl } from '../models/appurl.model';
 import { Observable, Subscription, timer } from 'rxjs';
+import { Person } from '../models/persons';
 declare var $: any;
 
 @Component({
@@ -33,6 +34,7 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
   public expandedFiles: boolean;
   public showloader: boolean;
   public filteredFiles: any;
+  public persons: Person[] = [];
   private subscription: Subscription;
   private timer: Observable<any>;
   public isAuth: boolean
@@ -60,7 +62,8 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
       reasonSwitch: new FormControl(false),
       fileNewName: new FormControl(),
       fileRelated: new FormControl(false, [Validators.required]),
-      fileReason: new FormControl()
+      fileReason: new FormControl(),
+      author: new FormControl('')
     });
 
     this.setConditionalValidators(true, 'fileNewName', true, true, true, 3, 30);
@@ -112,6 +115,7 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
     if (localStorage.getItem('path')) {
       this.url.url = localStorage.getItem('path')
     }
+    this.persons = await this.request.getPersons();
     await this.getContent(this.getUrl());
   };
 
@@ -312,6 +316,7 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
     let reasonSwitch = this.uploadFileForm.controls['reasonSwitch'].value ?? undefined;
     let fileReason = this.uploadFileForm.controls['fileReason'].value ?? undefined;
     let fileRelated = this.uploadFileForm.controls['fileRelated'].value ?? undefined;
+    const author = this.uploadFileForm.controls['author'].value ?? undefined;
     const formData: FormData = new FormData();
     const headers = new Headers();
     if (fileList[0]) {
@@ -324,7 +329,7 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
     };
     if (!reasonSwitch) fileReason = undefined;
     if (!fileRelated) fileRelated = undefined;
-    await this.request.uploadFile(formData, options, this.getUrl(), fileNewName, fileRelated, fileReason);
+    await this.request.uploadFile(formData, options, this.getUrl(), fileNewName, fileRelated, fileReason, author);
     this.modal('uploadNameChange', 'hide');
     this.getContent(this.getUrl());
   };

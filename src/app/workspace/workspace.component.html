@@ -224,9 +224,17 @@
           </div>
           <div class="d-grid mt-1">
             <span class="p-0 mt-1">Persona encargada</span>
-            <select class="form-control">
-              <option [value]="0">No</option>
-              <option [value]="1">Sí</option>
+            <select *ngIf="persons.length > 0"
+              class="form-control"
+              formControlName="author"
+            >
+              <option
+                *ngFor="let person of persons; let i = index"
+                [value]="person.dni"
+                [selected]="i == 0"
+              >
+                {{ person.name }}
+              </option>
             </select>
           </div>
           <div class="d-grid mx-1 mt-2">
