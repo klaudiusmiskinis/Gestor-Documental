@@ -12,6 +12,11 @@ export class AppUrl {
         this.parameters = parameters;
     }
 
+    toPath(path: string) {
+        if (!path.includes('/')) path = '/' + path
+        return this.url + path
+    }
+
     addParameter(parameter: Parameter): void {
         this.parameters.push(parameter);
     }
@@ -29,9 +34,9 @@ export class AppUrl {
 
     setParameterChar(url): string {
         if (url.includes('?')) {
-          return '&';
+            return '&';
         } else {
-          return '?';
+            return '?';
         };
     };
 }
