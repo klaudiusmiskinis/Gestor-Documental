@@ -136,14 +136,13 @@ export class RequestService {
     }
   }
 
-  async updateRow(data: any): Promise<void> {
+  async updateRow(data: any): Promise<boolean> {
     try {
-      const status = this.parse(await this.http.post<any>('http://localhost:3001/updateRow', data).toPromise());
-      if (status.success) {
-        this.setContent(status);
-      }
+      await this.http.post<any>('http://localhost:3001/update', data).toPromise();
+      return true;
     } catch (e) {
       this.notificate('Error con el cambio de nombre');
+      return false;
     }
   }
 
