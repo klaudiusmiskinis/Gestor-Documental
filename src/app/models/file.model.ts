@@ -13,22 +13,34 @@ export class FileInfo {
         }
     }
 
+    /**
+     * Devuelve la extension
+     */
     public getExtension(): void {
         if (this.name) {
             this.extension = this.name.split('.')[this.name.split('.').length - 1]
         }
     }
 
+    /**
+     * Comprueba el tamaño
+     * @param size number
+     */
     public calculateSize(size: number): void {
         let counterLoop = 0;
-        do {  
-           size  /= 1024;
-           size.toFixed(2);
-           counterLoop++;
-        } while (size > 1024); 
+        do {
+            size /= 1024;
+            size.toFixed(2);
+            counterLoop++;
+        } while (size > 1024);
         this.size = size.toFixed(2) + this.getUnitOfInformation(counterLoop);
     }
 
+    /**
+     * Devuleve el tamaño
+     * @param counter number
+     * @returns string
+     */
     public getUnitOfInformation(counter: number): string {
         switch (counter) {
             case 0:
@@ -45,5 +57,4 @@ export class FileInfo {
                 return ' KB'
         }
     }
-
 }
