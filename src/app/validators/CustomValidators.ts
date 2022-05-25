@@ -1,6 +1,11 @@
 import { AbstractControl } from "@angular/forms";
 
 export class CustomValidator {
+    /**
+     * Comprueba si es numerico
+     * @param control AbstractControl
+     * @returns object | null
+     */
     static numeric(control: AbstractControl) {
         let val = control.value;
         if (val === null || val === '') return null;
@@ -8,6 +13,11 @@ export class CustomValidator {
         return null;
     }
 
+    /**
+     * Comprueba si la fecha es válida, ni futura ni antigua a 1900
+     * @param control AbstractControl
+     * @returns object | null
+     */
     static dateValidator(control: AbstractControl) {
         let today: string | Date = new Date();
         today = today.toISOString().slice(0, -14);
@@ -19,6 +29,11 @@ export class CustomValidator {
         return null;
     }
 
+    /**
+     * Comprueba si el nombre incluye extension
+     * @param control AbstractControl
+     * @returns object | null
+     */
     static hasExtension(control: AbstractControl) {
         const value = control.value;
         if (value.includes('.')) {
@@ -27,6 +42,11 @@ export class CustomValidator {
         return null;
     }
 
+     /**
+     * Comprueba si el ultimo valor del campo termina en /
+     * @param control AbstractControl
+     * @returns object | null
+     */
     static lastSlash(control: AbstractControl) {
         const value = control.value;
         if (value.slice(-1) !== '/') {
