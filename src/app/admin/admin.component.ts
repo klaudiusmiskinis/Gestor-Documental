@@ -88,6 +88,9 @@ export class AdminComponent implements OnInit {
     })
   }
 
+  /**
+   * Método para cuando el componente cargue.
+   */
   async ngOnInit(): Promise<void> {
     this.persons = await this.request.getPersons();
     const response = await this.request.isAuthenticated();
@@ -99,6 +102,9 @@ export class AdminComponent implements OnInit {
     }
   }
 
+  /**
+   * Asignando los valores al formulario dependiendo de la fila seleccionada.
+   */
   setFormValues() {
     const controls = this.editRowForm.controls;
     if (!controls) throw 'Error with the form information';
@@ -115,6 +121,9 @@ export class AdminComponent implements OnInit {
     }
   }
 
+  /**
+   * Peticion al servicio para recibir los datos.
+   */
   async setDatos() {
     this.datos = await this.request.getAllFiles()
   }
@@ -124,23 +133,37 @@ export class AdminComponent implements OnInit {
     this.restartSize();
   }
 
+  /**
+   * Evento para manejar el evento del grid cargado.
+   * @param params 
+   */
   onGridReady(params: any) {
     this.gridApi = params.api;
     this.gridApi.setDomLayout('autoHeight');
     this.restartSize();
   }
 
+  /**
+   * Reinicia el tamaño de las columnas.
+   */
   restartSize() {
     if (!this.gridApi) throw "gridApi doesn't exist"
     this.gridApi.sizeColumnsToFit();
   }
 
+  /**
+   * Asigna los datos de la fila seleccionada.
+   * @param event 
+   */
   onRowClicked(event) {
     this.selected = event.data;
     this.selected.extension = this.selected.name.split('.')[this.selected.name.split('.').length - 1];
     this.setFormValues();
   }
 
+  /**
+   * Envia peticion HTTP con los datos al backend.
+   */
   async editRowSubmit() {
     const file = {}
     const where = {
@@ -170,20 +193,22 @@ export class AdminComponent implements OnInit {
     }
     this.editRowForm.controls['name'].setValue(this.editRowForm.controls['name'].value.split('.' + this.selected.name.split('.')[this.selected.name.split('.').length - 1])[0])
     const response = await this.request.updateRow(data)
-    console.log(data);
     if (response) {
       await this.setDatos();
       this.modal('editRowModal', 'hide');
     }
-
   }
 
+  /**
+   * Valida el nombre mirando los atributos del componente
+   * @param control AbstractControl
+   * @returns array | null
+   */
   validateFilename(control: AbstractControl): { [key: string]: any } | null {
     if (control.value) {
       const value = this.selected;
       const valueName = control.value
       const valueWithExtension = valueName + '.' + value.extension;
-      console.log(value, valueName, valueWithExtension);
       const response = this.datos.filter(row => {
         if (value.path === row.path && value.id !== row.id) {
           if (row.name.toLowerCase() === valueWithExtension.toLowerCase()) {
@@ -198,6 +223,11 @@ export class AdminComponent implements OnInit {
     return null;
   }
 
+  /**
+   * Permite mostrar o esconder un modal.
+   * @param id string
+   * @param state string
+   */
   modal(id: string, state: string): void {
     $('#' + id).modal(state);
   }

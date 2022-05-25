@@ -13,6 +13,13 @@ export class TokenInterceptorInterceptor implements HttpInterceptor {
 
   constructor(private token: TokenService) { }
 
+  /**
+   * Intercepta las peticiones antes de enviarlas y añade el header Authorization 
+   * en caso de que el token este guardado en localStorage
+   * @param request 
+   * @param next 
+   * @returns 
+   */
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (this.token.isSaved()) {
       request = request.clone({

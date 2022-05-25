@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { NotifierService } from 'angular-notifier';
+import { Person } from '../models/persons';
 import { TokenService } from './token.service';
 
 @Injectable({ providedIn: 'root' })
@@ -13,6 +14,11 @@ export class RequestService {
     this.notifier = notifier;
   }
 
+  /**
+   * POST a backend para la ruta login
+   * @param user object
+   * @returns Object
+   */
   async login(user: object): Promise<Object> {
     try {
       const res = await this.http.post<any>('http://localhost:3001/login', user).toPromise();
@@ -25,6 +31,11 @@ export class RequestService {
     }
   };
 
+  /**
+  * GET a backend para la ruta getAllFiles
+  * @param user object
+  * @returns Object
+  */
   async getAllFiles() {
     try {
       return await this.http.get<any>('http://localhost:3001/getAllFiles').toPromise();
@@ -34,6 +45,9 @@ export class RequestService {
     }
   }
 
+  /**
+   * GET a backend para la ruta isAuthenticated
+   */
   async isAuthenticated() {
     try {
       return await this.http.get<any>('http://localhost:3001/isAuthenticated').toPromise();
@@ -42,6 +56,11 @@ export class RequestService {
     }
   }
 
+  /**
+   * GET para los datos dependiendo de la carpeta en la que nos encontremos
+   * @param user object
+   * @returns Object
+   */
   async getWorkspace(path: string): Promise<Object> {
     try {
       this.setContent(this.parse(await this.http.get<any>(path).toPromise()));
@@ -52,6 +71,11 @@ export class RequestService {
     }
   };
 
+  /**
+   * DELETE para eliminar un archivo
+   * @param path string
+   * @param file string
+   */
   async deleteFile(path: string, file: string): Promise<void> {
     try {
       let char = this.setParameterChar(path);
@@ -65,6 +89,11 @@ export class RequestService {
     }
   };
 
+  /**
+   * DELETE para eliminar una carpeta
+   * @param path string
+   * @param folder string
+   */
   async deleteDirectory(path: string, folder: string): Promise<void> {
     try {
       let char = this.setParameterChar(path);
@@ -78,6 +107,11 @@ export class RequestService {
     }
   };
 
+  /**
+   * POST para recuperar un archivo
+   * @param path string
+   * @param folder string
+   */
   async recoverFile(id: number, isLastVersion: boolean): Promise<void> {
     try {
       const status = this.parse(await this.http.post<any>('http://localhost:3001/recover', { id: id, isLastVersion: isLastVersion }).toPromise());
@@ -90,6 +124,11 @@ export class RequestService {
     }
   }
 
+  /**
+   * POST para crear una carpeta
+   * @param path string
+   * @param directoryName string
+   */
   async makeDirectory(path: string, directoryName: string): Promise<void> {
     try {
       let char = this.setParameterChar(path);
@@ -103,11 +142,25 @@ export class RequestService {
     }
   };
 
+  /**
+   * GET a la ruta persons
+   * @returns array
+   */
   async getPersons() {
     const response = await this.http.get<any>('http://localhost:3001/persons').toPromise();
     return response;
   }
 
+  /**
+   * POST que envia el archivo al backend y los datos referentes a la subida
+   * @param formData FormData
+   * @param options Object
+   * @param path string
+   * @param name string
+   * @param fileRelated string
+   * @param fileReason string
+   * @param author string
+   */
   async uploadFile(formData: FormData, options: Object, path: string, name: string, fileRelated: string, fileReason: string, author: string): Promise<void> {
     try {
       if (name) path = path + this.setParameterChar(path) + 'updateName=' + name;
@@ -124,6 +177,12 @@ export class RequestService {
     }
   };
 
+  /**
+   * POST para editar el nombre
+   * @param path string
+   * @param newName string
+   * @param oldName string
+   */
   async editElementName(path: string, newName: string, oldName: string): Promise<void> {
     try {
       path = path + this.setParameterChar(path) + 'edit=' + oldName + '&to=' + newName;
@@ -136,6 +195,11 @@ export class RequestService {
     }
   }
 
+  /**
+   * POST que actualiza los datos de la fila
+   * @param data any
+   * @returns boolean
+   */
   async updateRow(data: any): Promise<boolean> {
     try {
       await this.http.post<any>('http://localhost:3001/update', data).toPromise();
@@ -146,6 +210,12 @@ export class RequestService {
     }
   }
 
+  /**
+   * Devuelve el archivo para descargar
+   * @param path string
+   * @param file string
+   * @returns string
+   */
   getFile(path: string, file: string): string {
     let char = this.setParameterChar(path);
     if (path == 'http://localhost:3001/') {
@@ -155,6 +225,12 @@ export class RequestService {
     }
   };
 
+  /**
+   * Devuelve el archivo para descargar
+   * @param path string
+   * @param file string
+   * @returns string
+   */
   getPDF(path: string, file: string): string {
     let char = this.setParameterChar(path);
     if (path == 'http://localhost:3001/') {
@@ -164,10 +240,20 @@ export class RequestService {
     }
   };
 
+  /**
+   * Convierte JSON a Nomenclatura de JavaScript
+   * @param request 
+   * @returns 
+   */
   parse(request: any): any {
     return JSON.parse(JSON.stringify(request));
   };
 
+  /**
+   * Comprueba el parametro y devuleve & o ?
+   * @param path string
+   * @returns 
+   */
   setParameterChar(path: string): string {
     if (path.includes('?')) {
       return '&' as string;
@@ -176,23 +262,41 @@ export class RequestService {
     };
   };
 
+  /**
+   * Devuleve el contenido
+   * @returns Object
+   */
   getContent(): Object {
     return this.content;
   };
 
+  /**
+   * Asigna el contenido
+   * @param content Object
+   */
   setContent(content: Object): void {
     this.content = content;
   };
 
+  /**
+   * Crea una notificacion
+   * @param message string
+   */
   notificate(message: string): void {
     this.notifier.notify('default', message);
   };
 
+  /**
+   * Elimina el token del localStorage
+   */
   logout() {
     this.token.removeToken()
-
   }
 
+  /**
+   * Redirige a la ruta parametrizada
+   * @param path string
+   */
   redirectTo(path: string) {
     if (path.charAt(0) !== '/') path = '/' + path;
     this.router.navigate([path])

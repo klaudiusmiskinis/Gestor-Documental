@@ -34,25 +34,42 @@ export class NavbarComponent implements OnChanges {
     this.getAdmin();
   }
 
+  /**
+   * Maneja cuando el componente tiene cambios.
+   */
   ngOnChanges(): void {
     this.setupPath();
     this.emitAdmin();
   }
 
+  /**
+   * Emite a los componentes padres
+   */
   emitAdmin() {
     this.isAdminEmitter.emit(this.isAdmin);
   }
 
+  /**
+   * Comprueba si es admin
+   */
   async getAdmin() {
     const response = await this.request.isAuthenticated();
     this.isAdmin = response.isAuthenticated
     this.emitAdmin();
   }
 
+  /**
+   * Permite mostrar o esconder un modal.
+   * @param id string
+   * @param state string
+   */
   modal(id: string, state: string): void {
     $('#' + id).modal(state);
   }
 
+  /**
+   * Metodo que envia los datos para poder comprobar el login
+   */
   async login() {
     const user = {
       username: this.loginForm.controls['username'].value,
@@ -68,6 +85,9 @@ export class NavbarComponent implements OnChanges {
     }
   }
 
+  /**
+   * Método que cierra la sesion del administrador
+   */
   logout() {
     this.isAdmin = false;
     this.emitAdmin();
@@ -76,6 +96,9 @@ export class NavbarComponent implements OnChanges {
     this.modal('logout', 'hide')
   }
 
+  /**
+   * Metodo que maneja el breadcrumb de donde nos encontramos
+   */
   setupPath(): void {
     this.renderedPath = this.path;
     if (this.renderedPath.charAt(this.renderedPath.length - 1) === '/') {

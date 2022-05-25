@@ -39,10 +39,18 @@ export class FoldersComponent implements OnInit {
     }
   }
 
+  /**
+   * Método para cuando el componente cargue.
+   */
   ngOnInit(): void {
     this.expanded = true
   }
 
+  /**
+   * Emisor de output para componentes padres
+   * @param type string
+   * @param folder string
+   */
   folderEmitter(type: string, folder: string) {
     this.folderEvent.emit({
       type: type, folder: folder
