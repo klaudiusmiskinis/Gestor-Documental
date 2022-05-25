@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { fadeInError } from '../config/animations.config';
 
@@ -7,7 +7,7 @@ import { fadeInError } from '../config/animations.config';
   templateUrl: './error-message.component.html',
   animations: [fadeInError]
 })
-export class ErrorMessageComponent implements OnInit {
+export class ErrorMessageComponent {
 
   @Input() ctrl: FormControl | any;
   @Input() isTouched: boolean = false;
@@ -27,20 +27,22 @@ export class ErrorMessageComponent implements OnInit {
     min: (par) => `El valor mínimo es ${par.min}.`
   };
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  /**
+   * Comprueba si al atributo para mostrar los errores es valido dependiendo del click al campo
+   * @returns boolean
+   */
   shouldShowErrors(): boolean {
     if (!this.isTouched) return this.ctrl && this.ctrl.errors;
     return this.ctrl && this.ctrl.errors && this.ctrl.touched;
   }
 
+  /**
+   * Recorriendo los errores y mostrando los mensajes.
+   * @returns string[]
+   */
   listOfErrors(): string[] {
     return Object.keys(this.ctrl.errors).map(
       err => this.ERROR_MESSAGE[err](this.ctrl.getError(err))
     );
   }
-
 }

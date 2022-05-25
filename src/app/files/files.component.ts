@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { fadeIn, slideIn } from '../config/animations.config';
 import { RequestService } from '../services/request.service';
 
@@ -8,7 +8,7 @@ import { RequestService } from '../services/request.service';
   animations: [slideIn, fadeIn]
 })
 
-export class FilesComponent implements OnInit {
+export class FilesComponent {
   public tooltipRight: object;
   public tooltipLeft: object;
   constructor(private request: RequestService) {
@@ -30,21 +30,38 @@ export class FilesComponent implements OnInit {
   @Input() path: string;
   @Output() fileEvent = new EventEmitter<Object>();
 
-  ngOnInit(): void {
-  }
-
+  /**
+   * Maneja la url para devolver un archivo para descargar
+   * @param file string
+   * @returns string
+   */
   getFile(file: string): string {
     return this.request.getFile(this.path, file);
   };
 
+  /**
+   * Maneja la url para devolver un archivo para descargar
+   * @param file string
+   * @returns string
+   */
   getFilePDF(file: string): string {
     return this.request.getPDF(this.path, file);
   };
 
+  /**
+   * Emisor de output para componentes padres
+   * @param type string
+   * @param file string
+   */
   fileEmitter(type: string, file: string) {
     this.fileEvent.emit({ type: type, file: file });
   }
 
+  /**
+   * Comprueba si la extension es .docx
+   * @param filename string
+   * @returns boolean
+   */
   isDocx(filename: string) {
     if (!filename.includes('.')) throw "Extension not detected";
     if (filename.includes('.docx')) return true;

@@ -110,7 +110,9 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
 
   @ViewChild('fileInputField') fileInputField: ElementRef;
 
-  /* Methods */
+  /**
+   * Método para cuando el componente cargue.
+   */
   async ngOnInit(): Promise<void> {
     if (localStorage.getItem('path')) {
       this.url.url = localStorage.getItem('path')
@@ -119,43 +121,70 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
     await this.getContent(this.getUrl());
   };
 
+  /**
+   * Método para cuando el componente se destruya.
+   */
   public ngOnDestroy() {
     if (this.subscription && this.subscription instanceof Subscription) {
       this.subscription.unsubscribe();
     }
   }
 
+  /**
+   * Método para manejar el evento de admin.
+   */
   adminEvent(event) {
     this.isAuth = event
   }
 
+  /**
+   * Método para manejar el evento cuando la vista esta cargada.
+   */
   ngAfterViewChecked(): void {
     this.cdRef.detectChanges();
   }
 
-  filterRemoved() {
+  /**
+   * Filtro para archivos borrados
+   */
+  filterRemoved(): void {
     this.request.notificate('Viendo archivos borrados');
     this.filteredFiles = this.content.files.filter(file => file.isRemoved === 1)
   }
 
-  filterLastVersions() {
+  /**
+   * Filtro para ultimas versiones
+   */
+  filterLastVersions(): void {
     this.request.notificate('Viendo últimas versiones');
     this.filteredFiles = this.content.files.filter(file => file.isLastVersion === 1)
   }
 
+  /**
+   * Filtro para ver todos los archivos
+   */
   noFilter() {
     this.request.notificate('Viendo todos los archivos');
     this.filteredFiles = this.content.files;
   }
 
+  /**
+   * Toggle para nombre
+   */
   togglecheckBoxBoolean() {
     this.checkBoxBoolean = !this.checkBoxBoolean;
   }
 
+  /**
+   * Toggle para motivo/razon
+   */
   togglecheckReasonBoolean() {
     this.checkReasonBoolean = !this.checkReasonBoolean;
   }
 
+  /**
+   * Asigna el elemento al que se ha seleccionado para los formularios de acciones
+   */
   setSelected(element: string, isFile: boolean): void {
     this.selected = {
       element: element,
@@ -163,18 +192,34 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
     }
   }
 
+  /**
+     * Permite mostrar o esconder un modal.
+     * @param id string
+     * @param state string
+     */
   modal(id: string, state: string): void {
     $('#' + id).modal(state);
   }
 
+  /**
+   * Devuelve el atributo url
+   * @returns string
+   */
   getUrl(): string {
     return this.url.url;
   }
 
+  /**
+   * Da valor al atributo url
+   * @param path string
+   */
   setPath(path: string): void {
     this.url.url = path;
   };
 
+  /**
+   * Comprueba si existe el archivo en el input.
+   */
   checkExistence(): void {
     const file = this.fileInputField.nativeElement;
     if (file.files.length > 0) {
@@ -182,6 +227,16 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
     }
   }
 
+  /**
+   * Asigna diferentes validadores dependiendo de si es true o false el checkbox marcado.
+   * @param value any
+   * @param field string
+   * @param minLength boolean
+   * @param maxLength boolean
+   * @param names boolean
+   * @param minLengthChars number
+   * @param maxLengthChars number
+   */
   setConditionalValidators(value: any, field: string, minLength: boolean, maxLength: boolean, names: boolean, minLengthChars?: number | any, maxLengthChars?: number | any) {
     const validators: ValidatorFn | ValidatorFn[] | null = [];
     if (value) {
@@ -205,6 +260,9 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
     this.uploadFileForm.updateValueAndValidity();
   }
 
+  /**
+   * Asigna texto y valor contrario al estado de expandido o contraido del HTML
+   */
   toggleExpandedFolders(): void {
     this.expandedFolders = !this.expandedFolders;
     const btnExtendFolders = this.btnExtendFolders.nativeElement;
@@ -215,6 +273,9 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
     }
   }
 
+  /**
+  * Asigna texto y valor contrario al estado de expandido o contraido del HTML
+  */
   toggleExpandedFiles(): void {
     this.expandedFiles = !this.expandedFiles;
     const btnExtendFiles = this.btnExtendFiles.nativeElement;
@@ -225,6 +286,10 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
     }
   }
 
+  /**
+   * Nos permite entrar dentro de las carpetas
+   * @param foldername string
+   */
   goForward(foldername: string): void {
     if (this.getUrl().includes('?path')) {
       this.setPath(this.getUrl() + '/' + foldername);
@@ -235,6 +300,9 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
     this.getContent(this.getUrl());
   };
 
+  /**
+   * Nos permite volver a la carpeta padre
+   */
   goBack(): void {
     if (this.getUrl().includes('?path=')) {
       if (this.getUrl().substring(0, this.getUrl().lastIndexOf('/')) === 'http://localhost:3001') {
@@ -247,6 +315,10 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
     };
   };
 
+  /**
+   * Permite manejar los eventos de las carpetas
+   * @param event 
+   */
   folderEvent(event) {
     this.setSelected(event.folder, false);
     switch (event.type) {
@@ -262,6 +334,10 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
     }
   }
 
+  /**
+   * Permite manejar los eventos de los archivos
+   * @param event 
+   */
   fileEvent(event) {
     this.setSelected(event.file, true);
     switch (event.type) {
@@ -277,6 +353,11 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
     }
   }
 
+  /**
+   * Devuelve un objeto con el nombre del error como validador.f
+   * @param control AbstractControl
+   * @returns object | null
+   */
   validateFoldername(control: AbstractControl): { [key: string]: any } | null {
     if (control.value) {
       const name = control.value.toLowerCase()
@@ -293,6 +374,11 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
     return null;
   }
 
+  /**
+   * Devuelve un objeto con el nombre del error como validador.f
+   * @param control AbstractControl
+   * @returns object | null
+   */
   validateFilename(control: AbstractControl): { [key: string]: any } | null {
     if (control.value) {
       const name = control.value.toLowerCase();
@@ -310,6 +396,9 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
     return null;
   }
 
+  /**
+   * Maneja el archivo adjuntado para permitir enviarlo al backend
+   */
   async uploadFile(): Promise<void> {
     let fileList: FileList = this.fileInputField.nativeElement.files;
     let fileNewName = this.uploadFileForm.controls['fileNewName'].value ?? undefined;
@@ -334,6 +423,9 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
     this.getContent(this.getUrl());
   };
 
+  /**
+   * Request HTTP para poder crear carpetas
+   */
   async makeDirectory(): Promise<void> {
     const directoryName = this.makeDirectoryForm.value.directory;
     if (directoryName) {
@@ -343,6 +435,9 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
     this.getContent(this.getUrl());
   };
 
+  /**
+   * Request HTTP para poder recuperar archivos borrados
+   */
   async recoverFile(): Promise<void> {
     const id = this.selected.element.id;
     await this.request.recoverFile(id, this.recoverForm.controls['isLastVersion'].value);
@@ -350,30 +445,50 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
     this.getContent(this.getUrl());
   };
 
+  /**
+   * Request HTTP para poder eliminar archivos
+   * @param file string
+   */
   async deleteFile(file: string): Promise<void> {
     await this.request.deleteFile(this.getUrl(), file);
     this.modal('confirmationDelete', 'hide');
     this.getContent(this.getUrl());
   };
 
+  /**
+   * Request HTTP para poder eliminar carpetas
+   * @param folder string
+   */
   async deleteFolder(folder: string): Promise<void> {
     await this.request.deleteDirectory(this.getUrl(), folder);
     this.modal('confirmationDelete', 'hide');
     this.getContent(this.getUrl());
   };
 
+  /**
+   * Request HTTP para poder editar nombre del archivo
+   * @param folder string
+   */
   async editFileNameSubmit() {
     await this.request.editElementName(this.getUrl(), this.editFileName.value.fileName + '.' + this.selected.element.split('.')[this.selected.element.split('.').length - 1], this.selected.element);
     this.modal('editFileName', 'hide');
     this.getContent(this.getUrl());
   }
 
+  /**
+   * Request HTTP para poder editar nombre de la carpeta
+   * @param folder string
+   */
   async editFolderNameSubmit() {
     await this.request.editElementName(this.getUrl(), this.editDirectoryName.value.folderName, this.selected.element);
     this.modal('editFolderName', 'hide');
     this.getContent(this.getUrl());
   }
 
+  /**
+   * Nos permite cargar los datos recibidos de la API
+   * @param path string
+   */
   async getContent(path: string): Promise<void> {
     this.setTimer();
     this.content = [];
@@ -381,6 +496,9 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
     this.filterLastVersions();
   };
 
+  /**
+   * Evento para mostrar la carga de los archivos
+   */
   public setTimer() {
     this.showloader = true;
     this.timer = timer(500);
