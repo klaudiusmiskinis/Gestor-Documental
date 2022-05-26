@@ -120,7 +120,24 @@ export class RequestService {
         this.setContent(status);
       };
     } catch (e) {
-      this.notificate('Error con la creación de la carpeta');
+      this.notificate('Error recuperando el archivo');
+    }
+  }
+
+  /**
+   * POST para recuperar un archivo
+   * @param path string
+   * @param folder string
+   */
+  async addPerson(person: object): Promise<void> {
+    try {
+      const status = this.parse(await this.http.post<any>('http://localhost:3001/persons', person).toPromise());
+      if (status.success) {
+        this.notificate('¡Usuario añadido!');
+        this.setContent(status);
+      };
+    } catch (e) {
+      this.notificate('Error añadiendo el usuario');
     }
   }
 
@@ -205,7 +222,7 @@ export class RequestService {
       await this.http.post<any>('http://localhost:3001/update', data).toPromise();
       return true;
     } catch (e) {
-      this.notificate('Error con el cambio de nombre');
+      this.notificate('Error con los cambios');
       return false;
     }
   }
