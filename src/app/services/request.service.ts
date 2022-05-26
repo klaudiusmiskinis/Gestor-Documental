@@ -10,6 +10,7 @@ import { TokenService } from './token.service';
 export class RequestService {
   private content: any;
   private notifier: any;
+  private url: string = 'http://localhost:3001'
   constructor(private http: HttpClient, notifier: NotifierService, private token: TokenService, private router: Router) {
     this.notifier = notifier;
   }
@@ -21,7 +22,7 @@ export class RequestService {
    */
   async login(user: object): Promise<Object> {
     try {
-      const res = await this.http.post<any>('http://localhost:3001/login', user).toPromise();
+      const res = await this.http.post<any>(this.url + '/login', user).toPromise();
       this.token.setToken(res.token)
       this.token.saveToken();
       return true;
@@ -38,7 +39,7 @@ export class RequestService {
   */
   async getAllFiles() {
     try {
-      return await this.http.get<any>('http://localhost:3001/getAllFiles').toPromise();
+      return await this.http.get<any>(this.url + '/getAllFiles').toPromise();
     } catch (e) {
       this.notificate('Error con el servidor.');
       return 'Error';
@@ -50,7 +51,7 @@ export class RequestService {
    */
   async isAuthenticated() {
     try {
-      return await this.http.get<any>('http://localhost:3001/isAuthenticated').toPromise();
+      return await this.http.get<any>(this.url + '/isAuthenticated').toPromise();
     } catch (e) {
       this.notificate('No tienes permiso para acceder aquí.');
     }
@@ -114,7 +115,7 @@ export class RequestService {
    */
   async recoverFile(id: number, isLastVersion: boolean): Promise<void> {
     try {
-      const status = this.parse(await this.http.post<any>('http://localhost:3001/recover', { id: id, isLastVersion: isLastVersion }).toPromise());
+      const status = this.parse(await this.http.post<any>(this.url + '/recover', { id: id, isLastVersion: isLastVersion }).toPromise());
       if (status.success) {
         this.notificate('¡Archivo recuperado!');
         this.setContent(status);
@@ -125,13 +126,12 @@ export class RequestService {
   }
 
   /**
-   * POST para recuperar un archivo
-   * @param path string
-   * @param folder string
+   * POST para añadir una persona
+   * @param person object
    */
   async addPerson(person: object): Promise<void> {
     try {
-      const status = this.parse(await this.http.post<any>('http://localhost:3001/persons', person).toPromise());
+      const status = this.parse(await this.http.post<any>(this.url + '/persons', person).toPromise());
       if (status.success) {
         this.notificate('¡Usuario añadido!');
         this.setContent(status);
@@ -164,7 +164,7 @@ export class RequestService {
    * @returns array
    */
   async getPersons() {
-    const response = await this.http.get<any>('http://localhost:3001/persons').toPromise();
+    const response = await this.http.get<any>(this.url + '/persons').toPromise();
     return response;
   }
 
@@ -219,7 +219,7 @@ export class RequestService {
    */
   async updateRow(data: any): Promise<boolean> {
     try {
-      await this.http.post<any>('http://localhost:3001/update', data).toPromise();
+      await this.http.post<any>(this.url + '/update', data).toPromise();
       return true;
     } catch (e) {
       this.notificate('Error con los cambios');
@@ -235,7 +235,7 @@ export class RequestService {
    */
   getFile(path: string, file: string): string {
     let char = this.setParameterChar(path);
-    if (path == 'http://localhost:3001/') {
+    if (path == (this.url + '/')) {
       return path.split('?').join('download?') + 'download' + char + 'download=' + file;
     } else {
       return path.split('?').join('download?') + char + 'download=' + file;
@@ -250,7 +250,7 @@ export class RequestService {
    */
   getPDF(path: string, file: string): string {
     let char = this.setParameterChar(path);
-    if (path == 'http://localhost:3001/') {
+    if (path == (this.url + '/')) {
       return path.split('?').join('download/pdf?') + 'download/pdf' + char + 'download=' + file;
     } else {
       return path.split('?').join('download/pdf?') + char + 'download=' + file;
