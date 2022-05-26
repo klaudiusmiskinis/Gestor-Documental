@@ -10,6 +10,12 @@
         Gestor <i class="bi bi-hexagon-fill me-1"></i>
       </button>
       <button
+        class="btn btn-sm btn-color shadow-sm me-1"
+        (click)="modal('addPerson', 'show')"
+      >
+        Añadir persona <i class="bi bi-person-plus-fill me-1"></i>
+      </button>
+      <button
         (click)="restartSize()"
         class="btn btn-sm btn-color shadow-sm me-1"
       >
@@ -277,7 +283,11 @@
             </div>
             <div class="col-sm-8">
               <span class="p-0 mt-1">Persona encargada</span>
-              <select class="form-control" formControlName="author">
+              <select
+                *ngIf="persons.length > 0"
+                class="form-control"
+                formControlName="author"
+              >
                 <option *ngFor="let person of persons" [value]="person.dni">
                   {{ person.name }}
                 </option>
@@ -332,6 +342,95 @@
               class="btn btn-sm btn-color"
             >
               Editar archivo
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade bg-opacity-75 bg-light"
+  id="addPerson"
+  tabindex="-1"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-color border-0">
+        <h6 class="modal-title text-light">Añadir persona</h6>
+        <button
+          type="button"
+          class="btn-close btn-close-white"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="addPersonForm" (ngSubmit)="addPerson()">
+          <div class="mb-3">
+            <label class="col-form-label">DNI:</label>
+            <input formControlName="dni" type="text" class="form-control" />
+            <div>
+              <error-message
+                [isTouched]="true"
+                [ctrl]="addPersonForm.get('dni')"
+              ></error-message>
+            </div>
+            <div *ngIf="!addPersonForm.controls['dni'].errors">
+              <div class="d-grid mt-1">
+                <small @fadeInError class="text-success"
+                  ><i class="bi bi-check-lg me-1"></i>Esta razón es válida.
+                </small>
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="col-form-label">Nombre:</label>
+            <input formControlName="name" type="text" class="form-control" />
+            <div>
+              <error-message
+                [isTouched]="true"
+                [ctrl]="addPersonForm.get('name')"
+              ></error-message>
+            </div>
+            <div *ngIf="!addPersonForm.controls['name'].errors">
+              <div class="d-grid mt-1">
+                <small @fadeInError class="text-success"
+                  ><i class="bi bi-check-lg me-1"></i>Esta razón es válida.
+                </small>
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="col-form-label">Apellido/s:</label>
+            <input
+              formControlName="lastname"
+              type="text"
+              class="form-control"
+            />
+            <div>
+              <error-message
+                [isTouched]="true"
+                [ctrl]="addPersonForm.get('lastname')"
+              ></error-message>
+            </div>
+            <div *ngIf="!addPersonForm.controls['lastname'].errors">
+              <div class="d-grid mt-1">
+                <small @fadeInError class="text-success"
+                  ><i class="bi bi-check-lg me-1"></i>Esta razón es válida.
+                </small>
+              </div>
+            </div>
+          </div>
+          <div class="d-grid mt-3">
+            <button
+              type="submit"
+              [disabled]="addPersonForm.invalid"
+              class="btn btn-sm btn-color"
+            >
+              Añadir persona
             </button>
           </div>
         </form>
