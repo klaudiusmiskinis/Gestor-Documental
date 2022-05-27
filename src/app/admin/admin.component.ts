@@ -35,6 +35,7 @@ export class AdminComponent implements OnInit {
   public selected: any;
   public persons: Person[] = [];
   public editRowForm: FormGroup;
+  public addPersonForm: FormGroup;
   public overlayLoadingTemplate =
     '<span class="ag-overlay-loading-center">Espera un momento.</span>';
   public overlayNoRowsTemplate =
@@ -86,6 +87,12 @@ export class AdminComponent implements OnInit {
         Validators.pattern('^[ A-zÀ-ú0-9._-]*$')
       ])
     })
+
+    this.addPersonForm = new FormGroup({
+      name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(30), Validators.pattern('^[A-Za-z]+$')]),
+      lastname: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(30), Validators.pattern('^[A-Za-z ]+$')]),
+      dni: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(9), Validators.pattern('^[A-Za-z0-9]+$')])
+    })
   }
 
   /**
@@ -99,7 +106,25 @@ export class AdminComponent implements OnInit {
     if (this.isAdmin) await this.setDatos();
     this.gridOptions = {
       localeText: (key: string, defaultValue: string) => localeEs[key] || defaultValue,
-    }
+    };
+  }
+
+  /**
+   * Metodo que acciona la limpieza completa  de la base de datos.
+   */
+  async purge() {
+    await this.request.purge();
+    this.modal('purgeModalSecure', 'hide')
+    await this.setDatos();
+  }
+
+  /**
+   * Metodo que acciona la limpieza completa  de la base de datos.
+   */
+  async bulk() {
+    await this.request.bulk();
+    this.modal('bulkModalSecure', 'show');
+    await this.setDatos();
   }
 
   /**
@@ -197,6 +222,17 @@ export class AdminComponent implements OnInit {
       await this.setDatos();
       this.modal('editRowModal', 'hide');
     }
+  }
+
+  async addPerson() {
+    const person = {
+      dni: this.addPersonForm.controls['dni'].value,
+      name: this.addPersonForm.controls['name'].value,
+      lastname: this.addPersonForm.controls['lastname'].value,
+    }
+    await this.request.addPerson(person);
+    this.modal('addPerson', 'hide');
+    this.addPersonForm.reset();
   }
 
   /**

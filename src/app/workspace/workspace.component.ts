@@ -49,15 +49,15 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
     this.checkBoxBoolean = true;
     this.checkReasonBoolean = false;
     this.selected = true;
+    this.expandedFolders = true;
+    this.expandedFiles = true;
+    this.showloader = false;
     this.tooltip = {
       arrow: true,
       placement: 'bottom',
       animation: 'fade',
       delay: [500, 0],
     };
-    this.expandedFolders = true;
-    this.expandedFiles = true;
-    this.showloader = false;
     this.uploadFileForm = new FormGroup({
       reasonSwitch: new FormControl(false),
       fileNewName: new FormControl(),
@@ -65,16 +65,13 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
       fileReason: new FormControl(),
       author: new FormControl('')
     });
-
     this.setConditionalValidators(true, 'fileNewName', true, true, true, 3, 30);
     this.uploadFileForm.controls['reasonSwitch'].valueChanges.subscribe(() => this.setConditionalValidators(this.uploadFileForm.controls['reasonSwitch'].value, 'fileReason', true, true, false, 3, 300));
-
     this.recoverForm = new FormGroup({
       isLastVersion: new FormControl(false, [
         Validators.required
       ])
     })
-
     this.makeDirectoryForm = new FormGroup({
       directory: new FormControl('', [
         Validators.required,
@@ -85,7 +82,6 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
         this.validateFilename.bind(this)
       ])
     });
-
     this.editDirectoryName = new FormGroup({
       folderName: new FormControl('', [
         Validators.required,
@@ -96,7 +92,6 @@ export class WorkspaceComponent implements OnInit, AfterViewChecked {
         this.validateFilename.bind(this)
       ])
     });
-
     this.editFileName = new FormGroup({
       fileName: new FormControl('', [
         Validators.required,
