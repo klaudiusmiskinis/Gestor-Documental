@@ -1,27 +1,53 @@
-# GestorDocumental
+# Gestor Documental
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.0.1.
+El gestor documental es una herramienta potente que permite manejar archivos con versiones y su relacion con las versiones.
 
-## Development server
+### COMENZAMOS
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Para el despliegue de desarrollo utilizaremos los siguientes comandos uno a uno:
 
-## Code scaffolding
+```
+npm install
+ng serve
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Para compilar el proyecto y poder desplegarlo utilizaremos el siguiente comando:
+```
+ng build --configuration production
+```
 
-## Build
+### Estructura del proyecto:
+```
++---app
+|   +---admin
+|   +---config
+|   +---error-message
+|   +---files
+|   +---folders
+|   +---interceptor
+|   +---loader
+|   +---models
+|   +---navbar
+|   +---services
+|   +---validators
+|   \---workspace
++---assets
+\---environments
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+```
 
-## Running unit tests
+### Importante
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Hay tener en cuenta el Backend para poder utilizar la aplicación.
 
-## Running end-to-end tests
+Se requiere de una Base de Datos MySQL y bien configurada.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
-## Further help
+**Desarrollado por [Klau](https://github.com/klaudiusmiskinis)**
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+*This project is licensed by [MIT License](https://api.github.com/licenses/mit).*
+
+*Copyright © 2020*
+
+
