@@ -110,6 +110,14 @@ export class AdminComponent implements OnInit {
   }
 
   /**
+   * Metodo que acciona la limpieza completa  de la base de datos.
+   */
+  async purge() {
+    await this.request.purge();
+    this.modal('purgeModal', 'hide')
+  }
+
+  /**
    * Asignando los valores al formulario dependiendo de la fila seleccionada.
    */
   setFormValues() {
