@@ -228,6 +228,34 @@ export class RequestService {
   }
 
   /**
+   * Hace una limpieza completa de la base de datos.
+   * @returns boolean
+   */
+  async purge(): Promise<boolean> {
+    try {
+      await this.http.post<any>(this.url + '/purge', {}).toPromise();
+      return true;
+    } catch (e) {
+      this.notificate('Error con el purge');
+      return false;
+    }
+  }
+
+  /**
+   * Hace un insert masivo de los archivos de 0
+   * @returns boolean
+   */
+  async bulk(): Promise<boolean> {
+    try {
+      await this.http.post<any>(this.url + '/bulk', {}).toPromise();
+      return true;
+    } catch (e) {
+      this.notificate('Error con el bulk');
+      return false;
+    }
+  }
+
+  /**
    * Devuelve el archivo para descargar
    * @param path string
    * @param file string
