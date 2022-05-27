@@ -118,6 +118,14 @@ export class AdminComponent implements OnInit {
   }
 
   /**
+   * Metodo que acciona la limpieza completa  de la base de datos.
+   */
+  async bulk() {
+    await this.request.bulk();
+    this.modal('bulkModal', 'hide')
+  }
+
+  /**
    * Asignando los valores al formulario dependiendo de la fila seleccionada.
    */
   setFormValues() {
