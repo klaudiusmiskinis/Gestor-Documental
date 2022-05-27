@@ -7,13 +7,25 @@
         class="btn btn-sm btn-color shadow-sm me-1"
         routerLink="/gestor-documental"
       >
-        Gestor <i class="bi bi-hexagon-fill me-1"></i>
+        Gestor <i class="bi bi-hexagon-fill ms-1"></i>
+      </button>
+      <button
+        class="btn btn-sm btn-color shadow-sm me-1"
+        (click)="modal('bulkModal', 'show')"
+      >
+        Insertar masivamente <i class="bi bi-front ms-1"></i>
+      </button>
+      <button
+        class="btn btn-sm btn-color shadow-sm me-1"
+        (click)="modal('purgeModal', 'show')"
+      >
+        Purgar base de datos<i class="bi bi-exclamation-diamond-fill ms-1"></i>
       </button>
       <button
         class="btn btn-sm btn-color shadow-sm me-1"
         (click)="modal('addPerson', 'show')"
       >
-        Añadir persona <i class="bi bi-person-plus-fill me-1"></i>
+        Añadir persona<i class="bi bi-person-plus-fill ms-1"></i>
       </button>
       <button
         (click)="restartSize()"
@@ -434,6 +446,174 @@
             </button>
           </div>
         </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade bg-opacity-75 bg-light"
+  id="bulkModal"
+  tabindex="-1"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-color border-0">
+        <h6 class="modal-title text-light">¿Insertar masivamente?</h6>
+        <button
+          type="button"
+          class="btn-close btn-close-white"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <p class="text-center">
+          ¿Estás seguro de querer insertar los datos de nuevo?
+        </p>
+        <div class="row gap-2 mt-3 mx-2">
+          <button
+            type="button"
+            class="col d-grid btn btn-sm btn-color shadow-sm"
+            (click)="
+              modal('bulkModal', 'hide'); modal('bulkModalSecure', 'show')
+            "
+          >
+            Sí, deseo insertarlos.
+          </button>
+          <button
+            type="button"
+            class="col d-grid btn btn-sm btn-secondary shadow-sm"
+            data-bs-dismiss="modal"
+          >
+            Cancelar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade bg-opacity-75 bg-light"
+  id="purgeModal"
+  tabindex="-1"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-color border-0">
+        <h6 class="modal-title text-light">¿Purgar la base de datos?</h6>
+        <button
+          type="button"
+          class="btn-close btn-close-white"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <p class="text-center">
+          ¿Estas seguro de eliminar todos los registros?
+        </p>
+        <div class="row gap-2 mt-3 mx-2">
+          <button
+            type="button"
+            class="col d-grid btn btn-sm btn-color shadow-sm"
+            (click)="
+              modal('purgeModal', 'hide'); modal('purgeModalSecure', 'show')
+            "
+          >
+            Si, estoy seguro
+          </button>
+          <button
+            type="button"
+            class="col d-grid btn btn-sm btn-secondary shadow-sm"
+            data-bs-dismiss="modal"
+          >
+            Cancelar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade bg-opacity-75 bg-light"
+  id="purgeModalSecure"
+  tabindex="-1"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-danger border-0">
+        <h6 class="modal-title text-light">AVISO</h6>
+        <button
+          type="button"
+          class="btn-close btn-close-white"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <p class="text-center">Esta acción es irreversible.</p>
+        <div class="row gap-2 mt-3 mx-2">
+          <button
+            type="button"
+            class="col d-grid btn btn-sm btn-danger shadow-sm"
+            (click)="purge(); modal('purgeModalSecure', 'hide')"
+          >
+            Si, proceder
+          </button>
+          <button
+            type="button"
+            class="col d-grid btn btn-sm btn-secondary shadow-sm"
+            data-bs-dismiss="modal"
+          >
+            Cancelar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade bg-opacity-75 bg-light"
+  id="bulkModalSecure"
+  tabindex="-1"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-danger border-0">
+        <h6 class="modal-title text-light">AVISO</h6>
+        <button
+          type="button"
+          class="btn-close btn-close-white"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <p class="text-center">Esta acción es irreversible.</p>
+        <div class="row gap-2 mt-3 mx-2">
+          <button
+            type="button"
+            class="col d-grid btn btn-sm btn-danger shadow-sm"
+            (click)="bulk()"
+          >
+            Si, proceder
+          </button>
+          <button
+            type="button"
+            class="col d-grid btn btn-sm btn-secondary shadow-sm"
+            data-bs-dismiss="modal"
+          >
+            Cancelar
+          </button>
+        </div>
       </div>
     </div>
   </div>

@@ -114,7 +114,8 @@ export class AdminComponent implements OnInit {
    */
   async purge() {
     await this.request.purge();
-    this.modal('purgeModal', 'hide')
+    this.modal('purgeModalSecure', 'hide')
+    await this.setDatos();
   }
 
   /**
@@ -122,7 +123,8 @@ export class AdminComponent implements OnInit {
    */
   async bulk() {
     await this.request.bulk();
-    this.modal('bulkModal', 'hide')
+    this.modal('bulkModalSecure', 'show');
+    await this.setDatos();
   }
 
   /**
