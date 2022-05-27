@@ -355,7 +355,7 @@
               [ctrl]="makeDirectoryForm.get('directory')"
             ></error-message>
           </div>
-          <div *ngIf="makeDirectoryForm.controls['directory']">
+          <div *ngIf="!makeDirectoryForm.controls['directory'].errors">
             <div class="d-grid mt-1">
               <small @fadeInError class="text-success"
                 ><i class="bi bi-check-lg me-1"></i>Este nombre es válido.
